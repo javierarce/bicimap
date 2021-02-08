@@ -294,14 +294,6 @@ export default {
 
       let body = L.DomUtil.create('div', 'Popup__body', content)
 
-      if (!window.bus.isAnonymous() && options.user) {
-        let footer = L.DomUtil.create('div', 'Popup__footer', content)
-
-        let user = L.DomUtil.create('a', 'Popup__user', footer)
-        user.href= `https://twitter.com/${options.user.username}`
-        user.innerText = `@${options.user.username}`
-      }
-
       let comment = L.DomUtil.create('div', 'Popup__comment', body)
       let controls = L.DomUtil.create('div', 'Popup__controls', body)
 
