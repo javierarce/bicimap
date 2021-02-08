@@ -9,6 +9,7 @@
 - [ ] Improve tooltips
 - [ ] Consider removing clusters
 - [ ] Remove "Map with Me" legacy code
+- [ ] Add spinner while the user position is being fetched
 - [ ] Save last position in the map
 - [ ] Add about page
 - [ ] Launch project
