@@ -1,15 +1,22 @@
 # BiciMap
 
-🌍 Map of BiciMad stations. **This project is still in development.**
+🌍 Unofficial map of BiciMad stations. 
+
+This is my attempt to make a more useful and nicer version of the [current BiciMad map](https://u.bicimad.com/mapa).
+
+**This project is still in development.**
 
 ### TODO
 
-- [x] Show spinner while the user position is being fetched
-- [ ] Show nearby stations
 - [ ] Add toggle to switch between modes (picking / leaving a bike)
-- [ ] Improve tooltips
-- [ ] Consider removing clusters
+- [ ] Show nearby stations to a given station
+- [ ] Improve tooltips (style and content)
 - [ ] Remove "Map with Me" legacy code
 - [ ] Save last position in the map
 - [ ] Add about page
 - [ ] Launch project
+
+### Done
+
+- [x] Show spinner while the user position is being fetched
+- [x] Remove clustering
