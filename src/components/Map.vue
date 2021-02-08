@@ -93,7 +93,7 @@ export default {
     toggle () {
       this.expanded = !this.expanded
       window.bus.$emit(config.ACTIONS.TOGGLE_MAP_SIZE, this.expanded)
-      this.toggleControl.getContainer().classList.toggle('is-expanded')
+      this.locateControl.getContainer().classList.toggle('is-expanded')
 
       setTimeout(() => {
         window.bus.$emit(config.ACTIONS.INVALIDATE_MAP_SIZE)
@@ -211,19 +211,30 @@ export default {
 
       this.map.on('locationfound', (data) => {
         window.bus.$emit(config.ACTIONS.STOP_LOADING)
+        this.locateControl.stopLoading()
         this.map.setView(data.latlng, 17, { animate: true, easeLinearity: 0.5, duration: 0.5 })
       })
 
       this.map.on('locationerror', (e) => {
         window.bus.$emit(config.ACTIONS.STOP_LOADING)
+        this.locateControl.stopLoading()
         console.log('location error', e)
       })
 
-      L.Control.ToggleExpand = L.Control.extend({
+      L.Control.LocateControl = L.Control.extend({
+        startLoading: () => {
+          this.locateControl._container.classList.add('is-loading')
+        },
+        stopLoading: () => {
+          this.locateControl._container.classList.remove('is-loading')
+        },
         onRemove: () => {
         },
         onAdd: (map)  => {
-          let div = L.DomUtil.create('div', 'ToggleControl')
+          let div = L.DomUtil.create('div', 'LocateControl')
+          let spinner = L.DomUtil.create('div', 'Spinner is-mini')
+
+          div.appendChild(spinner)
 
           L.DomEvent.on(div, 'click', (e) => {
             e.stopPropagation()
@@ -232,12 +243,13 @@ export default {
             L.DomEvent.disableClickPropagation(div)
             this.map.locate({setView: false })
             window.bus.$emit(config.ACTIONS.START_LOADING)
+            this.locateControl.startLoading()
           })
           return div
         }
       })
 
-      this.toggleControl = this.createToggleExpand({ position: 'topright' }).addTo(this.map)
+      this.locateControl = this.createLocateControl({ position: 'topright' }).addTo(this.map)
 
       this.cluster = L.markerClusterGroup({
         spiderfyOnMaxZoom: false,
@@ -252,8 +264,8 @@ export default {
       }).addTo(this.map)
     },
 
-    createToggleExpand (opts) {
-      return new L.Control.ToggleExpand(opts)
+    createLocateControl (opts) {
+      return new L.Control.LocateControl(opts)
     },
     createZoomOut (opts) {
       return new L.Control.ZoomOut(opts)
@@ -389,11 +401,9 @@ export default {
     },
     startLoading () {
       window.bus.$emit(config.ACTIONS.START_LOADING)
-      this.popup.getContent().classList.add('is-loading')
     },
     stopLoading () {
       window.bus.$emit(config.ACTIONS.STOP_LOADING)
-      this.popup.getContent().classList.remove('is-loading')
     },
     setName (text) {
       this.popup.getContent().querySelector('.js-name').textContent = text
