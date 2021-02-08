@@ -140,13 +140,11 @@ export default {
     addMarker (location) {
       let latlng = [location.latitude, location.longitude]
 
-      let name = location.name
+      let name = `${location.number} | ${location.name}`
       let description = `Bicicletas: ${location.dock_bikes} Bases libres: ${location.free_bases}`
-
-      let user = location.address
       let address = location.address
 
-      this.popup = this.createPopup(latlng, { name, description, user, address, readonly: true })
+      this.popup = this.createPopup(latlng, { name, description, address, readonly: true })
 
       let icon = this.getIcon(location)
       let marker = L.marker(latlng, { icon, location })
@@ -285,15 +283,6 @@ export default {
     createPopup (coordinates, options = {}) {
       let classNames = []
 
-      if (window.bus.isLoggedIn()) {
-        classNames.push('is-logged')
-      } 
-      
-      if (!window.bus.isLoggedIn() || options.description && options.description.length){
-        classNames.push('can-send')
-        this.enableSend = true
-      }
-
       if (options.readonly) {
         classNames.push('is-readonly')
       }
@@ -368,48 +357,9 @@ export default {
 
       this.popup.setContent(content)
 
-      if (options.geocode) {
-        this.geocode()
-      }
-
       return this.popup
     },
 
-    addLocation () {
-      if (!this.enableSend) {
-        return
-      }
-
-      this.startLoading()
-
-      let address = this.getAddress()
-      let coordinates = this.coordinates
-      let description = this.getDescription()
-      let name = this.getName()
-
-      window.bus.$emit(config.ACTIONS.ADD_LOCATION, { coordinates, name, description, address })
-    },
-    login () {
-      this.startLoading()
-
-      let address = this.getAddress()
-      let coordinates = this.coordinates
-      let description = this.getDescription()
-      let name = this.getName()
-      let zoom = this.map.getZoom()
-
-      window.bus.$emit(config.ACTIONS.LOGIN, { coordinates, zoom, name, description, address })
-    },
-    showSuccess () {
-      this.popup.getContent().classList.add('was-successful')
-
-      setTimeout(() => {
-        this.hideSuccess()
-      }, 1500)
-    },
-    hideSuccess () {
-      this.popup.getContent().classList.remove('was-successful')
-    },
     startLoading () {
       window.bus.$emit(config.ACTIONS.START_LOADING)
     },
@@ -437,59 +387,12 @@ export default {
     getDescription () {
       return document.body.querySelector('.js-description').value
     },
-    getAddress () {
-      return document.body.querySelector('.js-address').textContent
-    },
     setDescription (text) {
       document.body.querySelector('.js-description').value = text
 
       if (text && text.length) {
         this.enableSendButton()
       }
-    },
-    setAddress (text) {
-      this.popup.getContent().querySelector('.js-address').textContent = text
-      this.popup.getContent().classList.add('has-address')
-    },
-
-    parseAddress(address) {
-      let parts = []
-
-      let tpl = 'road, house_number, city, country'
-
-      tpl.split(', ').forEach((part) => {
-        if (address && address[part]) {
-          parts.push(address[part])
-        }
-      })
-
-      return parts.length ? parts.join(', ') : 'Mysterious location'
-    },
-
-    onGetGeocoding (response) {
-      response.json().then((result) => {
-        this.stopLoading()
-
-        let name = (result.namedetails && result.namedetails.name) || address || result.display_name
-        let address = (result && this.parseAddress(result.address)) || result.display_name
-        this.setName(this.truncate(name, MAX_TITLE_LENGTH))
-        this.setAddress(address)
-      })
-    },
-    geocode () {
-      this.startLoading()
-
-      let lat = this.coordinates.lat
-      let lng = this.coordinates.lng
-      let extraParams = '&addressdetails=1&namedetails=1&extratags=1&zoom=18&format=json'
-
-      let url = `${config.ENDPOINTS.NOMINATIM}${config.ENDPOINTS.GEOCODE_URL}?lat=${lat}&lon=${lng}${extraParams}`
-
-      this.get(url)
-        .then(this.onGetGeocoding.bind(this))
-        .catch((error) => {
-          console.error(error)
-        })
     },
     removeMarker () {
       this.map.closePopup()
