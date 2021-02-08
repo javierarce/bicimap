@@ -210,10 +210,12 @@ export default {
       this.map.zoomControl.setPosition('topright')
 
       this.map.on('locationfound', (data) => {
+        window.bus.$emit(config.ACTIONS.STOP_LOADING)
         this.map.setView(data.latlng, 17, { animate: true, easeLinearity: 0.5, duration: 0.5 })
       })
 
       this.map.on('locationerror', (e) => {
+        window.bus.$emit(config.ACTIONS.STOP_LOADING)
         console.log('location error', e)
       })
 
@@ -229,6 +231,7 @@ export default {
 
             L.DomEvent.disableClickPropagation(div)
             this.map.locate({setView: false })
+            window.bus.$emit(config.ACTIONS.START_LOADING)
           })
           return div
         }
