@@ -1,8 +1,6 @@
 map:
-  DEFAULT_SEARCH_LOCATION: ""
-  LAT: "40.416775"
-  LON: "-3.703790"
-  ZOOM: "13"
-  FIT_BOUNDS: false
+  LAT: "40.41"
+  LON: "-3.695"
+  ZOOM: "15"
 admin:
   TITLE: Estaciones de BiciMad
