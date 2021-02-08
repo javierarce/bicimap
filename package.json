@@ -31,6 +31,7 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "dependencies": {
+    "@turf/turf": "^6.3.0",
     "bicimad": "^1.0.1",
     "body-parser": "^1.19.0",
     "css-loader": "^3.5.3",

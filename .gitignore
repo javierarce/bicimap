@@ -33,6 +33,7 @@ database.sqlite
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+yarn.lock
 
 /public/assets
 .byebug_history

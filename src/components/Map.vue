@@ -9,6 +9,7 @@ import mixins from '../mixins'
 import config from '../../config'
 import mapConfig from '../../map.yaml'
 
+import * as turf from '@turf/turf'
 import * as L from 'leaflet'
 require('leaflet.markercluster')
 
@@ -18,6 +19,7 @@ export default {
   mixins: [mixins],
   data() {
     return {
+      stations: [],
       cluster: {},
       map: {},
       toggleMapControl: undefined,
@@ -50,7 +52,7 @@ export default {
       window.bus.$off(config.ACTIONS.SHOW_DEFAULT_POINT)
       window.bus.$off(config.ACTIONS.VISIT_MARKER)
 
-      window.bus.$on(config.ACTIONS.ADD_LOCATIONS, this.onAddLocations)
+      window.bus.$on(config.ACTIONS.ADD_LOCATIONS, this.onAddStations)
       window.bus.$on(config.ACTIONS.REMOVE_MARKER, this.onRemoveMarker)
       window.bus.$on(config.ACTIONS.INVALIDATE_MAP_SIZE, this.invalidateSize)
       window.bus.$on(config.ACTIONS.SHOW_DEFAULT_POINT, this.showDefaultPoint)
@@ -115,8 +117,9 @@ export default {
         console.error('Marker not found', window.bus.markers)
       }
     },
-    onAddLocations (locations) {
-      locations.forEach(this.addMarker.bind(this)) 
+    onAddStations (stations) {
+      this.stations = stations
+      this.stations.forEach(this.addMarker.bind(this)) 
       window.bus.$emit(config.ACTIONS.ON_LOAD)
       this.map.addLayer(this.cluster)
     },
@@ -139,12 +142,56 @@ export default {
       let marker = L.marker(latlng, { icon, location })
 
       marker.on('mouseover', (e) => {
-      marker.openPopup()
-      });
+        marker.openPopup()
+      })
+
       marker.on('mouseout', (e) => {
-        console.log('out');
+        console.log('out')
         this.map.closePopup()
-      });
+      })
+
+      marker.on('click', () => {
+        let latlng = marker.getLatLng()
+        let circle = turf.circle([latlng.lng, latlng.lat], 0.5, { steps: 20, units: 'kilometers'})
+
+        L.geoJSON(circle, {
+          style: function(feature) {
+            return {
+              color: "red"
+            }
+          }
+        }).addTo(this.map)
+
+        let points = []
+
+        this.stations.forEach((station) => {
+          if (+station.longitude !== latlng.lng && +station.latitude !== latlng.lat) {
+            points.push([ station.longitude, station.latitude ])
+          }
+        })
+
+        if (points) {
+          let pointsWithin = turf.pointsWithinPolygon(turf.points(points), circle)
+
+          let distances = []
+
+          pointsWithin.features.forEach((feature) => {
+            let from = turf.point([latlng.lng, latlng.lat])
+            let to = turf.point(feature.geometry.coordinates)
+            let options = { units: 'kilometers' }
+
+            let distance = turf.distance(from, to, options)
+            distances.push({ coordinates: feature.geometry.coordinates, distance })
+          })
+
+          if (distances) {
+            let sorted = Object.keys(distances)
+              .sort(function(a,b) {  return distances[a].distance - distances[b].distance })
+              .map(function(k) { return distances[k] })
+            console.log(sorted.slice(0, 3));
+          }
+        }
+      })
 
       marker.bindPopup(this.popup, { maxWidth: 'auto' })
 
@@ -163,13 +210,12 @@ export default {
       this.map.zoomControl.setPosition('topright')
 
       this.map.on('locationfound', (data) => {
-        console.log('found', data);
         this.map.setView(data.latlng, 17, { animate: true, easeLinearity: 0.5, duration: 0.5 })
-      });
+      })
 
       this.map.on('locationerror', (e) => {
-        console.log('error', e);
-      });
+        console.log('location error', e)
+      })
 
       L.Control.ToggleExpand = L.Control.extend({
         onRemove: () => {
@@ -188,7 +234,7 @@ export default {
         }
       })
 
-      this.toggleControl = this.createToggleExpand({ position: 'topright' }).addTo(this.map);
+      this.toggleControl = this.createToggleExpand({ position: 'topright' }).addTo(this.map)
 
       this.cluster = L.markerClusterGroup({
         spiderfyOnMaxZoom: false,
