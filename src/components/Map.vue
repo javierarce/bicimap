@@ -11,7 +11,7 @@ import mapConfig from '../../map.yaml'
 
 import * as turf from '@turf/turf'
 import * as L from 'leaflet'
-require('leaflet.markercluster')
+// require('leaflet.markercluster')
 
 const MAX_TITLE_LENGTH = 80
 
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       stations: [],
-      cluster: {},
+      //cluster: {},
       map: {},
       toggleMapControl: undefined,
       zoomOutControl: undefined,
@@ -77,7 +77,17 @@ export default {
 
       let classNames = [ 'icon' ]
 
-      if (location && !location.approved && window.bus.isModerated()) {
+      if (location && location.dock_bikes < 3) {
+        classNames.push('is-low')
+      } else if (location && location.dock_bikes >= 3 && location.dock_bikes < 5) {
+        classNames.push('is-ok')
+      } else if (location && location.dock_bikes >= 5) {
+        classNames.push('is-good')
+      } else {
+        classNames.push('is-bad')
+      }
+
+      if (location && !location.activate) {
         classNames.push('is-disabled')
       }
 
@@ -121,7 +131,7 @@ export default {
       this.stations = stations
       this.stations.forEach(this.addMarker.bind(this)) 
       window.bus.$emit(config.ACTIONS.ON_LOAD)
-      this.map.addLayer(this.cluster)
+      //this.map.addLayer(this.cluster)
     },
     fitBounds () {
       let group = L.featureGroup(window.bus.markers)
@@ -195,7 +205,8 @@ export default {
 
       marker.bindPopup(this.popup, { maxWidth: 'auto' })
 
-      this.cluster.addLayer(marker)
+      marker.addTo(this.map)
+      // this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
     },
     init () {
@@ -251,10 +262,10 @@ export default {
 
       this.locateControl = this.createLocateControl({ position: 'topright' }).addTo(this.map)
 
-      this.cluster = L.markerClusterGroup({
-        spiderfyOnMaxZoom: false,
-        showCoverageOnHover: false
-      })
+//      this.cluster = L.markerClusterGroup({
+//        spiderfyOnMaxZoom: false,
+//        showCoverageOnHover: false
+//      })
 
       L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}' + (L.Browser.retina ? '@2x.png' : '.png'), {
         attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
