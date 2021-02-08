@@ -6,7 +6,6 @@ const express = require('express')
 const cmd = require('node-cmd')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const rss = require('rss')
 const helmet = require('helmet')
 
 const config = require('./config')
