@@ -2,7 +2,7 @@
   <div class="About" @click="onClickOutside"> 
     <div class="About__backdrop"></div>
     <div class="About__inner has-transition" @click="onClickInside">
-      <div class="About__title">About</div>
+      <div class="About__title">Acerca de este proyecto</div>
       <div class="About__content">
         <div class="About__description">
           

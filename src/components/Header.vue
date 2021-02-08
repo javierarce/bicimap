@@ -5,7 +5,7 @@
       <div class="Header__updatedAt" v-html="updatedAt" v-if="updatedAt"></div>
     </div>
     <div class="Header__links">
-      <button class="Button Header__linksItem" @click="onClickAbout">About</button>
+      <button class="Button Header__linksItem" @click="onClickAbout">Acerca de</button>
     </div>
   </div>
 </template>
