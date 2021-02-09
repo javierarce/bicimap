@@ -13,6 +13,7 @@ const ACTIONS = {
   REMOVE_MARKER: 'remove-marker',
   ADD_MARKER: 'add-marker',
   ADD_MARKERS: 'add-markers',
+  CHANGE_MODE: 'change-mode',
   INVALIDATE_MAP_SIZE: 'invalidate-size',
   LOGGED_IN: 'logged-in',
   LOGIN: 'login',

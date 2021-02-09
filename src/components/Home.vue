@@ -8,14 +8,6 @@
     <About v-if="showAbout" />
     </transition>
 
-    <transition name="slide-fade">
-    <Destroy v-if="showDestroy" />
-    </transition>
-
-    <transition name="slide-fade">
-    <Config v-if="showConfig" />
-    </transition>
-
     <Header />
     <Map />
   </div>
@@ -27,8 +19,6 @@ import config from '../../config'
 
 import About from './About.vue'
 import Alert from './Alert.vue'
-import Config from './Config.vue'
-import Destroy from './Destroy.vue'
 import Header from './Header.vue'
 import Map from './Map.vue'
 
@@ -40,8 +30,6 @@ export default {
   components: {
     About,
     Alert,
-    Config,
-    Destroy,
     Header,
     Map,
   },
@@ -52,8 +40,6 @@ export default {
       alertTitle: undefined,
       locations: [],
       showAbout: false,
-      showDestroy: false,
-      showConfig: false,
       showAlert: false
     }
   },
@@ -69,9 +55,7 @@ export default {
       window.bus.$off(config.ACTIONS.ON_LOAD)
       window.bus.$off(config.ACTIONS.START_LOADING)
       window.bus.$off(config.ACTIONS.STOP_LOADING)
-      window.bus.$off(config.ACTIONS.TOGGLE_DESTROY)
       window.bus.$off(config.ACTIONS.TOGGLE_ABOUT)
-      window.bus.$off(config.ACTIONS.TOGGLE_CONFIG)
       window.bus.$off(config.ACTIONS.TOGGLE_ALERT)
       window.bus.$off(config.ACTIONS.TOGGLE_MAP_SIZE)
 
@@ -79,9 +63,7 @@ export default {
       window.bus.$on(config.ACTIONS.ON_LOAD, this.onLoad)
       window.bus.$on(config.ACTIONS.START_LOADING, this.onStartLoading)
       window.bus.$on(config.ACTIONS.STOP_LOADING, this.onStopLoading)
-      window.bus.$on(config.ACTIONS.TOGGLE_DESTROY, this.onToggleDestroy)
       window.bus.$on(config.ACTIONS.TOGGLE_ABOUT, this.onToggleAbout)
-      window.bus.$on(config.ACTIONS.TOGGLE_CONFIG, this.onToggleConfig)
       window.bus.$on(config.ACTIONS.TOGGLE_ALERT, this.onToggleAlert)
       window.bus.$on(config.ACTIONS.TOGGLE_MAP_SIZE, this.onToggleMapSize)
 
@@ -94,8 +76,6 @@ export default {
       if (e.keyCode === 27) {
         this.showAlert = false
         this.showAbout = false
-        this.showDestroy = false
-        this.showConfig = false
       }
     },
     onLoad () {
@@ -114,12 +94,6 @@ export default {
     },
     onStopLoading () {
       document.body.classList.remove('is-loading')
-    },
-    onToggleConfig () {
-      this.showConfig = !this.showConfig
-    },
-    onToggleDestroy () {
-      this.showDestroy = !this.showDestroy
     },
     onToggleAbout () {
       this.showAbout = !this.showAbout

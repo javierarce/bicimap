@@ -3,6 +3,7 @@
     <div class="Header__info">
       <button class="Button Header__title" @click="onClickTitle" v-html="title"></button>
       <div class="Header__updatedAt" v-html="updatedAt" v-if="updatedAt"></div>
+      <Toggle defaultText="Coger" activeText="Dejar" @state="onToggle"/>
     </div>
     <div class="Header__links">
       <button class="Button Header__linksItem" @click="onClickAbout">Acerca de</button>
@@ -16,8 +17,13 @@ import mixins from '../mixins'
 import config from '../../config'
 import mapConfig from '../../map.yaml'
 
+import Toggle from './Toggle.vue'
+
 export default {
   mixins: [mixins],
+  components: {
+    Toggle
+  },
   data() {
     return {
       canLogin: false,
@@ -37,6 +43,9 @@ export default {
     })
   },
   methods: {
+    onToggle (state) {
+      window.bus.$emit(config.ACTIONS.CHANGE_MODE, state)
+    },
     bindEvents () {
       window.bus.$off(config.ACTIONS.LOGGED_IN)
       window.bus.$off(config.ACTIONS.UPDATED_AT)

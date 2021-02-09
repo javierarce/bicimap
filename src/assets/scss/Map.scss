@@ -127,7 +127,8 @@
   transition: border 150ms ease-in-out, background 150ms ease-in-out, transform 250ms cubic-bezier(0,0,0.25,1); 
 }
 
-.show-bikes .leaflet-marker-icon.icon .free_bases {
+.leaflet-marker-icon.icon .data.is-leave .dock_bikes,
+.leaflet-marker-icon.icon .data.is-pickup .free_bases {
   display: none !important;
 }
 
@@ -232,4 +233,41 @@
   .Map__buttons {
     display: none;
   }
+}
+
+
+
+.Toggle {
+  margin: 0 0 0 1em;
+  display: flex;
+  align-items: center;
+}
+
+.Toggle__input {
+  margin: 0 .4em;
+  width: 50px;
+  height: 20px;
+  border-radius: 20px;
+  border: 1px solid #fff;
+  position: relative;
+}
+
+.Toggle__label {
+  position: relative;
+  font-size: .8em;
+  font-weight: bold;
+}
+
+.Toggle.is-active .Toggle__button {
+  left: calc(100% - 17px);
+}
+.Toggle__button {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 100%;
+  transition: all 250ms ease-in-out;
 }

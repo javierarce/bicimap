@@ -13,12 +13,14 @@ import * as turf from '@turf/turf'
 import * as L from 'leaflet'
 require('leaflet.markercluster')
 
-const MAX_TITLE_LENGTH = 80
+const PICKUP_MODE = 0
+const LEAVE_MODE = 1
 
 export default {
   mixins: [mixins],
   data() {
     return {
+      mode: PICKUP_MODE,
       stations: [],
       cluster: {},
       map: {},
@@ -35,6 +37,12 @@ export default {
       this.init()
     })
   },
+  watch: {
+    mode (value) {
+      this.cluster.clearLayers()
+      this.stations.forEach(this.addMarker.bind(this)) 
+    }
+  },
   computed: {
     toggleButtonClass () {
       return this.expanded ? 'is-expanded' : undefined
@@ -48,12 +56,14 @@ export default {
       window.bus.$off(config.ACTIONS.INVALIDATE_MAP_SIZE)
       window.bus.$off(config.ACTIONS.SHOW_DEFAULT_POINT)
       window.bus.$off(config.ACTIONS.VISIT_MARKER)
+      window.bus.$off(config.ACTIONS.CHANGE_MODE)
 
       window.bus.$on(config.ACTIONS.ADD_LOCATIONS, this.onAddStations)
       window.bus.$on(config.ACTIONS.REMOVE_MARKER, this.onRemoveMarker)
       window.bus.$on(config.ACTIONS.INVALIDATE_MAP_SIZE, this.invalidateSize)
       window.bus.$on(config.ACTIONS.SHOW_DEFAULT_POINT, this.showDefaultPoint)
       window.bus.$on(config.ACTIONS.VISIT_MARKER, this.onVisitMarker)
+      window.bus.$on(config.ACTIONS.CHANGE_MODE, this.changeMode)
     },
     bindKeys () {
       document.onkeydown = (e) => {
@@ -70,15 +80,17 @@ export default {
     },
 
     getIcon (location) {
-      let html = `<div class="data"><div class="dock_bikes"><strong>${location.dock_bikes}</strong></div><div class="free_bases"><strong>${location.free_bases}</strong></div></div>`
+      let html = `<div class="data ${this.mode ? 'is-leave' : 'is-pickup'}"><div class="dock_bikes"><strong>${location.dock_bikes}</strong></div><div class="free_bases"><strong>${location.free_bases}</strong></div></div>`
 
       let classNames = [ 'icon' ]
 
-      if (location && location.dock_bikes < 3) {
+      let what = this.mode ? 'free_bases' : 'dock_bikes'
+
+      if (location && location[what] < 3) {
         classNames.push('is-low')
-      } else if (location && location.dock_bikes >= 3 && location.dock_bikes < 5) {
+      } else if (location && location[what] >= 3 && location[what] < 5) {
         classNames.push('is-ok')
-      } else if (location && location.dock_bikes >= 5) {
+      } else if (location && location[what] >= 5) {
         classNames.push('is-good')
       } else {
         classNames.push('is-bad')
@@ -162,6 +174,15 @@ export default {
 
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
+    },
+    changeMode (mode) {
+      this.mode = mode
+    },
+    setPickupMode () {
+      this.mode = PICKUP_MODE
+    },
+    setLeaveMode () {
+      this.mode = LEAVE_MODE
     },
     init () {
       let options = { 
