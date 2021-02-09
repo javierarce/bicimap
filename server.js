@@ -57,8 +57,16 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/leaflet', express.static(__dirname + '/node_modules/leaflet/dist'))
 app.use('/leaflet.markercluster', express.static(__dirname + '/node_modules/leaflet.markercluster/dist'))
 
+app.get('/api/lanes', (request, response) => { 
+  fs.readFile('lanes.geojson', 'utf8', (error, data) => {
+    if (error) {
+      throw error;
+    }
+    response.json(JSON.parse(data))
+  })
+})
+
 app.get('/api/stations', (request, response) => { 
-  console.log('stations');
   fs.readFile('stations.json', 'utf8', (error, data) => {
     if (error) {
       console.log(error);

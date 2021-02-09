@@ -8,8 +8,8 @@ const TEXTS = {
 }
 
 const ACTIONS = {
-  ADD_LOCATION: 'add-location',
-  ADD_LOCATIONS: 'add-locations',
+  ADD_STATION: 'add-location',
+  ADD_STATIONS: 'add-locations',
   REMOVE_MARKER: 'remove-marker',
   ADD_MARKER: 'add-marker',
   ADD_MARKERS: 'add-markers',
@@ -20,9 +20,9 @@ const ACTIONS = {
   ON_LOAD: 'on-load',
   SELECT_MARKER: 'select-marker',
   SET_VIEW: 'set-view',
-  SHOW_ADDED_LOCATION: 'show-added-location',
+  SHOW_ADDED_STATION: 'show-added-location',
   SHOW_DEFAULT_POINT: 'show-default-point',
-  SHOW_SAVED_LOCATION: 'show-saved-location',
+  SHOW_SAVED_STATION: 'show-saved-location',
   START_LOADING: 'start-loading',
   STOP_LOADING: 'stop-loading',
   TOGGLE_DESTROY: 'toggle-destroy',
@@ -37,7 +37,8 @@ const ACTIONS = {
 /* BE CAREFUL WHEN CHANGING THESE SETTINGS */
 
 const ENDPOINTS = {
-  LOCATIONS: '/api/stations',
+  STATIONS: '/api/stations',
+  LANES: '/api/lanes',
   CONFIG: '/api/config'
 }
 

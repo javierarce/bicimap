@@ -46,7 +46,7 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.bindEvents()
-      this.getLocations()
+      this.getStations()
     })
   },
   methods: {
@@ -86,7 +86,7 @@ export default {
 
         let updatedAt = formatDistance(data.updated_at, new Date(),  { locale: es })
         window.bus.$emit(config.ACTIONS.UPDATED_AT, updatedAt)
-        window.bus.$emit(config.ACTIONS.ADD_LOCATIONS, data.stations)
+        window.bus.$emit(config.ACTIONS.ADD_STATIONS, data.stations)
       })
     },
     onStartLoading () {
@@ -107,8 +107,8 @@ export default {
     onToggleMapSize (value) {
       document.body.classList[value ? 'add' : 'remove']('is-expanded')
     },
-    getLocations () {
-      this.get(config.ENDPOINTS.LOCATIONS)
+    getStations () {
+      this.get(config.ENDPOINTS.STATIONS)
         .then(this.onGetLocations.bind(this))
         .catch((error) => {
           console.error(error)

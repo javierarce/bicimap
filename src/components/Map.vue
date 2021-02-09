@@ -61,14 +61,14 @@ export default {
   methods: {
     bindEvents () {
       this.bindKeys()
-      window.bus.$off(config.ACTIONS.ADD_LOCATIONS)
+      window.bus.$off(config.ACTIONS.ADD_STATIONS)
       window.bus.$off(config.ACTIONS.REMOVE_MARKER)
       window.bus.$off(config.ACTIONS.INVALIDATE_MAP_SIZE)
       window.bus.$off(config.ACTIONS.SHOW_DEFAULT_POINT)
       window.bus.$off(config.ACTIONS.VISIT_MARKER)
       window.bus.$off(config.ACTIONS.CHANGE_MODE)
 
-      window.bus.$on(config.ACTIONS.ADD_LOCATIONS, this.onAddStations)
+      window.bus.$on(config.ACTIONS.ADD_STATIONS, this.onAddStations)
       window.bus.$on(config.ACTIONS.REMOVE_MARKER, this.onRemoveMarker)
       window.bus.$on(config.ACTIONS.INVALIDATE_MAP_SIZE, this.invalidateSize)
       window.bus.$on(config.ACTIONS.SHOW_DEFAULT_POINT, this.showDefaultPoint)
@@ -260,6 +260,31 @@ export default {
         maxZoom: 20,
         minZoom: 0
       }).addTo(this.map)
+
+      this.addLanes()
+    },
+
+    addLanes () {
+      this.get(config.ENDPOINTS.LANES)
+        .then(this.onGetLanes.bind(this))
+        .catch((error) => {
+          console.error(error)
+        })
+    },
+
+    onGetLanes (response) {
+      response.json().then((data) => {
+      console.log(data);
+        L.geoJSON(data, {
+          style: (feature) => {
+            return {
+              "color": "pink",
+              "weight": 8,
+              "opacity": 0.8
+            }
+          }
+        }).addTo(this.map)
+      })
     },
 
     calculateClosestStationsToMarker (marker) {
