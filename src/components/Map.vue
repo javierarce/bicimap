@@ -39,8 +39,18 @@ export default {
   },
   watch: {
     mode (value) {
-      this.cluster.clearLayers()
-      this.stations.forEach(this.addMarker.bind(this)) 
+      window.bus.markers.forEach((marker) => {
+        let element = marker.getElement()
+        let location = marker.options.location
+        if (element) {
+          let what = value? 'free_bases' : 'dock_bikes'
+
+          element.classList.toggle('is-low', location[what] < 3)
+          element.classList.toggle('is-ok', location[what] >= 3 && location[what] < 5)
+          element.classList.toggle('is-good', location[what] >= 5)
+          element.querySelector('.data').innerText = location[what]
+        }
+      })
     }
   },
   computed: {
@@ -80,7 +90,7 @@ export default {
     },
 
     getIcon (location) {
-      let html = `<div class="data ${this.mode ? 'is-leave' : 'is-pickup'}"><div class="dock_bikes"><strong>${location.dock_bikes}</strong></div><div class="free_bases"><strong>${location.free_bases}</strong></div></div>`
+      let html = `<div class="data">${this.mode ? location.free_bases : location.dock_bikes}</div>`
 
       let classNames = [ 'icon' ]
 
@@ -171,6 +181,7 @@ export default {
       })
 
       marker.bindPopup(this.popup, { maxWidth: 'auto' })
+      marker.data = { id: 123 }
 
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
