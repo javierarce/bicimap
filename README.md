@@ -8,7 +8,6 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### TODO
 
-- [ ] Add toggle to switch between modes (picking / leaving a bike)
 - [ ] Show nearby stations to a given station
 - [ ] Improve tooltips (style and content)
 - [ ] Remove "Map with Me" legacy code
@@ -20,3 +19,4 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 - [x] Show spinner while the user position is being fetched
 - [x] Remove clustering
+- [x] Add toggle to switch between modes (picking / leaving a bike)
