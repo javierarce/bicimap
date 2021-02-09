@@ -22,14 +22,11 @@ export default {
       stations: [],
       cluster: {},
       map: {},
-      toggleMapControl: undefined,
-      zoomOutControl: undefined,
+      locateControl: null,
       expanded: false,
-      readonly: undefined,
       coordinates: undefined,
       options: {},
-      marker: undefined,
-      enableSend: false
+      marker: undefined
     }
   },
   mounted () {
@@ -144,7 +141,7 @@ export default {
       let description = `Bicicletas: ${location.dock_bikes} Bases libres: ${location.free_bases}`
       let address = location.address
 
-      this.popup = this.createPopup(latlng, { name, description, address, readonly: true })
+      this.popup = this.createPopup(latlng, { name, description, address })
 
       let icon = this.getIcon(location)
       let marker = L.marker(latlng, { icon, location })
@@ -154,56 +151,15 @@ export default {
       })
 
       marker.on('mouseout', (e) => {
-        console.log('out')
         this.map.closePopup()
       })
 
       marker.on('click', () => {
-        let latlng = marker.getLatLng()
-        let circle = turf.circle([latlng.lng, latlng.lat], 0.5, { steps: 20, units: 'kilometers'})
-
-        L.geoJSON(circle, {
-          style: function(feature) {
-            return {
-              color: "red"
-            }
-          }
-        }).addTo(this.map)
-
-        let points = []
-
-        this.stations.forEach((station) => {
-          if (+station.longitude !== latlng.lng && +station.latitude !== latlng.lat) {
-            points.push([ station.longitude, station.latitude ])
-          }
-        })
-
-        if (points) {
-          let pointsWithin = turf.pointsWithinPolygon(turf.points(points), circle)
-
-          let distances = []
-
-          pointsWithin.features.forEach((feature) => {
-            let from = turf.point([latlng.lng, latlng.lat])
-            let to = turf.point(feature.geometry.coordinates)
-            let options = { units: 'kilometers' }
-
-            let distance = turf.distance(from, to, options)
-            distances.push({ coordinates: feature.geometry.coordinates, distance })
-          })
-
-          if (distances) {
-            let sorted = Object.keys(distances)
-              .sort(function(a,b) {  return distances[a].distance - distances[b].distance })
-              .map(function(k) { return distances[k] })
-            console.log(sorted.slice(0, 3));
-          }
-        }
+        this.calculateClosestStationsToMarker(marker)
       })
 
       marker.bindPopup(this.popup, { maxWidth: 'auto' })
 
-      //marker.addTo(this.map)
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
     },
@@ -274,6 +230,49 @@ export default {
       }).addTo(this.map)
     },
 
+    calculateClosestStationsToMarker (marker) {
+        let latlng = marker.getLatLng()
+        let circle = turf.circle([latlng.lng, latlng.lat], 0.5, { steps: 20, units: 'kilometers'})
+
+        L.geoJSON(circle, {
+          style: function(feature) {
+            return {
+              color: "red"
+            }
+          }
+        }).addTo(this.map)
+
+        let points = []
+
+        this.stations.forEach((station) => {
+          if (+station.longitude !== latlng.lng && +station.latitude !== latlng.lat) {
+            points.push([ station.longitude, station.latitude ])
+          }
+        })
+
+        if (points) {
+          let pointsWithin = turf.pointsWithinPolygon(turf.points(points), circle)
+
+          let distances = []
+
+          pointsWithin.features.forEach((feature) => {
+            let from = turf.point([latlng.lng, latlng.lat])
+            let to = turf.point(feature.geometry.coordinates)
+            let options = { units: 'kilometers' }
+
+            let distance = turf.distance(from, to, options)
+            distances.push({ coordinates: feature.geometry.coordinates, distance })
+          })
+
+          if (distances) {
+            let sorted = Object.keys(distances)
+              .sort(function(a,b) {  return distances[a].distance - distances[b].distance })
+              .map(function(k) { return distances[k] })
+            console.log(sorted.slice(0, 3));
+          }
+        }
+    },
+
     createLocateControl (opts) {
       return new L.Control.LocateControl(opts)
     },
@@ -283,10 +282,6 @@ export default {
 
     createPopup (coordinates, options = {}) {
       let classNames = []
-
-      if (options.readonly) {
-        classNames.push('is-readonly')
-      }
 
       if (options.address || window.bus.isLoggedIn()) {
         classNames.push('has-address')
@@ -302,53 +297,15 @@ export default {
 
       let header = L.DomUtil.create('div', 'Popup__header js-name', content)
 
-      if (!options.readonly) {
-        header.contentEditable='true'
-      }
-
       header.innerHTML = options.name
 
       let body = L.DomUtil.create('div', 'Popup__body', content)
 
-      let comment = L.DomUtil.create('div', 'Popup__comment', body)
-      let controls = L.DomUtil.create('div', 'Popup__controls', body)
-
-      L.DomUtil.create('div', 'Popup__spinner Spinner', body)
-      L.DomUtil.create('div', 'Popup__success', body)
-
-      let description = L.DomUtil.create('div', 'Popup__description js-comment', comment)
+      let description = L.DomUtil.create('div', 'Popup__description js-comment', body)
 
       if (options.description) {
         description.innerText = options.description
       }
-
-      let textarea = L.DomUtil.create('textarea', 'Popup__input js-description', comment)
-      textarea.setAttribute('placeholder', config.TEXTS.PLACEHOLDER)
-
-      textarea.onkeyup = (e) => {
-        let description = this.getDescription()
-
-        if (window.bus.isLoggedIn()) {
-          if (description.length > 0) {
-            this.enableSendButton()
-          } else {
-            this.disableSendButton()
-          }
-        }
-      }
-
-      if (options.description && options.description.length) {
-        textarea.innerText = options.description
-        this.enableSendButton()
-      }
-
-      let btn = L.DomUtil.create('button', 'Button Popup__button', controls)
-      btn.setAttribute('type', 'button')
-
-      let showAddLocation = (window.bus.isLoggedIn() || window.bus.isAnonymous())
-
-      btn.innerHTML = showAddLocation ? 'Add location' : 'Log in with Twitter'
-      btn.onclick =  showAddLocation ? this.addLocation : this.login
 
       let address = L.DomUtil.create('div', 'Popup__address js-address', body)
 
@@ -370,18 +327,6 @@ export default {
     setName (text) {
       this.popup.getContent().querySelector('.js-name').textContent = text
     },
-    enableSendButton () {
-      if (this.popup && this.popup.getContent()) {
-        this.popup.getContent().classList.add('can-send')
-        this.enableSend = true
-      }
-    },
-    disableSendButton () {
-      if (this.popup && this.popup.getContent()) {
-        this.popup.getContent().classList.remove('can-send')
-        this.enableSend = false
-      }
-    },
     getName () {
       return document.body.querySelector('.js-name').textContent
     },
@@ -390,10 +335,6 @@ export default {
     },
     setDescription (text) {
       document.body.querySelector('.js-description').value = text
-
-      if (text && text.length) {
-        this.enableSendButton()
-      }
     },
     removeMarker () {
       this.map.closePopup()

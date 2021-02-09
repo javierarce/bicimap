@@ -1,10 +1,8 @@
 @import 'helpers/transitions';
 
 .Popup__description {
-  display: none;
-  padding: 16px;
-  font-size: 1.1em;
   line-height: 135%;
+  padding: 1em;
 }
 
 .Popup__content .Popup__input {
@@ -22,20 +20,7 @@
   position: relative;
   min-width: 300px;
   word-break: break-word;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
-.Popup__controls {
-  display: flex;
-  padding: 16px;
-  text-align: center;
-  width: 100%;
-  transition: all ease-in-out 250ms;
-}
-
 .Popup__address {
   display: none;
   font-size: .8em;
