@@ -199,8 +199,6 @@ export default {
 
       this.map.zoomControl.setPosition('topright')
 
-      this.map.whenReady(this.onMapReady)
-      
       this.map.on('moveend', this.onMapMoveEnd)
 
       this.map.on('locationfound', (data) => {
@@ -231,6 +229,8 @@ export default {
         minZoom: 0
       }).addTo(this.map)
 
+      this.map.whenReady(this.onMapReady)
+      
       this.addLanes()
     },
     onMapMoveEnd (e) {
@@ -242,9 +242,7 @@ export default {
         if (bounds) {
           let [west, south, east, north] = bounds.split(',').map(parseFloat)
           let newBounds = new L.LatLngBounds(new L.LatLng(south, west), new L.LatLng(north, east))
-          setTimeout(() => {
-            this.map.fitBounds(newBounds)
-          }, 800)
+            this.map.flyToBounds(newBounds)
         }
 
       } catch (error) {
