@@ -5,18 +5,19 @@
 @import 'helpers/transitions';
 @import 'helpers/vars';
 
-@import 'Alert';
 @import 'About';
+@import 'Alert';
 @import 'Button';
 @import 'Config';
-@import 'Input';
 @import 'Header';
+@import 'Input';
 @import 'Locations';
 @import 'Map';
-@import 'Tooltip';
 @import 'Popup';
 @import 'Search';
 @import 'Spinner';
+@import 'Toggle';
+@import 'Tooltip';
 
 * {
   box-sizing: border-box;

@@ -53,11 +53,16 @@ export default {
         let element = marker.getElement()
         let location = marker.options.location
         if (element) {
+
           let what = value? 'free_bases' : 'dock_bikes'
+
+          element.classList.toggle(`is-bikes`, what === 'dock_bikes')
+          element.classList.toggle(`is-docks`, what === 'free_bases')
 
           element.classList.toggle('is-low', location[what] < 3)
           element.classList.toggle('is-ok', location[what] >= 3 && location[what] < 5)
           element.classList.toggle('is-good', location[what] >= 5)
+
           element.querySelector('.data').innerText = location[what]
         }
       })
@@ -96,6 +101,8 @@ export default {
       let classNames = [ 'icon' ]
 
       let what = this.mode ? 'free_bases' : 'dock_bikes'
+
+      classNames.push(what ? 'is-bikes' : 'is-docks')
 
       if (location && location[what] < 3) {
         classNames.push('is-low')
@@ -148,7 +155,12 @@ export default {
       let icon = this.getIcon(location)
       let marker = L.marker(latlng, { icon, location })
 
+      this.bindMarker(marker, description)
 
+      this.cluster.addLayer(marker)
+      window.bus.markers.push(marker)
+    },
+    bindMarker (marker, description) {
       marker.on('click', () => {
         marker.closeTooltip()
         this.calculateClosestStationsToMarker(marker)
@@ -160,9 +172,6 @@ export default {
         offset: [0, -2],
         className: 'Marker__tooltip'
       })
-
-      this.cluster.addLayer(marker)
-      window.bus.markers.push(marker)
     },
     toggleMode (mode) {
       this.mode = mode

@@ -3,9 +3,9 @@
     <div class="Header__info">
       <button class="Button Header__title" @click="onClickTitle" v-html="title"></button>
       <div class="Header__updatedAt" v-html="updatedAt" v-if="updatedAt"></div>
-      <Toggle defaultText="Coger" activeText="Dejar" @state="onClickToggle"/>
     </div>
     <div class="Header__links">
+      <Toggle defaultText="Coger" activeText="Dejar" @state="onClickToggle"/>
       <button class="Button Header__linksItem" @click="onClickAbout">Acerca de</button>
     </div>
   </div>
@@ -26,28 +26,19 @@ export default {
   },
   data() {
     return {
-      canLogin: false,
       title: window.bus.getTitle(),
-      updatedAt: false,
-      loggedIn: false,
-      username: undefined,
-      avatarURL: undefined
+      updatedAt: false
     }
   },
   mounted () {
     this.$nextTick(() => {
       config.MAP = mapConfig.map
-      this.canLogin = !window.bus.isAnonymous()
-
       this.bindEvents()
     })
   },
   methods: {
     bindEvents () {
-      window.bus.$off(config.ACTIONS.LOGGED_IN)
       window.bus.$off(config.ACTIONS.UPDATED_AT)
-
-      window.bus.$on(config.ACTIONS.LOGGED_IN, this.onLoggedIn, this)
       window.bus.$on(config.ACTIONS.UPDATED_AT, this.onUpdatedAt, this)
     },
     onClickTitle () {

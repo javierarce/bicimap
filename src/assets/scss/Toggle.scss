@@ -1,0 +1,40 @@
+.Toggle {
+  display: flex;
+  align-items: center;
+}
+
+.Toggle:hover .Toggle__input {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.Toggle__input {
+  margin: 0 .4em;
+  width: 50px;
+  height: 20px;
+  border-radius: 20px;
+  border: 2px solid #fff;
+  position: relative;
+  transition: all 350ms ease-in-out;
+}
+
+.Toggle__label {
+  position: relative;
+  user-select: none;
+  font-weight: bold;
+}
+
+.Toggle__button {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 100%;
+  transition: all 350ms ease-in-out;
+}
+
+.Toggle.is-active .Toggle__button {
+  left: calc(100% - 15px);
+}
+
