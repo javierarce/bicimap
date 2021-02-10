@@ -72,13 +72,11 @@ export default {
     bindEvents () {
       this.bindKeys()
       window.bus.$off(config.ACTIONS.ADD_STATIONS)
-      window.bus.$off(config.ACTIONS.REMOVE_MARKER)
       window.bus.$off(config.ACTIONS.INVALIDATE_MAP_SIZE)
       window.bus.$off(config.ACTIONS.SHOW_DEFAULT_POINT)
       window.bus.$off(config.ACTIONS.TOGGLE_MODE)
 
       window.bus.$on(config.ACTIONS.ADD_STATIONS, this.onAddStations)
-      window.bus.$on(config.ACTIONS.REMOVE_MARKER, this.onRemoveMarker)
       window.bus.$on(config.ACTIONS.INVALIDATE_MAP_SIZE, this.invalidateSize)
       window.bus.$on(config.ACTIONS.SHOW_DEFAULT_POINT, this.showDefaultPoint)
       window.bus.$on(config.ACTIONS.TOGGLE_MODE, this.toggleMode)
@@ -127,18 +125,6 @@ export default {
         animate: true,
         duration: 1
       })
-    },
-    onRemoveMarker (id) {
-      let index = window.bus.markers.findIndex((item) => { 
-        return item.options.location.id === id
-      })
-
-      if (index !== -1) {
-        this.map.removeLayer(window.bus.markers[index])
-        this.$delete(window.bus.markers, index)
-      } else {
-        console.error('Marker not found', window.bus.markers)
-      }
     },
     onAddStations (stations) {
       this.stations = stations
@@ -362,19 +348,19 @@ export default {
 
       let content = L.DomUtil.create('div', `Popup__content ${classNames.join(' ')}`)
 
-      let header = L.DomUtil.create('div', 'Popup__header js-name', content)
+      let header = L.DomUtil.create('div', 'Popup__header', content)
 
       header.innerHTML = options.name
 
       let body = L.DomUtil.create('div', 'Popup__body', content)
 
-      let description = L.DomUtil.create('div', 'Popup__description js-comment', body)
+      let description = L.DomUtil.create('div', 'Popup__description', body)
 
       if (options.description) {
         description.innerHTML = options.description
       }
 
-      let address = L.DomUtil.create('div', 'Popup__address js-address', body)
+      let address = L.DomUtil.create('div', 'Popup__address', body)
 
       if (options.address) {
         address.innerText = options.address
@@ -391,18 +377,6 @@ export default {
     stopLoading () {
       window.bus.$emit(config.ACTIONS.STOP_LOADING)
     },
-    setName (text) {
-      this.popup.getContent().querySelector('.js-name').textContent = text
-    },
-    getName () {
-      return document.body.querySelector('.js-name').textContent
-    },
-    getDescription () {
-      return document.body.querySelector('.js-description').value
-    },
-    setDescription (text) {
-      document.body.querySelector('.js-description').value = text
-    },
     removeMarker () {
       this.map.closePopup()
 
@@ -412,17 +386,8 @@ export default {
         return true
       }
     },
-    focusOnPopup () {
-      this.popup.getContent().querySelector('.js-description').focus()
-    },
     invalidateSize () {
       this.map.invalidateSize(true)
-    },
-    truncate (text, length = 100) {
-      if (!text) {
-        return
-      }
-      return text.length > length ? `${text.substring(0, length)}...` : text
     }
   }
 }

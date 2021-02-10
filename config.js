@@ -10,7 +10,6 @@ const TEXTS = {
 const ACTIONS = {
   ADD_STATION: 'add-location',
   ADD_STATIONS: 'add-locations',
-  REMOVE_MARKER: 'remove-marker',
   ADD_MARKER: 'add-marker',
   ADD_MARKERS: 'add-markers',
   TOGGLE_MODE: 'toggle-mode',
