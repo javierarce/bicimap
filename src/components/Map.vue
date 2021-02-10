@@ -364,14 +364,8 @@ export default {
     createPopup (coordinates, options = {}) {
       let classNames = []
 
-      if (options.address) {
-        classNames.push('has-address')
-      }
-
-      let className = 'Popup'
-
       this.popup = L.popup({
-        className
+        className: 'Popup'
       })
 
       let content = L.DomUtil.create('div', `Popup__content ${classNames.join(' ')}`)

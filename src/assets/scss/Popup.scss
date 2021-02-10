@@ -26,8 +26,7 @@
   word-break: break-word;
 }
 .Popup__address {
-  display: none;
-  font-size: .8em;
+  font-size: 0.8em;
   width: 100%;
   opacity: 0.5;
   line-height: 135%;
@@ -80,9 +79,6 @@
   opacity: 0;
 }
 
-.Popup__content.has-address .Popup__address {
-  display: block;
-}
 .Popup__content.is-loading .Popup__spinner {
   opacity: 1;
   visibility: visible;
