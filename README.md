@@ -14,6 +14,7 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 - [ ] Fix header for small screens
 - [ ] Show nearby stations to a given station
 - [ ] Improve tooltips (style and content)
+- [ ] Add tooltips for the map controllers
 - [ ] Remove "Map with Me" legacy code
 - [ ] Save last position in the map
 - [ ] Launch project

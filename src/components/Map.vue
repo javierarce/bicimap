@@ -26,8 +26,9 @@ export default {
       cluster: {},
       map: {},
       showLanes: false,
-      locateControl: null,
       lanesControl: null,
+      locateControl: null,
+      modeControl: null,
       expanded: false,
       coordinates: undefined,
       options: {},
@@ -63,8 +64,6 @@ export default {
           element.classList.toggle('is-low', location[what] > 0 && location[what] < 3)
           element.classList.toggle('is-ok', location[what] >= 3 && location[what] < 5)
           element.classList.toggle('is-good', location[what] >= 5)
-
-          element.querySelector('.data').innerText = location[what]
         }
       })
     }
@@ -80,12 +79,10 @@ export default {
       window.bus.$off(config.ACTIONS.ADD_STATIONS)
       window.bus.$off(config.ACTIONS.INVALIDATE_MAP_SIZE)
       window.bus.$off(config.ACTIONS.SHOW_DEFAULT_POINT)
-      window.bus.$off(config.ACTIONS.TOGGLE_MODE)
 
       window.bus.$on(config.ACTIONS.ADD_STATIONS, this.onAddStations)
       window.bus.$on(config.ACTIONS.INVALIDATE_MAP_SIZE, this.invalidateSize)
       window.bus.$on(config.ACTIONS.SHOW_DEFAULT_POINT, this.showDefaultPoint)
-      window.bus.$on(config.ACTIONS.TOGGLE_MODE, this.toggleMode)
     },
     bindKeys () {
       document.onkeydown = (e) => {
@@ -97,7 +94,7 @@ export default {
       }
     },
     getIcon (location) {
-      let html = `<div class="data">${this.mode ? location.free_bases : location.dock_bikes}</div>`
+      let html = `<div class="data"></div>`
 
       let classNames = [ 'icon' ]
 
@@ -126,8 +123,8 @@ export default {
       return new L.divIcon({
         className,
         html,
-        iconSize: [32, 32],
-        iconAnchor: new L.Point(16, 0)
+        iconSize: [30, 30],
+        iconAnchor: new L.Point(15, 0)
       })
     },
     showDefaultPoint () {
@@ -182,9 +179,6 @@ export default {
         className: 'Marker__tooltip'
       })
     },
-    toggleMode (mode) {
-      this.mode = mode
-    },
     init () {
       let options = { 
         scrollWheelZoom: true,
@@ -208,6 +202,7 @@ export default {
         console.log('location error', e)
       })
 
+      this.addModeControl()
       this.addLocateControl()
 
       this.cluster = L.markerClusterGroup({
@@ -224,6 +219,33 @@ export default {
       }).addTo(this.map)
 
       this.addLanes()
+    },
+
+    addModeControl () {
+      L.Control.ModeControl = L.Control.extend({
+        onRemove: () => {
+        },
+        onAdd: (map)  => {
+          let div = L.DomUtil.create('div', 'Control Control__mode')
+          let bikes = L.DomUtil.create('div', 'Control__modeBikes')
+          let docks = L.DomUtil.create('div', 'Control__modeDocks')
+
+          L.DomEvent.on(div, 'click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+
+            this.mode = !this.mode
+            div.classList.toggle('is-docks', this.mode)
+          })
+
+          div.appendChild(bikes)
+          div.appendChild(docks)
+
+          return div
+        }
+      })
+
+      this.modeControl = new L.Control.ModeControl({ position: 'topright' }).addTo(this.map)
     },
 
     addLanesControl () {
@@ -245,7 +267,6 @@ export default {
       })
 
       this.lanesControl = new L.Control.LanesControl({ position: 'topright' }).addTo(this.map)
-
     },
 
     addLocateControl () {
@@ -308,14 +329,6 @@ export default {
         let latlng = marker.getLatLng()
         let circle = turf.circle([latlng.lng, latlng.lat], 0.5, { steps: 20, units: 'kilometers'})
 
-//        L.geoJSON(circle, {
-//          style: function(feature) {
-//            return {
-//              color: "red"
-//            }
-//          }
-//        }).addTo(this.map)
-
         let points = []
 
         this.stations.forEach((station) => {
@@ -345,10 +358,6 @@ export default {
             console.log(sorted.slice(0, 3));
           }
         }
-    },
-
-    createZoomOut (opts) {
-      return new L.Control.ZoomOut(opts)
     },
 
     createPopup (coordinates, options = {}) {

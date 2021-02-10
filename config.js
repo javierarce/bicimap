@@ -12,7 +12,6 @@ const ACTIONS = {
   ADD_STATIONS: 'add-locations',
   ADD_MARKER: 'add-marker',
   ADD_MARKERS: 'add-markers',
-  TOGGLE_MODE: 'toggle-mode',
   TOGGLE_LANES: 'toggle-lanes',
   INVALIDATE_MAP_SIZE: 'invalidate-size',
   LOGGED_IN: 'logged-in',

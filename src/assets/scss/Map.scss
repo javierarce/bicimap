@@ -90,6 +90,39 @@
   border-left: 2px solid #2477BE;
 }
 
+.Control__mode {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 52px;
+}
+
+.Control__mode .Control__modeBikes {
+  background: #2477BE;
+  border-radius: 2px 0 0 2px;
+}
+
+.Control__mode .Control__modeDocks {
+  border-radius: 0 2px 2px 0;
+}
+.Control__mode.is-docks .Control__modeBikes {
+  background: #fff;
+}
+.Control__mode.is-docks .Control__modeDocks {
+  background: #2477BE;
+}
+
+.Control__modeBikes,
+.Control__modeDocks {
+  width: 26px;
+  height: 26px;
+}
+
+.Control__divider {
+  border: 1px solid #ddd;
+  width: 1px;
+  height: 100%;
+}
 
 .Map .leaflet-top .leaflet-control {
   margin-top: 8px;
@@ -133,17 +166,37 @@
   color: #fff;
 }
 
+.leaflet-marker-icon.icon .data:before {
+  content: '';
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.leaflet-marker-icon.icon.is-low .data:before {
+  height: 30%;
+  background: rgba(0,0,0, 0.2);
+}
+
+.leaflet-marker-icon.icon.is-ok .data:before {
+  height: 50%;
+  background: rgba(0,0,0, 0.1);
+}
+
 .leaflet-marker-icon.icon.is-docks .data {
   border-radius: 4px;
 }
 
 .leaflet-marker-icon.icon .data {
-  width: 36px;
-  height: 36px;
+  transform: scale(1);
+  width: 30px;
+	border: 4px solid #fff;
+  overflow: hidden;
+  height: 30px;
   font-weight: bold;
   box-shadow: 0 2px 4px rgba(#000, 0.2);
   padding: 0.4em;
-	border: 4px solid #fff;
 	background: #fafafa;
   border-radius: 100%;
   line-height: auto;

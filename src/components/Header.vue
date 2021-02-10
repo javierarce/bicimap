@@ -5,7 +5,6 @@
       <div class="Header__updatedAt" v-html="updatedAt" v-if="updatedAt"></div>
     </div>
     <div class="Header__links">
-      <Toggle defaultText="Coger" activeText="Dejar" @state="onClickToggle"/>
       <button class="Button Header__linksItem" @click="onClickAbout">Acerca de</button>
     </div>
   </div>
@@ -17,13 +16,8 @@ import mixins from '../mixins'
 import config from '../../config'
 import mapConfig from '../../map.yaml'
 
-import Toggle from './Toggle.vue'
-
 export default {
   mixins: [mixins],
-  components: {
-    Toggle
-  },
   data() {
     return {
       title: window.bus.getTitle(),
@@ -49,10 +43,7 @@ export default {
     },
     onUpdatedAt (text) {
       this.updatedAt = `actualizado hace ${text}`
-    },
-    onClickToggle (state) {
-      window.bus.$emit(config.ACTIONS.TOGGLE_MODE, state)
-    },
+    }
   }
 }
 </script>
