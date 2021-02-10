@@ -8,11 +8,10 @@ const TEXTS = {
 }
 
 const ACTIONS = {
-  ADD_STATION: 'add-location',
-  ADD_STATIONS: 'add-locations',
   ADD_MARKER: 'add-marker',
   ADD_MARKERS: 'add-markers',
-  TOGGLE_LANES: 'toggle-lanes',
+  ADD_STATION: 'add-location',
+  ADD_STATIONS: 'add-locations',
   INVALIDATE_MAP_SIZE: 'invalidate-size',
   LOGGED_IN: 'logged-in',
   LOGIN: 'login',
@@ -20,14 +19,16 @@ const ACTIONS = {
   SELECT_MARKER: 'select-marker',
   SET_VIEW: 'set-view',
   SHOW_ADDED_STATION: 'show-added-location',
+  SHOW_ALERT: 'show-alert',
   SHOW_DEFAULT_POINT: 'show-default-point',
   SHOW_SAVED_STATION: 'show-saved-location',
   START_LOADING: 'start-loading',
   STOP_LOADING: 'stop-loading',
-  TOGGLE_DESTROY: 'toggle-destroy',
   TOGGLE_ABOUT: 'toggle-about',
-  TOGGLE_CONFIG: 'toggle-config',
   TOGGLE_ALERT: 'toggle-alert',
+  TOGGLE_CONFIG: 'toggle-config',
+  TOGGLE_DESTROY: 'toggle-destroy',
+  TOGGLE_LANES: 'toggle-lanes',
   UPDATED_AT: 'updated-at'
 }
 

@@ -209,12 +209,13 @@
 }
 .Item {
   display: flex;
-  flex-direction: column;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-  padding: 0.8em;
   width: 100px;
+  height: 90px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
 }
 
 .Item__amount {

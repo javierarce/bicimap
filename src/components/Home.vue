@@ -57,6 +57,7 @@ export default {
       window.bus.$off(config.ACTIONS.STOP_LOADING)
       window.bus.$off(config.ACTIONS.TOGGLE_ABOUT)
       window.bus.$off(config.ACTIONS.TOGGLE_ALERT)
+      window.bus.$off(config.ACTIONS.SHOW_ALERT)
 
       window.bus.$on(config.ACTIONS.LOGIN, this.onLogin)
       window.bus.$on(config.ACTIONS.ON_LOAD, this.onLoad)
@@ -64,6 +65,7 @@ export default {
       window.bus.$on(config.ACTIONS.STOP_LOADING, this.onStopLoading)
       window.bus.$on(config.ACTIONS.TOGGLE_ABOUT, this.onToggleAbout)
       window.bus.$on(config.ACTIONS.TOGGLE_ALERT, this.onToggleAlert)
+      window.bus.$on(config.ACTIONS.SHOW_ALERT, this.onShowAlert)
 
       document.onkeyup = this.onKeyUp
     },
@@ -95,6 +97,12 @@ export default {
     },
     onToggleAbout () {
       this.showAbout = !this.showAbout
+    },
+    onShowAlert (title, description, footer) {
+      this.showAlert = true
+      this.alertTitle = title
+      this.alertDescription = description
+      this.alertFooter = footer
     },
     onToggleAlert (title, description, footer) {
       this.showAlert = !this.showAlert

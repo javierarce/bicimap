@@ -199,6 +199,10 @@ export default {
 
       this.map.zoomControl.setPosition('topright')
 
+      this.map.whenReady(this.onMapReady)
+      
+      this.map.on('moveend', this.onMapMoveEnd)
+
       this.map.on('locationfound', (data) => {
         window.bus.$emit(config.ACTIONS.STOP_LOADING)
         this.locateControl.stopLoading()
@@ -228,6 +232,24 @@ export default {
       }).addTo(this.map)
 
       this.addLanes()
+    },
+    onMapMoveEnd (e) {
+      this.saveToLocalStorage('bounds',this.map.getBounds().toBBoxString())
+    },
+    onMapReady () {
+      let bounds = this.retrieveFromLocalStorage('bounds')
+      try {
+        if (bounds) {
+          let [west, south, east, north] = bounds.split(',').map(parseFloat)
+          let newBounds = new L.LatLngBounds(new L.LatLng(south, west), new L.LatLng(north, east))
+          setTimeout(() => {
+            this.map.fitBounds(newBounds)
+          }, 800)
+        }
+
+      } catch (error) {
+        console.log(error)
+      }
     },
 
     addModeControl () {
@@ -335,38 +357,38 @@ export default {
     },
 
     calculateClosestStationsToMarker (marker) {
-        let latlng = marker.getLatLng()
-        let circle = turf.circle([latlng.lng, latlng.lat], 0.5, { steps: 20, units: 'kilometers'})
+      let latlng = marker.getLatLng()
+      let circle = turf.circle([latlng.lng, latlng.lat], 0.5, { steps: 20, units: 'kilometers'})
 
-        let points = []
+      let points = []
 
-        this.stations.forEach((station) => {
-          if (+station.longitude !== latlng.lng && +station.latitude !== latlng.lat) {
-            points.push([ station.longitude, station.latitude ])
-          }
+      this.stations.forEach((station) => {
+        if (+station.longitude !== latlng.lng && +station.latitude !== latlng.lat) {
+          points.push([ station.longitude, station.latitude ])
+        }
+      })
+
+      if (points) {
+        let pointsWithin = turf.pointsWithinPolygon(turf.points(points), circle)
+
+        let distances = []
+
+        pointsWithin.features.forEach((feature) => {
+          let from = turf.point([latlng.lng, latlng.lat])
+          let to = turf.point(feature.geometry.coordinates)
+          let options = { units: 'kilometers' }
+
+          let distance = turf.distance(from, to, options)
+          distances.push({ coordinates: feature.geometry.coordinates, distance })
         })
 
-        if (points) {
-          let pointsWithin = turf.pointsWithinPolygon(turf.points(points), circle)
-
-          let distances = []
-
-          pointsWithin.features.forEach((feature) => {
-            let from = turf.point([latlng.lng, latlng.lat])
-            let to = turf.point(feature.geometry.coordinates)
-            let options = { units: 'kilometers' }
-
-            let distance = turf.distance(from, to, options)
-            distances.push({ coordinates: feature.geometry.coordinates, distance })
-          })
-
-          if (distances) {
-            let sorted = Object.keys(distances)
-              .sort(function(a,b) {  return distances[a].distance - distances[b].distance })
-              .map(function(k) { return distances[k] })
-            console.log(sorted.slice(0, 3));
-          }
+        if (distances) {
+          let sorted = Object.keys(distances)
+            .sort(function(a,b) {  return distances[a].distance - distances[b].distance })
+            .map(function(k) { return distances[k] })
+          console.log(sorted.slice(0, 3));
         }
+      }
     },
 
     createPopup (coordinates, options = {}) {

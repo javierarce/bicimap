@@ -13,6 +13,11 @@ const HEADERS = {
 }
 
 export default {
+  data () {
+    return {
+      localStorage: window.localStorage
+    }
+  },
   methods: {
     onError (e) {
       console.log('Error: ', e)
@@ -63,17 +68,30 @@ export default {
           console.log(error)
         })
     },
-    geocode (lat, lng, data) {
-      let url = `${config.GEOCODE_URL}?lat=${lat}&lon=${lng}&zoom=18&format=json`
-
-      let onGetGeocoding = (response) => {
-        this.onGetGeocoding(response, data)
+    saveToLocalStorage (id, what) {
+      if (this.localStorage) {
+        console.log('saving', id, what);
+        this.localStorage.setItem(id, JSON.stringify(what))
       }
-      this.get(url)
-        .then(onGetGeocoding.bind(this))
-        .catch((error) => {
-          console.log(error)
-        })
+    },
+    retrieveFromLocalStorage (id) {
+      if (this.localStorage) {
+        let what = this.localStorage.getItem(id)
+        if (what) {
+          return JSON.parse(what)
+        }
+      }
+      return undefined
+    },
+    removeFromLocalStorage (id) {
+      if (this.localStorage) {
+        this.localStorage.removeItem(id)
+      }
+    },
+    emptyLocalStorage (id) {
+      if (this.localStorage) {
+        this.localStorage.clear()
+      }
     },
     pluralize (amount, singular, plural, options = {}) {
       let word = singular
