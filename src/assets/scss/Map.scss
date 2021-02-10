@@ -99,11 +99,11 @@
 
 .Control__mode .Control__modeBikes {
   background: #2477BE;
-  border-radius: 2px 0 0 2px;
+  border-radius: 2px 2px 0 0;
 }
 
 .Control__mode .Control__modeDocks {
-  border-radius: 0 2px 2px 0;
+  border-radius: 0 0 2px 2px;
 }
 .Control__mode.is-docks .Control__modeBikes {
   background: #fff;
