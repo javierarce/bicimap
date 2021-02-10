@@ -37,11 +37,11 @@
 
 /* Map controls */
 
-.LocateControl:hover {
+.Control:hover {
   background-color: #f4f4f4;
 }
 
-.LocateControl {
+.Control {
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
   background: #fff;
   width: 26px;
@@ -50,7 +50,7 @@
   cursor: pointer;
 }
 
-.LocateControl:before {
+.Control__locate:before {
   content: '';
   position: absolute;
   top: 6px;
@@ -61,15 +61,33 @@
   border-radius: 100%;
 }
 
-.LocateControl .Spinner {
+.Control .Spinner {
   display: none;
 }
 
-.LocateControl.is-loading:before {
+.Control.is-loading:before {
   display: none;
 }
-.LocateControl.is-loading .Spinner {
+.Control.is-loading .Spinner {
   display: block;
+}
+
+.Control__lanes.is-selected {
+  background: #2477BE;
+}
+
+.Control__lanes.is-selected:before {
+  border-color: #fff;
+}
+
+.Control__lanes:before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 12px;
+  width: 2px;
+  height: 14px;
+  border-left: 2px solid #2477BE;
 }
 
 
@@ -204,22 +222,6 @@
   border: none;
 }
 
-.leaflet-touch .LocateControl,
-.leaflet-touch .LocateControl {
-  width: 30px;
-  height: 30px;
-}
-
-.leaflet-touch .LocateControl:before {
-  top: 8px;
-  left: 8px;
-}
-
-.leaflet-touch .LocateControl:before {
-  top: 3px;
-  left: 3px;
-}
-
 @media only screen and (max-width: 800px) {
   .Map__container {
     width: 100%;
@@ -234,7 +236,6 @@
 
 
 .Toggle {
-  margin: 0 0 0 1em;
   display: flex;
   align-items: center;
 }

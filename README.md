@@ -9,7 +9,9 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 ### TODO
 
 - [ ] Improve bike lane style
-- [ ] Add toggle to show/hide bike lanes
+- [ ] Open the infowindows on click
+- [ ] Add mobile view
+- [ ] Fix header for small screens
 - [ ] Show nearby stations to a given station
 - [ ] Improve tooltips (style and content)
 - [ ] Remove "Map with Me" legacy code
@@ -19,6 +21,7 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### Done
 
+- [x] Add toggle to show/hide bike lanes
 - [x] Show spinner while the user position is being fetched
 - [x] Remove clustering
 - [x] Add toggle to switch between modes (picking / leaving a bike)

@@ -1,8 +1,8 @@
 <template>
   <button class="Toggle" :class="toggleClass" @click="toggle">
-    <div class="Toggle__label" v-html="defaultStateText"></div>
+    <div class="Toggle__label" v-html="defaultStateText" v-if="defaultStateText"></div>
     <div class="Toggle__input"><div class="Toggle__button"></div></div>
-    <div class="Toggle__label" v-html="activeStateText"></div>
+    <div class="Toggle__label" v-html="activeStateText" v-if="activeStateText"></div>
   </button>
 </template>
 

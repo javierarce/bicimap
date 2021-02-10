@@ -21,10 +21,13 @@ export default {
   data() {
     return {
       mode: PICKUP_MODE,
+      lanes: {},
       stations: [],
       cluster: {},
       map: {},
+      showLanes: false,
       locateControl: null,
+      lanesControl: null,
       expanded: false,
       coordinates: undefined,
       options: {},
@@ -38,6 +41,13 @@ export default {
     })
   },
   watch: {
+    showLanes (state) {
+      if (state) {
+        this.map.addLayer(this.lanes)
+      } else {
+        this.map.removeLayer(this.lanes)
+      }
+    },
     mode (value) {
       window.bus.markers.forEach((marker) => {
         let element = marker.getElement()
@@ -66,14 +76,14 @@ export default {
       window.bus.$off(config.ACTIONS.INVALIDATE_MAP_SIZE)
       window.bus.$off(config.ACTIONS.SHOW_DEFAULT_POINT)
       window.bus.$off(config.ACTIONS.VISIT_MARKER)
-      window.bus.$off(config.ACTIONS.CHANGE_MODE)
+      window.bus.$off(config.ACTIONS.TOGGLE_MODE)
 
       window.bus.$on(config.ACTIONS.ADD_STATIONS, this.onAddStations)
       window.bus.$on(config.ACTIONS.REMOVE_MARKER, this.onRemoveMarker)
       window.bus.$on(config.ACTIONS.INVALIDATE_MAP_SIZE, this.invalidateSize)
       window.bus.$on(config.ACTIONS.SHOW_DEFAULT_POINT, this.showDefaultPoint)
       window.bus.$on(config.ACTIONS.VISIT_MARKER, this.onVisitMarker)
-      window.bus.$on(config.ACTIONS.CHANGE_MODE, this.changeMode)
+      window.bus.$on(config.ACTIONS.TOGGLE_MODE, this.toggleMode)
     },
     bindKeys () {
       document.onkeydown = (e) => {
@@ -118,15 +128,6 @@ export default {
         iconSize: [32, 32],
         iconAnchor: new L.Point(16, 0)
       })
-    },
-    toggle () {
-      this.expanded = !this.expanded
-      window.bus.$emit(config.ACTIONS.TOGGLE_MAP_SIZE, this.expanded)
-      this.locateControl.getContainer().classList.toggle('is-expanded')
-
-      setTimeout(() => {
-        window.bus.$emit(config.ACTIONS.INVALIDATE_MAP_SIZE)
-      }, 200)
     },
     showDefaultPoint () {
       this.map.flyTo([config.MAP.LAT, config.MAP.LON], config.MAP.ZOOM, {
@@ -186,14 +187,8 @@ export default {
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
     },
-    changeMode (mode) {
+    toggleMode (mode) {
       this.mode = mode
-    },
-    setPickupMode () {
-      this.mode = PICKUP_MODE
-    },
-    setLeaveMode () {
-      this.mode = LEAVE_MODE
     },
     init () {
       let options = { 
@@ -218,35 +213,7 @@ export default {
         console.log('location error', e)
       })
 
-      L.Control.LocateControl = L.Control.extend({
-        startLoading: () => {
-          this.locateControl._container.classList.add('is-loading')
-        },
-        stopLoading: () => {
-          this.locateControl._container.classList.remove('is-loading')
-        },
-        onRemove: () => {
-        },
-        onAdd: (map)  => {
-          let div = L.DomUtil.create('div', 'LocateControl')
-          let spinner = L.DomUtil.create('div', 'Spinner is-mini')
-
-          div.appendChild(spinner)
-
-          L.DomEvent.on(div, 'click', (e) => {
-            e.stopPropagation()
-            e.preventDefault()
-
-            L.DomEvent.disableClickPropagation(div)
-            this.map.locate({setView: false })
-            window.bus.$emit(config.ACTIONS.START_LOADING)
-            this.locateControl.startLoading()
-          })
-          return div
-        }
-      })
-
-      this.locateControl = this.createLocateControl({ position: 'topright' }).addTo(this.map)
+      this.addLocateControl()
 
       this.cluster = L.markerClusterGroup({
         disableClusteringAtZoom: 14,
@@ -264,6 +231,60 @@ export default {
       this.addLanes()
     },
 
+    addLanesControl () {
+      L.Control.LanesControl = L.Control.extend({
+        onRemove: () => {
+        },
+        onAdd: (map)  => {
+          let div = L.DomUtil.create('div', 'Control Control__lanes')
+
+          L.DomEvent.on(div, 'click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+
+            this.showLanes = !this.showLanes
+            div.classList.toggle('is-selected', this.showLanes)
+          })
+          return div
+        }
+      })
+
+      this.lanesControl = new L.Control.LanesControl({ position: 'topright' }).addTo(this.map)
+
+    },
+
+    addLocateControl () {
+      L.Control.LocateControl = L.Control.extend({
+        startLoading: () => {
+          this.locateControl._container.classList.add('is-loading')
+        },
+        stopLoading: () => {
+          this.locateControl._container.classList.remove('is-loading')
+        },
+        onRemove: () => {
+        },
+        onAdd: (map)  => {
+          let div = L.DomUtil.create('div', 'Control Control__locate')
+          let spinner = L.DomUtil.create('div', 'Spinner is-mini')
+
+          div.appendChild(spinner)
+
+          L.DomEvent.on(div, 'click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+
+            L.DomEvent.disableClickPropagation(div)
+            this.map.locate({setView: false })
+            window.bus.$emit(config.ACTIONS.START_LOADING)
+            this.locateControl.startLoading()
+          })
+          return div
+        }
+      })
+
+      this.locateControl = new L.Control.LocateControl({ position: 'topright' }).addTo(this.map)
+    },
+
     addLanes () {
       this.get(config.ENDPOINTS.LANES)
         .then(this.onGetLanes.bind(this))
@@ -274,16 +295,17 @@ export default {
 
     onGetLanes (response) {
       response.json().then((data) => {
-      console.log(data);
-        L.geoJSON(data, {
+        this.lanes = L.geoJSON(data, {
           style: (feature) => {
             return {
-              "color": "pink",
+              "color": "#23D5AB",
               "weight": 8,
-              "opacity": 0.8
+              "opacity": 0.5,
             }
           }
-        }).addTo(this.map)
+        })
+
+        this.addLanesControl()
       })
     },
 
@@ -330,9 +352,6 @@ export default {
         }
     },
 
-    createLocateControl (opts) {
-      return new L.Control.LocateControl(opts)
-    },
     createZoomOut (opts) {
       return new L.Control.ZoomOut(opts)
     },
