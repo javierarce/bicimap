@@ -70,7 +70,6 @@ export default {
     },
     saveToLocalStorage (id, what) {
       if (this.localStorage) {
-        console.log('saving', id, what);
         this.localStorage.setItem(id, JSON.stringify(what))
       }
     },
