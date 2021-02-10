@@ -147,8 +147,12 @@ export default {
       let latlng = [location.latitude, location.longitude]
 
       let name = `${location.number} | ${location.name}`
-      let description = `<div class="Items"><div class="Item"><div class="Item__amount">${location.dock_bikes}</div><div class="Item__title">bicicletas</div></div><div class="Item"><div class="Item__amount">${location.free_bases}</div><div class="Item__title">bases libres</div> </div></div>`
-      let tooltipDescription = `<strong>Bicicletas</strong>: ${location.dock_bikes}. <strong>Bases libres</strong>: ${location.free_bases}`
+
+      let descriptionBikes = `<div class="Item"><div class="Item__amount">${location.dock_bikes}</div><div class="Item__title">${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas', { showAmount: false })}</div></div>`
+      let descriptionDocks = `<div class="Item"><div class="Item__amount">${location.free_bases}</div><div class="Item__title">${this.pluralize(location.free_bases, 'base libre', 'bases libres', { showAmount: false })}</div></div>`
+      let description = `<div class="Items">${descriptionBikes} ${descriptionDocks}</div>`
+
+      let tooltipDescription = `${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. ${this.pluralize(location.free_bases, 'base libre', 'bases libres')}.`
       let address = location.address
 
       this.popup = this.createPopup(latlng, { name, description, address })

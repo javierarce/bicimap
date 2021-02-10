@@ -75,5 +75,18 @@ export default {
           console.log(error)
         })
     },
+    pluralize (amount, singular, plural, options = {}) {
+      let word = singular
+
+      if (!amount || amount > 1)  {
+        word = plural
+      }
+
+      if (options && options.showAmount === false) {
+        return word
+      } else {
+        return `${amount} ${word}`
+      }
+    }
   }
 }
