@@ -57,7 +57,6 @@ export default {
       window.bus.$off(config.ACTIONS.STOP_LOADING)
       window.bus.$off(config.ACTIONS.TOGGLE_ABOUT)
       window.bus.$off(config.ACTIONS.TOGGLE_ALERT)
-      window.bus.$off(config.ACTIONS.TOGGLE_MAP_SIZE)
 
       window.bus.$on(config.ACTIONS.LOGIN, this.onLogin)
       window.bus.$on(config.ACTIONS.ON_LOAD, this.onLoad)
@@ -65,7 +64,6 @@ export default {
       window.bus.$on(config.ACTIONS.STOP_LOADING, this.onStopLoading)
       window.bus.$on(config.ACTIONS.TOGGLE_ABOUT, this.onToggleAbout)
       window.bus.$on(config.ACTIONS.TOGGLE_ALERT, this.onToggleAlert)
-      window.bus.$on(config.ACTIONS.TOGGLE_MAP_SIZE, this.onToggleMapSize)
 
       document.onkeyup = this.onKeyUp
     },
@@ -103,9 +101,6 @@ export default {
       this.alertTitle = title
       this.alertDescription = description
       this.alertFooter = footer
-    },
-    onToggleMapSize (value) {
-      document.body.classList[value ? 'add' : 'remove']('is-expanded')
     },
     getStations () {
       this.get(config.ENDPOINTS.STATIONS)

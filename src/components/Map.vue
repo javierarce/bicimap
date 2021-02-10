@@ -75,14 +75,12 @@ export default {
       window.bus.$off(config.ACTIONS.REMOVE_MARKER)
       window.bus.$off(config.ACTIONS.INVALIDATE_MAP_SIZE)
       window.bus.$off(config.ACTIONS.SHOW_DEFAULT_POINT)
-      window.bus.$off(config.ACTIONS.VISIT_MARKER)
       window.bus.$off(config.ACTIONS.TOGGLE_MODE)
 
       window.bus.$on(config.ACTIONS.ADD_STATIONS, this.onAddStations)
       window.bus.$on(config.ACTIONS.REMOVE_MARKER, this.onRemoveMarker)
       window.bus.$on(config.ACTIONS.INVALIDATE_MAP_SIZE, this.invalidateSize)
       window.bus.$on(config.ACTIONS.SHOW_DEFAULT_POINT, this.showDefaultPoint)
-      window.bus.$on(config.ACTIONS.VISIT_MARKER, this.onVisitMarker)
       window.bus.$on(config.ACTIONS.TOGGLE_MODE, this.toggleMode)
     },
     bindKeys () {
@@ -94,11 +92,6 @@ export default {
         }
       }
     },
-    onVisitMarker (marker) {
-      this.map.setView(marker.getLatLng(), 17, { animate: true, easeLinearity: .5, duration: 0.250 })
-      marker.fire('click')
-    },
-
     getIcon (location) {
       let html = `<div class="data">${this.mode ? location.free_bases : location.dock_bikes}</div>`
 

@@ -30,9 +30,7 @@ const ACTIONS = {
   TOGGLE_ABOUT: 'toggle-about',
   TOGGLE_CONFIG: 'toggle-config',
   TOGGLE_ALERT: 'toggle-alert',
-  TOGGLE_MAP_SIZE: 'toggle-map-size',
-  UPDATED_AT: 'updated-at',
-  VISIT_MARKER: 'visit-marker'
+  UPDATED_AT: 'updated-at'
 }
 
 /* BE CAREFUL WHEN CHANGING THESE SETTINGS */
