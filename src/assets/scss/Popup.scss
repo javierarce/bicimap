@@ -5,6 +5,11 @@
   padding: 1em;
 }
 
+
+.Popup__description strong {
+  font-weight: bold;
+}
+
 .Popup__content .Popup__input {
   min-width: auto;
   font-size: 1em;
@@ -67,33 +72,6 @@
 
 .Popup__body {
   overflow: hidden;
-}
-
-.was-successful .Popup__success:before {
-  content: 'Thanks! 😊';
-  position: absolute;
-  font-size: 1.8em;
-}
-
-.was-successful .Popup__success {
-  top: 0;
-  opacity: 1;
-}
-
-.Popup__success {
-  position: absolute;
-  transition: all ease-in-out 250ms;
-  background: #fff;
-  z-index: 1000;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  top: 200px;
-  transition: top ease-in-out 250ms, opacity ease-in-out 520ms;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: none;
 }
 
 .Popup__spinner {

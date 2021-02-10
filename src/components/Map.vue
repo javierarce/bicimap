@@ -154,7 +154,7 @@ export default {
       let latlng = [location.latitude, location.longitude]
 
       let name = `${location.number} | ${location.name}`
-      let description = `Bicicletas: ${location.dock_bikes} Bases libres: ${location.free_bases}`
+      let description = `<strong>Bicicletas</strong>: ${location.dock_bikes}. <strong>Bases libres</strong>: ${location.free_bases}`
       let address = location.address
 
       this.popup = this.createPopup(latlng, { name, description, address })
@@ -162,20 +162,18 @@ export default {
       let icon = this.getIcon(location)
       let marker = L.marker(latlng, { icon, location })
 
-      marker.on('mouseover', (e) => {
-        marker.openPopup()
-      })
-
-      marker.on('mouseout', (e) => {
-        this.map.closePopup()
-      })
 
       marker.on('click', () => {
+        marker.closeTooltip()
         this.calculateClosestStationsToMarker(marker)
       })
 
       marker.bindPopup(this.popup, { maxWidth: 'auto' })
-      marker.data = { id: 123 }
+      marker.bindTooltip(description, {
+        direction: 'top',
+        offset: [0, -2],
+        className: 'Marker__tooltip'
+      })
 
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
@@ -306,13 +304,13 @@ export default {
         let latlng = marker.getLatLng()
         let circle = turf.circle([latlng.lng, latlng.lat], 0.5, { steps: 20, units: 'kilometers'})
 
-        L.geoJSON(circle, {
-          style: function(feature) {
-            return {
-              color: "red"
-            }
-          }
-        }).addTo(this.map)
+//        L.geoJSON(circle, {
+//          style: function(feature) {
+//            return {
+//              color: "red"
+//            }
+//          }
+//        }).addTo(this.map)
 
         let points = []
 
@@ -373,7 +371,7 @@ export default {
       let description = L.DomUtil.create('div', 'Popup__description js-comment', body)
 
       if (options.description) {
-        description.innerText = options.description
+        description.innerHTML = options.description
       }
 
       let address = L.DomUtil.create('div', 'Popup__address js-address', body)
