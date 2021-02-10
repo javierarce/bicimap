@@ -146,10 +146,14 @@ export default {
     addMarker (location) {
       let latlng = [location.latitude, location.longitude]
 
-      let name = `${location.number} | ${location.name}`
+      let name = `<div class="Station__id">${location.number}</div> ${location.name}`
 
-      let descriptionBikes = `<div class="Item"><div class="Item__amount">${location.dock_bikes}</div><div class="Item__title">${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas', { showAmount: false })}</div></div>`
-      let descriptionDocks = `<div class="Item"><div class="Item__amount">${location.free_bases}</div><div class="Item__title">${this.pluralize(location.free_bases, 'base libre', 'bases libres', { showAmount: false })}</div></div>`
+      let bikes = this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas', { showAmount: false })
+      let descriptionBikes = `<div class="Item"><div class="Item__amount">${location.dock_bikes}</div><div class="Item__title">${bikes}</div></div>`
+
+      let bases = this.pluralize(location.free_bases, 'base libre', 'bases libres', { showAmount: false })
+      let descriptionDocks = `<div class="Item"><div class="Item__amount">${location.free_bases}</div><div class="Item__title">${bases}</div></div>`
+
       let description = `<div class="Items">${descriptionBikes} ${descriptionDocks}</div>`
 
       let tooltipDescription = `${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. ${this.pluralize(location.free_bases, 'base libre', 'bases libres')}.`

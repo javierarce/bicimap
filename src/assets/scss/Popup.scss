@@ -110,6 +110,9 @@
 }
 
 .Popup__header {
+  display: flex;
+  align-items: start;
+  justify-content: start;
   border-radius: 4px 4px 0 0;
 	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
 	background-size: 400% 400%;
@@ -218,4 +221,18 @@
   font-weight: bold;
   font-size: 1.4em;
   margin: 0 0 0.2em;
+}
+
+.Station__id {
+  margin: 0 .4em 0 0;
+}
+
+.Station__id:after {
+  content: '';
+  position: relative;
+  width: 1px;
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  left: 0.4em;
+  margin: 0 0.4em 0 0;
 }
