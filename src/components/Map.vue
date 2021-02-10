@@ -147,7 +147,8 @@ export default {
       let latlng = [location.latitude, location.longitude]
 
       let name = `${location.number} | ${location.name}`
-      let description = `<strong>Bicicletas</strong>: ${location.dock_bikes}. <strong>Bases libres</strong>: ${location.free_bases}`
+      let description = `<div class="Items"><div class="Item"><div class="Item__amount">${location.dock_bikes}</div><div class="Item__title">bicicletas</div></div><div class="Item"><div class="Item__amount">${location.free_bases}</div><div class="Item__title">bases libres</div> </div></div>`
+      let tooltipDescription = `<strong>Bicicletas</strong>: ${location.dock_bikes}. <strong>Bases libres</strong>: ${location.free_bases}`
       let address = location.address
 
       this.popup = this.createPopup(latlng, { name, description, address })
@@ -155,7 +156,7 @@ export default {
       let icon = this.getIcon(location)
       let marker = L.marker(latlng, { icon, location })
 
-      this.bindMarker(marker, description)
+      this.bindMarker(marker, tooltipDescription)
 
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
@@ -363,7 +364,7 @@ export default {
     createPopup (coordinates, options = {}) {
       let classNames = []
 
-      if (options.address || window.bus.isLoggedIn()) {
+      if (options.address) {
         classNames.push('has-address')
       }
 
