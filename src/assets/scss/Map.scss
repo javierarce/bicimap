@@ -122,6 +122,11 @@
   color: #000;
 }
 
+.leaflet-marker-icon.icon.is-empty .data {
+  transition: all 250ms ease-in-out;
+  background: #666;
+  color: #fff;
+}
 .leaflet-marker-icon.icon.is-low .data {
   transition: all 250ms ease-in-out;
   background: #f44336;

@@ -59,7 +59,8 @@ export default {
           element.classList.toggle(`is-bikes`, what === 'dock_bikes')
           element.classList.toggle(`is-docks`, what === 'free_bases')
 
-          element.classList.toggle('is-low', location[what] < 3)
+          element.classList.toggle('is-empty', location[what] === 0)
+          element.classList.toggle('is-low', location[what] > 0 && location[what] < 3)
           element.classList.toggle('is-ok', location[what] >= 3 && location[what] < 5)
           element.classList.toggle('is-good', location[what] >= 5)
 
@@ -104,7 +105,9 @@ export default {
 
       classNames.push(what ? 'is-bikes' : 'is-docks')
 
-      if (location && location[what] < 3) {
+      if (location && location[what] === 0) {
+        classNames.push('is-empty')
+      } else if (location && location[what] < 3) {
         classNames.push('is-low')
       } else if (location && location[what] >= 3 && location[what] < 5) {
         classNames.push('is-ok')
@@ -166,6 +169,12 @@ export default {
         this.calculateClosestStationsToMarker(marker)
       })
 
+      marker.on('mousemove', () => { 
+        if (marker.isPopupOpen() && marker.isTooltipOpen()) {
+          marker.closeTooltip()
+        }
+      })
+
       marker.bindPopup(this.popup, { maxWidth: 'auto' })
       marker.bindTooltip(description, {
         direction: 'top',
@@ -207,7 +216,7 @@ export default {
         showCoverageOnHover: false
       })
 
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}' + (L.Browser.retina ? '@2x.png' : '.png'), {
+      this.layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}' + (L.Browser.retina ? '@2x.png' : '.png'), {
         attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 20,
