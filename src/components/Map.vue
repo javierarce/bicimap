@@ -84,11 +84,9 @@ export default {
       this.bindKeys()
       window.bus.$off(config.ACTIONS.ADD_STATIONS)
       window.bus.$off(config.ACTIONS.INVALIDATE_MAP_SIZE)
-      window.bus.$off(config.ACTIONS.SHOW_DEFAULT_POINT)
 
       window.bus.$on(config.ACTIONS.ADD_STATIONS, this.onAddStations)
       window.bus.$on(config.ACTIONS.INVALIDATE_MAP_SIZE, this.invalidateSize)
-      window.bus.$on(config.ACTIONS.SHOW_DEFAULT_POINT, this.showDefaultPoint)
     },
     bindKeys () {
       document.onkeydown = (e) => {
@@ -133,21 +131,11 @@ export default {
         iconAnchor: new L.Point(15, 0)
       })
     },
-    showDefaultPoint () {
-      this.map.flyTo([config.MAP.LAT, config.MAP.LON], config.MAP.ZOOM, {
-        animate: true,
-        duration: 1
-      })
-    },
     onAddStations (stations) {
       this.stations = stations
       this.stations.forEach(this.addMarker.bind(this)) 
       window.bus.$emit(config.ACTIONS.ON_LOAD)
       this.map.addLayer(this.cluster)
-    },
-    fitBounds () {
-      let group = L.featureGroup(window.bus.markers)
-      this.map.fitBounds(group.getBounds())
     },
     addMarker (location) {
       let latlng = [location.latitude, location.longitude]
@@ -166,17 +154,17 @@ export default {
 
       let address = location.address
 
-      this.popup = this.createPopup(latlng, { name, description, address })
+      let popup = this.createPopup(latlng, { name, description, address })
 
       let icon = this.getIcon(location)
       let marker = L.marker(latlng, { icon, location }).addTo(this.map)
 
-      this.bindMarker(marker, tooltipDescription)
+      this.bindMarker(marker, tooltipDescription, popup)
 
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
     },
-    bindMarker (marker, description) {
+    bindMarker (marker, description, popup) {
       marker.on('click', () => {
         setTimeout(() => {
           marker.closeTooltip()
@@ -189,7 +177,7 @@ export default {
         }
       })
 
-      marker.bindPopup(this.popup, { maxWidth: 'auto' })
+      marker.bindPopup(popup, { maxWidth: 'auto' })
       marker.bindTooltip(description, {
         direction: 'top',
         offset: [0, -2],
@@ -201,6 +189,7 @@ export default {
         scrollWheelZoom: true,
         zoomControl: true,
         maxBoundsViscosity: 1.0,
+        tap: false
       }
 
       this.map = L.map('map', options).setView([config.MAP.LAT, config.MAP.LON], config.MAP.ZOOM)
@@ -418,35 +407,23 @@ export default {
     },
 
     createPopup (coordinates, options = {}) {
-      let classNames = []
-
-      this.popup = L.popup({
+      let popup = L.popup({
         className: 'Popup'
       })
 
-      let content = L.DomUtil.create('div', `Popup__content ${classNames.join(' ')}`)
-
+      let content = L.DomUtil.create('div', 'Popup__content')
       let header = L.DomUtil.create('div', 'Popup__header', content)
-
-      header.innerHTML = options.name
-
       let body = L.DomUtil.create('div', 'Popup__body', content)
-
       let description = L.DomUtil.create('div', 'Popup__description', body)
-
-      if (options.description) {
-        description.innerHTML = options.description
-      }
-
       let address = L.DomUtil.create('div', 'Popup__address', body)
 
-      if (options.address) {
-        address.innerText = options.address
-      }
+      header.innerHTML = options.name
+      description.innerHTML = options.description
+      address.innerText = options.address
 
-      this.popup.setContent(content)
+      popup.setContent(content)
 
-      return this.popup
+      return popup
     },
 
     startLoading () {
