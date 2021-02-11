@@ -6,7 +6,7 @@
       <div class="About__content">
         <div class="About__description">
           
-          <p><strong>BiciMap</strong> es un mapa no oficial y de código abierto del servicio de alquiler de bicicletas <a href="https://www.bicimad.com" target="_blank">BiciMAd</a> de Madrid.</p>
+          <p><strong>BiciMap</strong> es un mapa no oficial y de código abierto del servicio de alquiler de bicicletas <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> de Madrid.</p>
           <p>Estaciones actualizadas hace <strong v-html="updatedAt"></strong>.</p>
 
           <p>Sigue el desarrollo de este proyecto, sugiere mejoras e informa de errores en GitHub.</p>
