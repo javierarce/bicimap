@@ -1,7 +1,7 @@
 {
-  "name": "MapWithMe",
-  "version": "2.0.0",
-  "description": "Create collaborative maps with your friends (and enemies)",
+  "name": "BiciMap",
+  "version": "1.0.0",
+  "description": "Unofficial map of BiciMAd stations.",
   "main": "server.js",
   "license": "MIT",
   "scripts": {
@@ -14,7 +14,7 @@
     "url": "https://twitter.com/javier"
   },
   "bugs": {
-    "url": "https://github.com/javierarce/map-with-me/issues"
+    "url": "https://github.com/javierarce/bicimap/issues"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
