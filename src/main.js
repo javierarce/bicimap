@@ -1,18 +1,14 @@
 "use strict";
 
-import Vue from 'vue/dist/vue';
+import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 const Home = require('./components/Home.vue').default
 const App = require('./app.vue').default
 
 import config from '../config'
-import mapConfig from '../map.yaml'
 
-config.ADMIN = mapConfig.admin
-config.MAP = mapConfig.map
-
-import styles from './assets/scss/style.scss'
+import './assets/scss/style.scss'
 
 Vue.use(VueRouter)
 
@@ -39,7 +35,7 @@ window.bus = new Vue({
       return !!(this.user && this.user.username && config.ADMIN.ADMIN_USERNAME === this.user.username)
     },
     getTitle () {
-      return config.ADMIN.TITLE
+      return config.MAP.TITLE
     },
     getAdminUsername () {
       return config.ADMIN.ADMIN_USERNAME

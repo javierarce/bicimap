@@ -7,14 +7,12 @@
 <script>
 import mixins from '../mixins'
 import config from '../../config'
-import mapConfig from '../../map.yaml'
 
 import * as turf from '@turf/turf'
 import * as L from 'leaflet'
 require('leaflet.markercluster')
 
 const PICKUP_MODE = 0
-const LEAVE_MODE = 1
 
 export default {
   mixins: [mixins],
@@ -233,7 +231,7 @@ export default {
       
       this.addLanes()
     },
-    onMapMoveEnd (e) {
+    onMapMoveEnd () {
       this.saveToLocalStorage('bounds',this.map.getBounds().toBBoxString())
     },
     onMapReady () {
@@ -254,7 +252,7 @@ export default {
       L.Control.ModeControl = L.Control.extend({
         onRemove: () => {
         },
-        onAdd: (map)  => {
+        onAdd: ()  => {
           let div = L.DomUtil.create('div', 'Control Control__mode')
           let bikes = L.DomUtil.create('div', 'Control__modeBikes')
           let docks = L.DomUtil.create('div', 'Control__modeDocks')
@@ -281,7 +279,7 @@ export default {
       L.Control.LanesControl = L.Control.extend({
         onRemove: () => {
         },
-        onAdd: (map)  => {
+        onAdd: ()  => {
           let div = L.DomUtil.create('div', 'Control Control__lanes')
 
           L.DomEvent.on(div, 'click', (e) => {
@@ -308,7 +306,7 @@ export default {
         },
         onRemove: () => {
         },
-        onAdd: (map)  => {
+        onAdd: ()  => {
           let div = L.DomUtil.create('div', 'Control Control__locate')
           let spinner = L.DomUtil.create('div', 'Spinner is-mini')
 
@@ -331,7 +329,7 @@ export default {
     },
 
     addLanes () {
-      this.get(config.ENDPOINTS.LANES)
+      this.get('/lanes.geojson')
         .then(this.onGetLanes.bind(this))
         .catch((error) => {
           console.error(error)
@@ -341,7 +339,7 @@ export default {
     onGetLanes (response) {
       response.json().then((data) => {
         this.lanes = L.geoJSON(data, {
-          style: (feature) => {
+          style: () => {
             return {
               "color": "#23D5AB",
               "weight": 8,

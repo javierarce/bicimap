@@ -11,7 +11,6 @@
 
 import mixins from '../mixins'
 import config from '../../config'
-import mapConfig from '../../map.yaml'
 
 export default {
   mixins: [mixins],
@@ -21,13 +20,8 @@ export default {
       q: undefined
     }
   },
-  mounted () {
-    this.$nextTick(() => {
-      config.MAP = mapConfig.map
-    })
-  },
   methods: {
-    onKeyUp (e) {
+    onKeyUp () {
       this.q = this.$refs.search.value
     },
     onSubmit (e) {
@@ -72,4 +66,3 @@ export default {
   }
 }
 </script>
-

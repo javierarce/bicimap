@@ -1,3 +1,10 @@
+const MAP = {
+  TITLE: 'BiciMap',
+  LAT: "40.41",
+  LON: "-3.695",
+  ZOOM: "15"
+}
+
 const TEXTS = {
   PLACEHOLDER: 'What\'s cool about this place?',
   SEARCH_PLACEHOLDER: 'Search for a place or an address',
@@ -35,12 +42,11 @@ const ACTIONS = {
 /* BE CAREFUL WHEN CHANGING THESE SETTINGS */
 
 const ENDPOINTS = {
-  STATIONS: '/api/stations',
-  LANES: '/api/lanes',
   CONFIG: '/api/config'
 }
 
 module.exports = { 
+  MAP,
   ACTIONS,
   ENDPOINTS,
   TEXTS

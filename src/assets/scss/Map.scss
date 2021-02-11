@@ -18,6 +18,17 @@
 .Map .leaflet-bar {
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
 }
+
+.Map .leaflet-bar a, 
+.Map .leaflet-bar a:hover {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+  }
+.Map .leaflet-control-zoom-in, .Map .leaflet-control-zoom-out {
+    font: bold 18px 'Lucida Console', Monaco, monospace;
+    text-indent: 1px;
+}
 .Map .leaflet-container a {
 	background: #2477BE;
 }

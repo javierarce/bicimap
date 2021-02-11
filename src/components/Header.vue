@@ -14,7 +14,6 @@
 
 import mixins from '../mixins'
 import config from '../../config'
-import mapConfig from '../../map.yaml'
 
 export default {
   mixins: [mixins],
@@ -26,7 +25,6 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      config.MAP = mapConfig.map
       this.bindEvents()
     })
   },

@@ -87,7 +87,7 @@ export default {
         this.localStorage.removeItem(id)
       }
     },
-    emptyLocalStorage (id) {
+    emptyLocalStorage () {
       if (this.localStorage) {
         this.localStorage.clear()
       }

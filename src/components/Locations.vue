@@ -22,7 +22,6 @@
 import mixins from '../mixins'
 
 import config from '../../config'
-import mapConfig from '../../map.yaml'
 
 export default {
   props: ['height'],

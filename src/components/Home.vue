@@ -22,7 +22,7 @@ import Alert from './Alert.vue'
 import Header from './Header.vue'
 import Map from './Map.vue'
 
-import { format, formatDistance, formatRelative, subDays } from 'date-fns'
+import { formatDistance } from 'date-fns'
 import { es } from 'date-fns/locale';
 
 export default {
@@ -111,7 +111,7 @@ export default {
       this.alertFooter = footer
     },
     getStations () {
-      this.get(config.ENDPOINTS.STATIONS)
+      this.get('/stations.json')
         .then(this.onGetLocations.bind(this))
         .catch((error) => {
           console.error(error)
