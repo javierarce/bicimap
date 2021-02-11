@@ -370,9 +370,10 @@ export default {
           this.lanes = L.geoJSON(data, {
             style: () => {
               return {
+                interactive:false,
                 "color": "#23D5AB",
                 "weight": 8,
-                "opacity": 0.5,
+                "opacity": 0.5
               }
             }
           })
