@@ -21,9 +21,9 @@
 
 .Map .leaflet-bar a, 
 .Map .leaflet-bar a:hover {
-  width: 26px;
-  height: 26px;
-  line-height: 26px;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
 }
 .Map .leaflet-control-zoom-in, .Map .leaflet-control-zoom-out {
   font: bold 18px 'Lucida Console', Monaco, monospace;
@@ -55,8 +55,8 @@
 .Control {
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
   background: #fff;
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   border-radius: 2px;
   cursor: pointer;
 }
@@ -64,10 +64,10 @@
 .Control__locate:before {
   content: '';
   position: absolute;
-  top: 6px;
-  left: 6px;
-  width: 10px;
-  height: 10px;
+  top: 8px;
+  left: 8px;
+  width: 12px;
+  height: 12px;
   border: 2px solid #2477BE;
   border-radius: 100%;
 }
@@ -87,50 +87,44 @@
   background: #2477BE;
 }
 
-.Control__lanes.is-selected:before {
-  border-color: #fff;
+.Control__lanes.is-selected {
+  background-image: url(/img/lanes_white.svg);
+  background-color: #2477BE;
 }
 
-.Control__lanes:before {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 12px;
-  width: 2px;
-  height: 14px;
-  border-left: 2px solid #2477BE;
+.Control__lanes {
+  background-color: #fff;
+  background-image: url(/img/lanes.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.Control__help:before {
-  content: '?';
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 26px;
-  height: 26px;
-  font-size: 1.3em;
-  line-height: normal;
-  font-weight: 600;
-  color: #2477BE;
+.Control__help {
+  background-image: url(/img/help.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .Control__mode {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 52px;
+  height: 64px;
 }
 
 .Control__mode .Control__modeBikes {
   background-color: #2477BE;
   border-radius: 2px 2px 0 0;
-  background-image: url(/img/bike_white.svg)
+  background-image: url(/img/bike_white.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .Control__mode .Control__modeDocks {
   border-radius: 0 0 2px 2px;
-  background-image: url(/img/dock.svg)
+  background-image: url(/img/dock.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .Control__mode.is-docks .Control__modeBikes {
   background-color: #fff;
@@ -143,8 +137,8 @@
 
 .Control__modeBikes,
 .Control__modeDocks {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
 }
 
 .Control__divider {
