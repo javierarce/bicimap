@@ -4,9 +4,9 @@
   "description": "Unofficial map of BiciMAd stations.",
   "main": "server.js",
   "license": "MIT",
-    "engines" : {
-      "node" : "12.18.0"
-    },
+  "engines": {
+    "node": "12.18.0"
+  },
   "scripts": {
     "start:client": "webpack-dev-server --config webpack.config.js",
     "start": "babel-watch ./server.js"
