@@ -24,6 +24,7 @@ export default {
       cluster: {},
       map: {},
       showLanes: false,
+      helpControl: null,
       lanesControl: null,
       locateControl: null,
       modeControl: null,
@@ -195,7 +196,8 @@ export default {
 
       this.map = L.map('map', options).setView([config.MAP.LAT, config.MAP.LON], config.MAP.ZOOM)
 
-      this.map.zoomControl.setPosition('topright')
+      this.addHelpControl()
+      this.map.zoomControl.setPosition('topleft')
 
       this.map.on('moveend', this.onMapMoveEnd)
 
@@ -228,7 +230,6 @@ export default {
       }).addTo(this.map)
 
       this.map.whenReady(this.onMapReady)
-      
       this.addLanes()
     },
     onMapMoveEnd () {
@@ -275,6 +276,25 @@ export default {
       this.modeControl = new L.Control.ModeControl({ position: 'topright' }).addTo(this.map)
     },
 
+    addHelpControl () {
+      L.Control.HelpControl = L.Control.extend({
+        onRemove: () => {
+        },
+        onAdd: ()  => {
+          let div = L.DomUtil.create('div', 'Control Control__help')
+
+          L.DomEvent.on(div, 'click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+
+            window.bus.$emit(config.ACTIONS.TOGGLE_ABOUT)
+          })
+          return div
+        }
+      })
+
+      this.helpControl = new L.Control.HelpControl({ position: 'topright' }).addTo(this.map)
+    },
     addLanesControl () {
       L.Control.LanesControl = L.Control.extend({
         onRemove: () => {

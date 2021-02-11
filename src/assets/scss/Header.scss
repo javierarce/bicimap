@@ -6,7 +6,7 @@
 .Header {
   position: absolute;
   padding: 0 30px;
-  top: 20px;
+  top: 3em;
   width: 100%;
   display: flex;
   align-items: center;
@@ -17,28 +17,22 @@
   z-index: 1000;
 }
 
-.Header__updatedAt {
-  font-size: .8em;
-  color: #fff;
-  opacity: 0.7;
-}
-
 .Header__info {
   display: flex;
   align-items: center;
-}
-
-.Header__description {
-  color: #fff;
-  opacity: .6;
+  background: #fff;
+  padding: 0.4em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
 }
 
 .Header__title {
   font-weight: bold;
   font-size: 1.4em;
-  color: #fff;
+  color: #2477BE;
   margin: 0 8px 0 0;
 }
+
 .is-expanded .Header__links {
   opacity: 0;
 }

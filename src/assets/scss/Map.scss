@@ -6,7 +6,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  padding: 60px 30px 30px 30px;
+  padding: 1em;
 }
 
 .Map {
@@ -21,16 +21,16 @@
 
 .Map .leaflet-bar a, 
 .Map .leaflet-bar a:hover {
-    width: 26px;
-    height: 26px;
-    line-height: 26px;
-  }
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+}
 .Map .leaflet-control-zoom-in, .Map .leaflet-control-zoom-out {
-    font: bold 18px 'Lucida Console', Monaco, monospace;
-    text-indent: 1px;
+  font: bold 18px 'Lucida Console', Monaco, monospace;
+  text-indent: 1px;
 }
 .Map .leaflet-container a {
-	background: #2477BE;
+  background: #2477BE;
 }
 .Map .leaflet-bar a:first-child {
   border-top-left-radius: 2px;
@@ -43,7 +43,7 @@
 }
 
 .leaflet-container a {
-	color: #2477BE;
+  color: #2477BE;
 }
 
 /* Map controls */
@@ -101,6 +101,20 @@
   border-left: 2px solid #2477BE;
 }
 
+.Control__help:before {
+  content: '?';
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 26px;
+  height: 26px;
+  font-size: 1.3em;
+  line-height: normal;
+  font-weight: 600;
+  color: #2477BE;
+}
+
 .Control__mode {
   display: flex;
   justify-content: center;
@@ -142,11 +156,11 @@
 /* Markers */ 
 
 .leaflet-marker-icon.icon.leaflet-zoom-animated.leaflet-interactive:hover .data {
-	border: 4px solid #fff;
+  border: 4px solid #fff;
   transform: scale(0.9);
 }
 .leaflet-marker-icon.icon.is-disabled {
-	background: #ccc;
+  background: #ccc;
 }
 
 
@@ -202,12 +216,12 @@
 .leaflet-marker-icon.icon .data {
   width: 30px;
   height: 30px;
-	border: 4px solid #fff;
+  border: 4px solid #fff;
   overflow: hidden;
   font-weight: bold;
   box-shadow: 0 2px 4px rgba(#000, 0.2);
   padding: 0.4em;
-	background: #fafafa;
+  background: #fafafa;
   border-radius: 100%;
   line-height: auto;
   display: flex;

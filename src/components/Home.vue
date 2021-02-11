@@ -5,10 +5,9 @@
     </transition>
 
     <transition name="slide-fade">
-    <About v-if="showAbout" />
+    <About :updatedAt="updatedAt" v-if="showAbout" />
     </transition>
 
-    <Header />
     <Map />
   </div>
 </template>
@@ -19,7 +18,6 @@ import config from '../../config'
 
 import About from './About.vue'
 import Alert from './Alert.vue'
-import Header from './Header.vue'
 import Map from './Map.vue'
 
 import { formatDistance } from 'date-fns'
@@ -30,7 +28,6 @@ export default {
   components: {
     About,
     Alert,
-    Header,
     Map,
   },
   data () {
@@ -39,6 +36,7 @@ export default {
       alertFooter: undefined,
       alertTitle: undefined,
       locations: [],
+      updatedAt: undefined,
       showAbout: false,
       showAlert: false
     }
@@ -81,11 +79,10 @@ export default {
     onLoad () {
       document.body.classList.add('is-loaded')
     },
-    onGetLocations (response) {
+    onGetStations (response) {
       response.json().then((data) => {
 
-        let updatedAt = formatDistance(data.updated_at, new Date(),  { locale: es })
-        window.bus.$emit(config.ACTIONS.UPDATED_AT, updatedAt)
+        this.updatedAt = formatDistance(data.updated_at, new Date(),  { locale: es })
         window.bus.$emit(config.ACTIONS.ADD_STATIONS, data.stations)
       })
     },
@@ -112,7 +109,7 @@ export default {
     },
     getStations () {
       this.get('/stations.json')
-        .then(this.onGetLocations.bind(this))
+        .then(this.onGetStations.bind(this))
         .catch((error) => {
           console.error(error)
         })
