@@ -170,8 +170,9 @@ export default {
     },
     bindMarker (marker, description) {
       marker.on('click', () => {
-        marker.closeTooltip()
-        this.calculateClosestStationsToMarker(marker)
+        setTimeout(() => {
+          marker.closeTooltip()
+        }, 100)
       })
 
       marker.on('mousemove', () => { 

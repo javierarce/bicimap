@@ -1,8 +1,8 @@
 const MAP = {
   TITLE: 'BiciMap',
-  LAT: "40.41",
-  LON: "-3.695",
-  ZOOM: "15"
+  LAT: "40.41948626649347",
+  LON: "-3.6930539666172475",
+  ZOOM: "14"
 }
 
 const TEXTS = {
