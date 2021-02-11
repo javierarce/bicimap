@@ -1,8 +1,8 @@
 # BiciMap
 
-🌍 Unofficial map of BiciMAd stations. 
+🌍 Unofficial map of BiciMAD stations. 
 
-This is my attempt to make a more useful and nicer version of the [current BiciMAd map](https://u.bicimad.com/mapa).
+This is my attempt to make a more useful and nicer version of the [current BiciMAD map](https://u.bicimad.com/mapa).
 
 ### TODO
 
