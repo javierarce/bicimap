@@ -56,10 +56,10 @@ export default {
 
       let tooltipDescription = `${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. ${this.pluralize(location.free_bases, 'base libre', 'bases libres')}.`
 
-      if (value) {
-      tooltipDescription = `${this.pluralize(location.free_bases, 'base libre', 'bases libres')}. ${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. `
-      }
-marker.setTooltipContent(tooltipDescription)
+          if (value) {
+            tooltipDescription = `${this.pluralize(location.free_bases, 'base libre', 'bases libres')}. ${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. `
+          }
+          marker.setTooltipContent(tooltipDescription)
 
           let what = value? 'free_bases' : 'dock_bikes'
 
@@ -169,7 +169,7 @@ marker.setTooltipContent(tooltipDescription)
       this.popup = this.createPopup(latlng, { name, description, address })
 
       let icon = this.getIcon(location)
-      let marker = L.marker(latlng, { icon, location })
+      let marker = L.marker(latlng, { icon, location }).addTo(this.map)
 
       this.bindMarker(marker, tooltipDescription)
 
@@ -250,7 +250,7 @@ marker.setTooltipContent(tooltipDescription)
         if (bounds) {
           let [west, south, east, north] = bounds.split(',').map(parseFloat)
           let newBounds = new L.LatLngBounds(new L.LatLng(south, west), new L.LatLng(north, east))
-            this.map.flyToBounds(newBounds)
+          this.map.flyToBounds(newBounds)
         }
 
       } catch (error) {
@@ -365,21 +365,21 @@ marker.setTooltipContent(tooltipDescription)
         })
     },
 
-    onGetLanes (response) {
-      response.json().then((data) => {
-        this.lanes = L.geoJSON(data, {
-          style: () => {
-            return {
-              "color": "#23D5AB",
-              "weight": 8,
-              "opacity": 0.5,
+      onGetLanes (response) {
+        response.json().then((data) => {
+          this.lanes = L.geoJSON(data, {
+            style: () => {
+              return {
+                "color": "#23D5AB",
+                "weight": 8,
+                "opacity": 0.5,
+              }
             }
-          }
-        })
+          })
 
-        this.addLanesControl()
-      })
-    },
+          this.addLanesControl()
+        })
+      },
 
     calculateClosestStationsToMarker (marker) {
       let latlng = marker.getLatLng()
