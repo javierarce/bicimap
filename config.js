@@ -32,6 +32,7 @@ const ACTIONS = {
   START_LOADING: 'start-loading',
   STOP_LOADING: 'stop-loading',
   TOGGLE_ABOUT: 'toggle-about',
+  OPEN_ABOUT: 'open-about',
   TOGGLE_ALERT: 'toggle-alert',
   TOGGLE_CONFIG: 'toggle-config',
   TOGGLE_DESTROY: 'toggle-destroy',

@@ -54,6 +54,7 @@ export default {
       window.bus.$off(config.ACTIONS.START_LOADING)
       window.bus.$off(config.ACTIONS.STOP_LOADING)
       window.bus.$off(config.ACTIONS.TOGGLE_ABOUT)
+      window.bus.$off(config.ACTIONS.OPEN_ABOUT)
       window.bus.$off(config.ACTIONS.TOGGLE_ALERT)
       window.bus.$off(config.ACTIONS.SHOW_ALERT)
 
@@ -62,6 +63,7 @@ export default {
       window.bus.$on(config.ACTIONS.START_LOADING, this.onStartLoading)
       window.bus.$on(config.ACTIONS.STOP_LOADING, this.onStopLoading)
       window.bus.$on(config.ACTIONS.TOGGLE_ABOUT, this.onToggleAbout)
+      window.bus.$on(config.ACTIONS.OPEN_ABOUT, this.onOpenAbout)
       window.bus.$on(config.ACTIONS.TOGGLE_ALERT, this.onToggleAlert)
       window.bus.$on(config.ACTIONS.SHOW_ALERT, this.onShowAlert)
 
@@ -90,6 +92,9 @@ export default {
     },
     onStopLoading () {
       document.body.classList.remove('is-loading')
+    },
+    onOpenAbout () {
+      this.showAbout = true
     },
     onToggleAbout () {
       this.showAbout = !this.showAbout

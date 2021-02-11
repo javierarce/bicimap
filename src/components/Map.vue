@@ -177,9 +177,7 @@ marker.setTooltipContent(tooltipDescription)
       window.bus.markers.push(marker)
     },
     bindMarker (marker, description) {
-      marker.on('click', (e) => {
-        e.stopPropagation()
-        e.preventDefault()
+      marker.on('click', () => {
         setTimeout(() => {
           marker.closeTooltip()
         }, 100)
@@ -207,7 +205,6 @@ marker.setTooltipContent(tooltipDescription)
 
       this.map = L.map('map', options).setView([config.MAP.LAT, config.MAP.LON], config.MAP.ZOOM)
 
-      this.addHelpControl()
       this.map.zoomControl.setPosition('topleft')
 
       this.map.on('moveend', this.onMapMoveEnd)
@@ -224,6 +221,7 @@ marker.setTooltipContent(tooltipDescription)
         console.log('location error', e)
       })
 
+      this.addHelpControl()
       this.addModeControl()
       this.addLocateControl()
 
@@ -269,7 +267,7 @@ marker.setTooltipContent(tooltipDescription)
           let bikes = L.DomUtil.create('div', 'Control__modeBikes')
           let docks = L.DomUtil.create('div', 'Control__modeDocks')
 
-          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
+          L.DomEvent.on(div, 'click touchstart', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
@@ -294,11 +292,11 @@ marker.setTooltipContent(tooltipDescription)
         onAdd: ()  => {
           let div = L.DomUtil.create('div', 'Control Control__help')
 
-          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
+          L.DomEvent.on(div, 'click', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
-            window.bus.$emit(config.ACTIONS.TOGGLE_ABOUT)
+            window.bus.$emit(config.ACTIONS.OPEN_ABOUT)
           })
           return div
         }
@@ -313,7 +311,7 @@ marker.setTooltipContent(tooltipDescription)
         onAdd: ()  => {
           let div = L.DomUtil.create('div', 'Control Control__lanes')
 
-          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
+          L.DomEvent.on(div, 'click touchstart', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
@@ -343,7 +341,7 @@ marker.setTooltipContent(tooltipDescription)
 
           div.appendChild(spinner)
 
-          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
+          L.DomEvent.on(div, 'click touchstart', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
