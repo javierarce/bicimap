@@ -3,36 +3,40 @@ name: CI
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    pull_request:
+      branches: [ main ]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+      jobs:
+        build:
+          runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
+          steps:
+            - name: Install
+              run: yarn install
 
-    - name: Copy file via scp
-      uses: appleboy/scp-action@master
-      env:
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
-        PASSPHRASE: ${{ secrets.PASSPHRASE }}
-      with:
-         source: "."
-         target: "/home/javier/bicimap"
+            - name: Build
+              run: yarn run build
 
-    - name: Executing remote command
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
-        PASSPHRASE: ${{ secrets.PASSPHRASE }}
-        script: |
-          yarn --cwd /home/javier/bicimap
-          pm2 restart bicimap
+            - uses: actions/checkout@v2
+            - name: Copy file via scp
+              uses: appleboy/scp-action@master
+              env:
+                HOST: ${{ secrets.HOST }}
+                USERNAME: ${{ secrets.USERNAME }}
+                PORT: ${{ secrets.PORT }}
+                KEY: ${{ secrets.SSHKEY }}
+                PASSPHRASE: ${{ secrets.PASSPHRASE }}
+                with:
+                  source: "."
+                  target: "/home/javier/bicimap"
+
+            - name: Executing remote command
+              uses: appleboy/ssh-action@master
+              with:
+                host: ${{ secrets.HOST }}
+                USERNAME: ${{ secrets.USERNAME }}
+                PORT: ${{ secrets.PORT }}
+                KEY: ${{ secrets.SSHKEY }}
+                PASSPHRASE: ${{ secrets.PASSPHRASE }}
+                script: |
+                  yarn --cwd /home/javier/bicimap
