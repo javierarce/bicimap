@@ -6,16 +6,16 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### TODO
 
-- [ ] Fix popup issues on mobile / Safari
-- [ ] Fix alerts
+- [ ] Add station refresh on a set interval
+- [ ] Add tooltips for the map controllers
+- [ ] Fix error alerts
+- [ ] Add screenshot/GIF in this documentation
 - [ ] Add numbers in the markers for better accesibility
 - [ ] Show nearby stations to a given station
-- [ ] Add tooltips for the map controllers
-- [ ] Remove "Map with Me" legacy code
-- [ ] Add screenshot/GIF in this documentation
 
 ### Done
 
+- [x] Fix popup issues on mobile / Safari
 - [x] Launch project
 - [x] Improve tooltips (style and content)
 - [x] Save (and load) last position in the map
