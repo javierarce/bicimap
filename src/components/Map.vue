@@ -177,7 +177,9 @@ marker.setTooltipContent(tooltipDescription)
       window.bus.markers.push(marker)
     },
     bindMarker (marker, description) {
-      marker.on('click', () => {
+      marker.on('click', (e) => {
+        e.stopPropagation()
+        e.preventDefault()
         setTimeout(() => {
           marker.closeTooltip()
         }, 100)
@@ -267,7 +269,7 @@ marker.setTooltipContent(tooltipDescription)
           let bikes = L.DomUtil.create('div', 'Control__modeBikes')
           let docks = L.DomUtil.create('div', 'Control__modeDocks')
 
-          L.DomEvent.on(div, 'click', (e) => {
+          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
@@ -292,7 +294,7 @@ marker.setTooltipContent(tooltipDescription)
         onAdd: ()  => {
           let div = L.DomUtil.create('div', 'Control Control__help')
 
-          L.DomEvent.on(div, 'click', (e) => {
+          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
@@ -311,7 +313,7 @@ marker.setTooltipContent(tooltipDescription)
         onAdd: ()  => {
           let div = L.DomUtil.create('div', 'Control Control__lanes')
 
-          L.DomEvent.on(div, 'click', (e) => {
+          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
@@ -341,7 +343,7 @@ marker.setTooltipContent(tooltipDescription)
 
           div.appendChild(spinner)
 
-          L.DomEvent.on(div, 'click', (e) => {
+          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
             e.stopPropagation()
             e.preventDefault()
 

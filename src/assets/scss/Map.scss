@@ -60,6 +60,7 @@
   height: 32px;
   border-radius: 2px;
   cursor: pointer;
+  user-select: none;
 }
 
 .Control__locate:before {
