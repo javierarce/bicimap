@@ -123,18 +123,22 @@
 }
 
 .Control__mode .Control__modeBikes {
-  background: #2477BE;
+  background-color: #2477BE;
   border-radius: 2px 2px 0 0;
+  background-image: url(/img/bike_white.svg)
 }
 
 .Control__mode .Control__modeDocks {
   border-radius: 0 0 2px 2px;
+  background-image: url(/img/dock.svg)
 }
 .Control__mode.is-docks .Control__modeBikes {
-  background: #fff;
+  background-color: #fff;
+  background-image: url(/img/bike.svg)
 }
 .Control__mode.is-docks .Control__modeDocks {
-  background: #2477BE;
+  background-color: #2477BE;
+  background-image: url(/img/dock_white.svg)
 }
 
 .Control__modeBikes,

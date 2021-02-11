@@ -81,7 +81,6 @@ export default {
     },
     onGetStations (response) {
       response.json().then((data) => {
-
         this.updatedAt = formatDistance(data.updated_at, new Date(),  { locale: es })
         window.bus.$emit(config.ACTIONS.ADD_STATIONS, data.stations)
       })
