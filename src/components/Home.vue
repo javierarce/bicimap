@@ -49,8 +49,6 @@ export default {
   },
   methods: {
     bindEvents () {
-      window.bus.$off(config.ACTIONS.LOGIN)
-      window.bus.$off(config.ACTIONS.ON_LOAD)
       window.bus.$off(config.ACTIONS.START_LOADING)
       window.bus.$off(config.ACTIONS.STOP_LOADING)
       window.bus.$off(config.ACTIONS.TOGGLE_ABOUT)
@@ -58,8 +56,6 @@ export default {
       window.bus.$off(config.ACTIONS.TOGGLE_ALERT)
       window.bus.$off(config.ACTIONS.SHOW_ALERT)
 
-      window.bus.$on(config.ACTIONS.LOGIN, this.onLogin)
-      window.bus.$on(config.ACTIONS.ON_LOAD, this.onLoad)
       window.bus.$on(config.ACTIONS.START_LOADING, this.onStartLoading)
       window.bus.$on(config.ACTIONS.STOP_LOADING, this.onStopLoading)
       window.bus.$on(config.ACTIONS.TOGGLE_ABOUT, this.onToggleAbout)
@@ -77,9 +73,6 @@ export default {
         this.showAlert = false
         this.showAbout = false
       }
-    },
-    onLoad () {
-      document.body.classList.add('is-loaded')
     },
     onGetStations (response) {
       response.json().then((data) => {

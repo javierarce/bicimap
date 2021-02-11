@@ -83,10 +83,7 @@ export default {
     bindEvents () {
       this.bindKeys()
       window.bus.$off(config.ACTIONS.ADD_STATIONS)
-      window.bus.$off(config.ACTIONS.INVALIDATE_MAP_SIZE)
-
       window.bus.$on(config.ACTIONS.ADD_STATIONS, this.onAddStations)
-      window.bus.$on(config.ACTIONS.INVALIDATE_MAP_SIZE, this.invalidateSize)
     },
     bindKeys () {
       document.onkeydown = (e) => {
@@ -134,7 +131,6 @@ export default {
     onAddStations (stations) {
       this.stations = stations
       this.stations.forEach(this.addMarker.bind(this)) 
-      window.bus.$emit(config.ACTIONS.ON_LOAD)
       this.map.addLayer(this.cluster)
     },
     addMarker (location) {
@@ -440,9 +436,6 @@ export default {
         this.marker = undefined
         return true
       }
-    },
-    invalidateSize () {
-      this.map.invalidateSize(true)
     }
   }
 }

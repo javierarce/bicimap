@@ -1,5 +1,3 @@
-import config from '../config'
-
 const METHODS = {
   DELETE: 'DELETE',
   GET: 'GET',
@@ -54,19 +52,6 @@ export default {
     },
     latLonToCoordinates (latLon) {
       return { lat: latLon[0], lon: latLon[1] }
-    },
-    getDetails (id, data) {
-      let url = `${config.ENDPOINTS.NOMINATIM}${config.ENDPOINTS.SEARCH_DETAILS_URL}?place_id=${id}&format=json`
-
-      const onGetDetails = (response) => {
-        this.onGetDetails(response, data)
-      }
-
-      this.get(url)
-        .then(onGetDetails.bind(this))
-        .catch((error) => {
-          console.log(error)
-        })
     },
     saveToLocalStorage (id, what) {
       if (this.localStorage) {
