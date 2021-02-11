@@ -54,6 +54,13 @@ export default {
         let location = marker.options.location
         if (element) {
 
+      let tooltipDescription = `${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. ${this.pluralize(location.free_bases, 'base libre', 'bases libres')}.`
+
+      if (value) {
+      tooltipDescription = `${this.pluralize(location.free_bases, 'base libre', 'bases libres')}. ${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. `
+      }
+marker.setTooltipContent(tooltipDescription)
+
           let what = value? 'free_bases' : 'dock_bikes'
 
           element.classList.toggle(`is-bikes`, what === 'dock_bikes')
@@ -156,6 +163,7 @@ export default {
       let description = `<div class="Items">${descriptionBikes} ${descriptionDocks}</div>`
 
       let tooltipDescription = `${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. ${this.pluralize(location.free_bases, 'base libre', 'bases libres')}.`
+
       let address = location.address
 
       this.popup = this.createPopup(latlng, { name, description, address })
