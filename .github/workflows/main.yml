@@ -19,7 +19,7 @@ jobs:
         HOST: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USERNAME }}
         PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
+        PASSWORD: ${{ secrets.PASSWORD }}
       with:
          source: "."
          target: "/home/javier/bicimap"
@@ -30,7 +30,7 @@ jobs:
         host: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USERNAME }}
         PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
+        PASSWORD: ${{ secrets.PASSWORD }}
         script: |
           yarn --cwd /home/javier/bicimap
           pm2 restart npm
