@@ -33,6 +33,6 @@ jobs:
           KEY: ${{ secrets.SSHKEY }}
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
         with:
-           source: "."
+           source: "dist"
            target: "/home/javier/bicimap"
 
