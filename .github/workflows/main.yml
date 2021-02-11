@@ -35,4 +35,4 @@ jobs:
         PASSPHRASE: ${{ secrets.PASSPHRASE }}
         script: |
           yarn --cwd /home/javier/bicimap
-          pm2 restart npm
+          pm2 restart bicimap
