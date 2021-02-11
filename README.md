@@ -6,8 +6,8 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### TODO
 
+- [ ] Fix popup issues on mobile / Safari
 - [ ] Fix alerts
-- [ ] Improve mobile view
 - [ ] Add numbers in the markers for better accesibility
 - [ ] Show nearby stations to a given station
 - [ ] Add tooltips for the map controllers
