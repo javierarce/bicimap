@@ -12,9 +12,9 @@ jobs:
 
     steps:
       - name: Install
-        run: yarn install
+        run: npm install
       - name: Build
-        run: yarn run build
+        run: npm run build
         
       - uses: actions/checkout@v2
 
