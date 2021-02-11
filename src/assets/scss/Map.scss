@@ -7,6 +7,7 @@
   width: 100%;
   height: 100%;
   padding: 1em;
+  transition: padding 250ms ease-in-out;
 }
 
 .Map {
@@ -310,7 +311,7 @@
   .Map__container {
     width: 100%;
     height: 100%;
-    padding: 60px 20px 20px 20px;
+    padding: 0;
   }
   .Map__buttons {
     display: none;
