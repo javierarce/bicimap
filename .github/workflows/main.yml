@@ -16,10 +16,10 @@ jobs:
     - name: Copy file via scp
       uses: appleboy/scp-action@master
       env:
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        PASSWORD: ${{ secrets.PASSWORD }}
+        host: ${{ secrets.HOST }}
+        usenrame: ${{ secrets.USERNAME }}
+        port: ${{ secrets.PORT }}
+        password: ${{ secrets.PASSWORD }}
       with:
          source: "."
          target: "/home/javier/bicimap"
@@ -28,9 +28,9 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        PASSWORD: ${{ secrets.PASSWORD }}
+        usenrame: ${{ secrets.USERNAME }}
+        port: ${{ secrets.PORT }}
+        password: ${{ secrets.PASSWORD }}
         script: |
           yarn --cwd /home/javier/bicimap
           pm2 restart npm
