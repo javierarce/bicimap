@@ -267,7 +267,7 @@ export default {
           let bikes = L.DomUtil.create('div', 'Control__modeBikes')
           let docks = L.DomUtil.create('div', 'Control__modeDocks')
 
-          L.DomEvent.on(div, 'click touchstart', (e) => {
+          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
@@ -311,7 +311,7 @@ export default {
         onAdd: ()  => {
           let div = L.DomUtil.create('div', 'Control Control__lanes')
 
-          L.DomEvent.on(div, 'click touchstart', (e) => {
+          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
@@ -341,7 +341,7 @@ export default {
 
           div.appendChild(spinner)
 
-          L.DomEvent.on(div, 'click touchstart', (e) => {
+          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
