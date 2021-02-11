@@ -17,7 +17,7 @@ jobs:
       uses: appleboy/scp-action@master
       env:
         host: ${{ secrets.HOST }}
-        usenrame: ${{ secrets.USERNAME }}
+        username: ${{ secrets.USERNAME }}
         port: ${{ secrets.PORT }}
         password: ${{ secrets.PASSWORD }}
       with:
@@ -28,7 +28,7 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
-        usenrame: ${{ secrets.USERNAME }}
+        username: ${{ secrets.USERNAME }}
         port: ${{ secrets.PORT }}
         password: ${{ secrets.PASSWORD }}
         script: |
