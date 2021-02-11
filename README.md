@@ -2,9 +2,9 @@
 
 🌍 Unofficial map of BiciMAd stations. 
 
-This is my attempt to make a more useful and nicer version of the [current BiciMAd map](https://u.bicimad.com/mapa).
+[BiciMap](https://bicimap.javierarce.com)
 
-**This project is still in development.**
+This is my attempt to make a more useful and nicer version of the [current BiciMAd map](https://u.bicimad.com/mapa).
 
 ### TODO
 
@@ -19,6 +19,7 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### Done
 
+- [x] Deploy
 - [x] Improve tooltips (style and content)
 - [x] Save (and load) last position in the map
 - [x] Improve bike lane style
