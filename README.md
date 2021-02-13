@@ -8,8 +8,8 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### HOW TO INSTALL IT
 
-- Clone this repo: `git@github.com:javierarce/bicimap.git`
-- Install dependecies: `yarn`
+- Clone this repo: `git clone git@github.com:javierarce/bicimap.git`
+- Install dependecies: `cd bicimap; yarn`
 - Download stations: `node public/stations.js`
 - Run server: `yarn serve`
 - Follow the instructions in your console
