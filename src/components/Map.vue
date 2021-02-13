@@ -8,7 +8,6 @@
 import mixins from '../mixins'
 import config from '../../config'
 
-import * as turf from '@turf/turf'
 import * as L from 'leaflet'
 require('leaflet.markercluster')
 
@@ -54,7 +53,7 @@ export default {
         let location = marker.options.location
         if (element) {
 
-      let tooltipDescription = `${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. ${this.pluralize(location.free_bases, 'base libre', 'bases libres')}.`
+          let tooltipDescription = `${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. ${this.pluralize(location.free_bases, 'base libre', 'bases libres')}.`
 
           if (value) {
             tooltipDescription = `${this.pluralize(location.free_bases, 'base libre', 'bases libres')}. ${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. `
@@ -350,56 +349,21 @@ export default {
         })
     },
 
-      onGetLanes (response) {
-        response.json().then((data) => {
-          this.lanes = L.geoJSON(data, {
-            style: () => {
-              return {
-                interactive:false,
-                "color": "#23D5AB",
-                "weight": 8,
-                "opacity": 0.5
-              }
+    onGetLanes (response) {
+      response.json().then((data) => {
+        this.lanes = L.geoJSON(data, {
+          style: () => {
+            return {
+              interactive:false,
+              "color": "#23D5AB",
+              "weight": 8,
+              "opacity": 0.5
             }
-          })
-
-          this.addLanesControl()
+          }
         })
-      },
 
-    calculateClosestStationsToMarker (marker) {
-      let latlng = marker.getLatLng()
-      let circle = turf.circle([latlng.lng, latlng.lat], 0.5, { steps: 20, units: 'kilometers'})
-
-      let points = []
-
-      this.stations.forEach((station) => {
-        if (+station.longitude !== latlng.lng && +station.latitude !== latlng.lat) {
-          points.push([ station.longitude, station.latitude ])
-        }
+        this.addLanesControl()
       })
-
-      if (points) {
-        let pointsWithin = turf.pointsWithinPolygon(turf.points(points), circle)
-
-        let distances = []
-
-        pointsWithin.features.forEach((feature) => {
-          let from = turf.point([latlng.lng, latlng.lat])
-          let to = turf.point(feature.geometry.coordinates)
-          let options = { units: 'kilometers' }
-
-          let distance = turf.distance(from, to, options)
-          distances.push({ coordinates: feature.geometry.coordinates, distance })
-        })
-
-        if (distances) {
-          let sorted = Object.keys(distances)
-            .sort(function(a,b) {  return distances[a].distance - distances[b].distance })
-            .map(function(k) { return distances[k] })
-          console.log(sorted.slice(0, 3));
-        }
-      }
     },
 
     createPopup (coordinates, options = {}) {
