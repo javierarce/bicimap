@@ -37,6 +37,7 @@ export default {
     this.$nextTick(() => {
       this.bindEvents()
       this.init()
+      window.pin = this
     })
   },
   watch: {
@@ -128,28 +129,38 @@ export default {
       })
     },
     onAddStations (stations) {
-      this.stations = stations
-      this.stations.forEach(this.addMarker.bind(this)) 
-      this.map.addLayer(this.cluster)
+      if (this.stations && this.stations.length) {
+        this.updateStations()
+      } else {
+        this.stations = stations
+        this.stations.forEach(this.addMarker.bind(this))
+        this.map.addLayer(this.cluster)
+      }
+    },
+    updateStations () {
+      this.cluster.getLayers().forEach((marker) => { 
+        let station = this.getStationById(marker.options.location.id)
+
+        let content = this.getPopupContent(station)
+        let icon = this.getIcon(station)
+
+        marker.setPopupContent(content)
+        marker.setIcon(icon)
+      })
+    },
+    getStationById (id) {
+      return this.stations.find(station => station.id === id)
     },
     addMarker (location) {
       let latlng = [location.latitude, location.longitude]
 
-      let name = `<div class="Station__id">${location.number}</div> ${location.name}`
+      let tooltipDescription = this.getTooltipDescription(location)
 
-      let bikes = this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas', { showAmount: false })
-      let descriptionBikes = `<div class="Item"><div class="Item__amount">${location.dock_bikes}</div><div class="Item__title">${bikes}</div></div>`
+      let popup = L.popup({
+        className: 'Popup'
+      })
 
-      let bases = this.pluralize(location.free_bases, 'base libre', 'bases libres', { showAmount: false })
-      let descriptionDocks = `<div class="Item"><div class="Item__amount">${location.free_bases}</div><div class="Item__title">${bases}</div></div>`
-
-      let description = `<div class="Items">${descriptionBikes} ${descriptionDocks}</div>`
-
-      let tooltipDescription = `${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. ${this.pluralize(location.free_bases, 'base libre', 'bases libres')}.`
-
-      let address = location.address
-
-      let popup = this.createPopup(latlng, { name, description, address })
+      popup.setContent(this.getPopupContent(location))
 
       let icon = this.getIcon(location)
       let marker = L.marker(latlng, { icon, location }).addTo(this.map)
@@ -158,6 +169,9 @@ export default {
 
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
+    },
+    getTooltipDescription (location) {
+      return `${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. ${this.pluralize(location.free_bases, 'base libre', 'bases libres')}.`
     },
     bindMarker (marker, description, popup) {
       marker.on('click', () => {
@@ -366,24 +380,30 @@ export default {
       })
     },
 
-    createPopup (coordinates, options = {}) {
-      let popup = L.popup({
-        className: 'Popup'
-      })
+    getPopupContent (location) {
+      let name = `<div class="Station__id">${location.number}</div> ${location.name}`
+
+      let bikes = this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas', { showAmount: false })
+      let descriptionBikes = `<div class="Item"><div class="Item__amount">${location.dock_bikes}</div><div class="Item__title">${bikes}</div></div>`
+
+      let bases = this.pluralize(location.free_bases, 'base libre', 'bases libres', { showAmount: false })
+      let descriptionDocks = `<div class="Item"><div class="Item__amount">${location.free_bases}</div><div class="Item__title">${bases}</div></div>`
+
+      let description = `<div class="Items">${descriptionBikes} ${descriptionDocks}</div>`
+
+      let address = location.address
 
       let content = L.DomUtil.create('div', 'Popup__content')
       let header = L.DomUtil.create('div', 'Popup__header', content)
       let body = L.DomUtil.create('div', 'Popup__body', content)
-      let description = L.DomUtil.create('div', 'Popup__description', body)
-      let address = L.DomUtil.create('div', 'Popup__address', body)
+      let popupDescription = L.DomUtil.create('div', 'Popup__description', body)
+      let popupAddress = L.DomUtil.create('div', 'Popup__address', body)
 
-      header.innerHTML = options.name
-      description.innerHTML = options.description
-      address.innerText = options.address
+      header.innerHTML = name
+      popupDescription.innerHTML = description
+      popupAddress.innerText = address
 
-      popup.setContent(content)
-
-      return popup
+      return content
     },
 
     startLoading () {

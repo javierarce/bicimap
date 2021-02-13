@@ -44,7 +44,7 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.bindEvents()
-      this.getStations()
+      this.loadStations()
     })
   },
   methods: {
@@ -104,7 +104,16 @@ export default {
       this.alertDescription = description
       this.alertFooter = footer
     },
+    loadStations () {
+      console.log('loading stations')
+      this.getStations()
+
+      setInterval(() => {
+        this.getStations()
+      }, 60 * 1000)
+    },
     getStations () {
+      console.log('Getting stations')
       this.get('/stations.json')
         .then(this.onGetStations.bind(this))
         .catch((error) => {
