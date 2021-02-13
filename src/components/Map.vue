@@ -129,9 +129,8 @@ export default {
       })
     },
     onAddStations (stations) {
-      this.stations = stations
-
       if (this.stations && this.stations.length) {
+        this.stations = stations
         this.updateStations()
       } else {
         this.stations.forEach(this.addMarker.bind(this))
