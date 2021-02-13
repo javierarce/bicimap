@@ -54,11 +54,8 @@ export default {
         let location = marker.options.location
         if (element) {
 
-          let tooltipDescription = `${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. ${this.pluralize(location.free_bases, 'base libre', 'bases libres')}.`
+          let tooltipDescription = this.getTooltipContent(location, value)
 
-          if (value) {
-            tooltipDescription = `${this.pluralize(location.free_bases, 'base libre', 'bases libres')}. ${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. `
-          }
           marker.setTooltipContent(tooltipDescription)
 
           let what = value? 'free_bases' : 'dock_bikes'
@@ -94,14 +91,12 @@ export default {
         }
       }
     },
-    getIcon (location) {
-      let html = `<div class="data"></div>`
-
+    getIconClassNames (location) {
       let classNames = [ 'icon' ]
 
       let what = this.mode ? 'free_bases' : 'dock_bikes'
 
-      classNames.push(what ? 'is-bikes' : 'is-docks')
+      classNames.push(this.mode ? 'is-docks' : 'is-bikes')
 
       if (location && location[what] === 0) {
         classNames.push('is-empty')
@@ -119,14 +114,7 @@ export default {
         classNames.push('is-disabled')
       }
 
-      let className = classNames.join(' ')
-
-      return new L.divIcon({
-        className,
-        html,
-        iconSize: [30, 30],
-        iconAnchor: new L.Point(15, 0)
-      })
+      return classNames.join(' ')
     },
     onAddStations (stations) {
       if (this.stations && this.stations.length) {
@@ -152,9 +140,11 @@ export default {
 
         if (station) {
           let content = this.getPopupContent(station)
+          let tooltipContent = this.getTooltipContent(station)
           let icon = this.getIcon(station)
 
           marker.setPopupContent(content)
+          marker.setTooltipContent(tooltipContent)
           marker.setIcon(icon)
         }
       })
@@ -165,24 +155,33 @@ export default {
     addMarker (location) {
       let latlng = [location.latitude, location.longitude]
 
-      let tooltipDescription = this.getTooltipDescription(location)
-
       let popup = L.popup({
         className: 'Popup'
       })
 
+      let icon = this.getIcon(location)
       popup.setContent(this.getPopupContent(location))
 
-      let icon = this.getIcon(location)
       let marker = L.marker(latlng, { icon, location }).addTo(this.map)
 
-      this.bindMarker(marker, tooltipDescription, popup)
+      this.bindMarker(marker, this.getTooltipContent(location), popup)
 
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
     },
-    getTooltipDescription (location) {
-      return `${this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas')}. ${this.pluralize(location.free_bases, 'base libre', 'bases libres')}.`
+    getIcon (location) {
+      return new L.divIcon({
+        className: this.getIconClassNames(location),
+        html: '<div class="data"></div>',
+        iconSize: [30, 30],
+        iconAnchor: new L.Point(15, 0)
+      })
+    },
+    getTooltipContent (location, mode) {
+      let parts = [this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas'), this.pluralize(location.free_bases, 'base libre', 'bases libres')]
+      let description = mode ? parts.reverse() : parts
+
+      return description.join('. ') + '.'
     },
     bindMarker (marker, description, popup) {
       marker.on('click', () => {
