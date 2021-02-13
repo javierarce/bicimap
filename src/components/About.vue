@@ -8,7 +8,11 @@
           
           <p><strong>BiciMap</strong> es un mapa no oficial y de código abierto del servicio de alquiler de bicicletas <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> de Madrid.</p>
 
-          <p>Sigue el desarrollo de este proyecto, sugiere mejoras e informa de errores en GitHub.</p>
+          <p>Este proyecto busca ofrecer una alternativa amable al mapa de estaciones oficial.</p>
+
+          <div class="About__separator"></div>
+
+          <p>Sigue el desarrollo de este mapa, sugiere mejoras e informa de errores en GitHub.</p>
           <a href="https://github.com/javierarce/bicimap" class="Button About__button is-bold" title="Visita el repositorio en GitHub" target="_blank">Visita el repositorio de código</a>
 
         </div>
@@ -16,7 +20,7 @@
 
         <div class="About__footer">
           <div>Actualizado hace <strong v-html="updatedAt"></strong></div>
-          <div>Creado por <a href="https://twitter.com/javier" target="_blank">Javier Arce</a> sobre una bicicleta</div>
+          <div>Creado por <a href="https://twitter.com/javier" target="_blank">Javier Arce</a> sobre una bici</div>
         </div>
       </div>
     </div>
