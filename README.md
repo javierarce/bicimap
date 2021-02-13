@@ -6,6 +6,13 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ![card](public/img/card.png)
 
+### HOW TO INSTALL IT
+
+- Clone this repo: `git@github.com:javierarce/bicimap.git`
+- Install dependecies: `yarn`
+- Run server: `yarn serve`
+- Follow the instructions in your console
+
 ### TODO
 
 - [ ] Add station refresh on a set interval
@@ -17,6 +24,7 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### Done
 
+- [x] Add installation instructions
 - [x] Fix popup issues on mobile / Safari
 - [x] Launch project
 - [x] Improve tooltips (style and content)
