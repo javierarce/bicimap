@@ -130,14 +130,14 @@ export default {
     },
     onAddStations (stations) {
       if (this.stations && this.stations.length) {
-        this.updateStations()
+        this.updateStations(stations)
       } else {
         this.stations = stations
         this.stations.forEach(this.addMarker.bind(this))
         this.map.addLayer(this.cluster)
       }
     },
-    updateStations () {
+    updateStations (stations) {
       this.stations = stations
 
       this.cluster.getLayers().forEach((marker) => { 
