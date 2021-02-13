@@ -37,7 +37,7 @@ export default {
     this.$nextTick(() => {
       this.bindEvents()
       this.init()
-      window.pin = this
+      window.map = this
     })
   },
   watch: {

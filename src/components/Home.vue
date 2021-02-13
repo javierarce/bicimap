@@ -21,7 +21,7 @@ import Alert from './Alert.vue'
 import Map from './Map.vue'
 
 import { formatDistance } from 'date-fns'
-import { es } from 'date-fns/locale';
+import { es } from 'date-fns/locale'
 
 export default {
   mixins: [mixins],
@@ -45,6 +45,7 @@ export default {
     this.$nextTick(() => {
       this.bindEvents()
       this.loadStations()
+      window.home = this
     })
   },
   methods: {
@@ -113,8 +114,8 @@ export default {
       }, 60 * 1000)
     },
     getStations () {
-      console.log('Getting stations')
-      this.get('/stations.json')
+      console.log('Getting stations.')
+      this.get(`/stations.json?r=${Math.random() * 10000}`)
         .then(this.onGetStations.bind(this))
         .catch((error) => {
           console.error(error)
