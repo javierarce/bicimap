@@ -140,14 +140,23 @@ export default {
     updateStations (stations) {
       this.stations = stations
 
-      this.cluster.getLayers().forEach((marker) => { 
-        let station = this.getStationById(marker.options.location.id)
+      let markers = this.cluster.getLayers()
 
-        let content = this.getPopupContent(station)
-        let icon = this.getIcon(station)
+      markers.forEach((marker) => { 
+        let id = marker.options.location.id
+        console.log('Updating marker:', id)
+        console.log(marker.options.location)
+        let station = this.getStationById(id)
+        console.log(station)
+        console.log('-----')
 
-        marker.setPopupContent(content)
-        marker.setIcon(icon)
+        if (station) {
+          let content = this.getPopupContent(station)
+          let icon = this.getIcon(station)
+
+          marker.setPopupContent(content)
+          marker.setIcon(icon)
+        }
       })
     },
     getStationById (id) {
