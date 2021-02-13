@@ -28,8 +28,8 @@
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  padding: 32px 32px 18px 32px;
-  width: 500px;
+  padding: 1.4em;
+  width: 600px;
   transition: all 250ms ease-in-out;
   z-index: 1000;
 }
@@ -48,12 +48,11 @@
 }
 .About__footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 16px 0 0 0;
   width: 100%;
   font-size: 0.7em;
   line-height: 135%;
-  text-align: right;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
