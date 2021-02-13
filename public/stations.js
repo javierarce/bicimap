@@ -8,7 +8,7 @@ Bicimad.get().then((result) => {
 
   let content = JSON.stringify(data)
 
-  fs.writeFile('stations.json', content, 'utf8', (error) => {
+  fs.writeFile(`${ __dirname }/stations.json`, content, 'utf8', (error) => {
     if (error) {
       return console.log(error)
     }

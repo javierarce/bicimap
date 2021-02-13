@@ -10,6 +10,7 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 - Clone this repo: `git@github.com:javierarce/bicimap.git`
 - Install dependecies: `yarn`
+- Download stations: `node public/stations.js`
 - Run server: `yarn serve`
 - Follow the instructions in your console
 
