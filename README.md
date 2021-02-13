@@ -4,6 +4,8 @@
 
 This is my attempt to make a more useful and nicer version of the [current BiciMAD map](https://u.bicimad.com/mapa).
 
+![card](public/img/card.png)
+
 ### TODO
 
 - [ ] Add station refresh on a set interval
