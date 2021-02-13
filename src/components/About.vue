@@ -15,8 +15,8 @@
 
 
         <div class="About__footer">
-          <div>Datos actualizados hace <strong v-html="updatedAt"></strong></div>
-          <div>Creado por <a href="https://twitter.com/javier" target="_blank">Javier Arce</a> sobre una bicicleta.</div>
+          <div>Actualizado hace <strong v-html="updatedAt"></strong></div>
+          <div>Creado por <a href="https://twitter.com/javier" target="_blank">Javier Arce</a> sobre una bicicleta</div>
         </div>
       </div>
     </div>
