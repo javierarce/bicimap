@@ -109,9 +109,9 @@ export default {
       console.log('loading stations')
       this.getStations()
 
-      setInterval(() => {
-        this.getStations()
-      }, 60 * 1000)
+//      setInterval(() => {
+//        this.getStations()
+//      }, 60 * 1000)
     },
     getStations () {
       console.log('Getting stations.')
