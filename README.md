@@ -24,6 +24,7 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### Done
 
+- [x] Create PWA
 - [x] Add screenshot/GIF in this documentation
 - [x] Add station refresh on a set interval
 - [x] Add installation instructions
