@@ -174,7 +174,7 @@ export default {
       })
     },
     getTooltipContent (location, mode) {
-      let parts = [this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas'), this.pluralize(location.free_bases, 'base libre', 'bases libres')]
+      let parts = [this.pluralize(location.dock_bikes, 'bici', 'bicis'), this.pluralize(location.free_bases, 'base', 'bases')]
       let description = mode ? parts.reverse() : parts
 
       return description.join('. ') + '.'
