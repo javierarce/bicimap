@@ -16,15 +16,16 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### TODO
 
-- [ ] Add station refresh on a set interval
+- [ ] Allow marking stations as favorites for easier access
 - [ ] Add tooltips for the map controllers
 - [ ] Fix error alerts
-- [ ] Add screenshot/GIF in this documentation
 - [ ] Add numbers in the markers for better accesibility
 - [ ] Show nearby stations to a given station
 
 ### Done
 
+- [x] Add screenshot/GIF in this documentation
+- [x] Add station refresh on a set interval
 - [x] Add installation instructions
 - [x] Fix popup issues on mobile / Safari
 - [x] Launch project
