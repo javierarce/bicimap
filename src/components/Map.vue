@@ -52,8 +52,8 @@ export default {
       window.bus.markers.forEach((marker) => {
         let element = marker.getElement()
         let location = marker.options.location
-        if (element) {
 
+        if (element) {
           let tooltipDescription = this.getTooltipContent(location, value)
 
           marker.setTooltipContent(tooltipDescription)
@@ -136,7 +136,7 @@ export default {
 
         if (station) {
           let content = this.getPopupContent(station)
-          let tooltipContent = this.getTooltipContent(station)
+          let tooltipContent = this.getTooltipContent(station, this.mode)
           let icon = this.getIcon(station)
 
           marker.setPopupContent(content)
@@ -160,7 +160,7 @@ export default {
 
       let marker = L.marker(latlng, { icon, location }).addTo(this.map)
 
-      this.bindMarker(marker, this.getTooltipContent(location), popup)
+      this.bindMarker(marker, this.getTooltipContent(location, this.mode), popup)
 
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
