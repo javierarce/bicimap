@@ -132,11 +132,7 @@ export default {
 
       markers.forEach((marker) => { 
         let id = marker.options.location.id
-        console.log('Updating marker:', id)
-        console.log(marker.options.location)
         let station = this.getStationById(id)
-        console.log(station)
-        console.log('-----')
 
         if (station) {
           let content = this.getPopupContent(station)
