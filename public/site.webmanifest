@@ -1,6 +1,7 @@
 {
-    "name": "",
-    "short_name": "",
+  "start_url": "/",
+    "name": "BiciMap",
+    "short_name": "BiciMap",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

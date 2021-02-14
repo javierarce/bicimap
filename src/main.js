@@ -9,6 +9,7 @@ const App = require('./app.vue').default
 import config from '../config'
 
 import './assets/scss/style.scss'
+import './registerServiceWorker'
 
 Vue.use(VueRouter)
 
