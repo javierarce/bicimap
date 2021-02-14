@@ -106,15 +106,15 @@ export default {
       this.alertFooter = footer
     },
     loadStations () {
-      console.log('loading stations')
+      console.log('Loading stations…')
       this.getStations()
 
-//      setInterval(() => {
-//        this.getStations()
-//      }, 60 * 1000)
+      setInterval(() => {
+        this.getStations()
+      }, 30 * 1000)
     },
     getStations () {
-      console.log('Getting stations.')
+      console.log('Getting stations…')
       this.get(`/stations.json?r=${Math.random() * 10000}`)
         .then(this.onGetStations.bind(this))
         .catch((error) => {
