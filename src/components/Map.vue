@@ -177,7 +177,7 @@ export default {
       let parts = [this.pluralize(location.dock_bikes, 'bici', 'bicis'), this.pluralize(location.free_bases, 'base', 'bases')]
       let description = mode ? parts.reverse() : parts
 
-      return description.join('. ') + '.'
+      return description.join(' / ')
     },
     bindMarker (marker, description, popup) {
       marker.on('click', () => {
