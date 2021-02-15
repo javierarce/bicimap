@@ -10,11 +10,10 @@
 
           <p>Este proyecto busca ofrecer una alternativa amable al mapa de estaciones oficial.</p>
 
-          <div class="About__separator"></div>
-
-          <p>Sigue el desarrollo de este mapa, sugiere mejoras e informa de errores en GitHub.</p>
-          <a href="https://github.com/javierarce/bicimap" class="Button About__button is-bold" title="Visita el repositorio en GitHub" target="_blank">Visita el repositorio de código</a>
-
+          <div class="About__help">
+            <p>Sigue el desarrollo de este mapa, sugiere mejoras e informa de errores en GitHub.</p>
+            <a href="https://github.com/javierarce/bicimap" class="Button About__button is-bold" title="Visita el repositorio en GitHub" target="_blank">Visita el repositorio de código</a>
+          </div>
         </div>
 
 

@@ -54,11 +54,9 @@
 .About__footer {
   display: flex;
   justify-content: space-between;
-  padding: 16px 0 0 0;
   width: 100%;
   font-size: 0.7em;
   line-height: 135%;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .About__content {
@@ -98,4 +96,10 @@
   .About__footer > div:first-child{
     margin: 0 0 0.2em;
   }
+}
+
+.About__help {
+  background: #f6f6f6;
+  padding: 0.8em;
+  border-radius: 4px;
 }
