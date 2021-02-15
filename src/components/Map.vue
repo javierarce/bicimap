@@ -232,6 +232,10 @@ export default {
         })
 
         this.you = L.marker(location, { icon }).addTo(this.map)
+
+        this.you.on('click', () => {
+          this.map.setView(location, 19, { animate: true, easeLinearity: 0.5, duration: 0.5 })
+        })
       })
 
       this.map.on('locationerror', (e) => {
