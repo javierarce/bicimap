@@ -1,3 +1,20 @@
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(#2477BE, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 20px rgba(#2477BE, 0.0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(#2477BE, 0.0);
+	}
+}
+
 @keyframes load8 {
   0% {
     transform: rotate(0deg);

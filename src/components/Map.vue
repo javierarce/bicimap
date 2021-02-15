@@ -17,6 +17,7 @@ export default {
   mixins: [mixins],
   data() {
     return {
+      you: undefined,
       mode: PICKUP_MODE,
       lanes: {},
       stations: [],
@@ -216,7 +217,21 @@ export default {
       this.map.on('locationfound', (data) => {
         window.bus.$emit(config.ACTIONS.STOP_LOADING)
         this.locateControl.stopLoading()
-        this.map.setView(data.latlng, 17, { animate: true, easeLinearity: 0.5, duration: 0.5 })
+        let location = data.latlng
+        this.map.setView(location, 17, { animate: true, easeLinearity: 0.5, duration: 0.5 })
+
+        if (this.you) {
+          this.you.remove()
+        }
+
+        let icon = new L.divIcon({
+          className: 'icon is-you',
+          html: '<div class="marker"></div>',
+          iconSize: [30, 30],
+          iconAnchor: new L.Point(15, 0)
+        })
+
+        this.you = L.marker(location, { icon }).addTo(this.map)
       })
 
       this.map.on('locationerror', (e) => {
@@ -351,6 +366,7 @@ export default {
 
             L.DomEvent.disableClickPropagation(div)
             this.map.locate({setView: false })
+
             window.bus.$emit(config.ACTIONS.START_LOADING)
             this.locateControl.startLoading()
           })
