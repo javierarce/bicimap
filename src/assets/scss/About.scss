@@ -7,13 +7,6 @@
   justify-content: center;
   z-index: 10000;
 }
-.About__separator {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  margin: 1em 0;
-}
-.About__inner p:last-child {
-  margin: 0;
-}
 
 .About__inner a {
   color: #000;
@@ -21,20 +14,23 @@
 }
 
 .About__inner strong {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .About__inner p {
   margin: 0 0 16px 0;
   line-height: 135%;
 }
+.About__inner p:last-child {
+  margin: 0;
+}
 
 .About__inner {
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  padding: 1.4em;
-  width: 540px;
+  padding: 1.2em;
+  width: 500px;
   transition: all 250ms ease-in-out;
   z-index: 1000;
 }
@@ -44,12 +40,15 @@
   margin: 0 0 16px 0;
 }
 .About__description {
-  margin: 0 0 16px 0;
+  margin: 0 0 0.8em 0;
   line-height: 135%;
 }
-.About__sidebar {
-  flex: 1;
-  margin: 0 0 0 16px;
+.About__highlight {
+  background: #f6f6f6;
+  padding: 0.8em;
+  line-height: 135%;
+  border-radius: 4px;
+  margin: 0 0 0.8em 0;
 }
 .About__footer {
   display: flex;
@@ -67,7 +66,7 @@
   flex-direction: column;
 }
 
-.Button.About__button.is-bold {
+.About__highlight .About__button.is-bold {
   font-size: 1em;
 }
 .About__backdrop {
@@ -91,15 +90,9 @@
 
   .About__footer {
     flex-direction: column;
-    font-size: .8em;
+    font-size: 0.8em;
   }
   .About__footer > div:first-child{
     margin: 0 0 0.2em;
   }
-}
-
-.About__help {
-  background: #f6f6f6;
-  padding: 0.8em;
-  border-radius: 4px;
 }
