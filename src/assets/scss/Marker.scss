@@ -11,7 +11,7 @@
   transform: scale(0.9);
 }
 .Marker.is-docks:hover .Marker__inner {
-  transform: scale(0.9);
+  transform: scale(0.9) rotate(90deg);
 }
 
 .Marker.is-docks.is-low .Marker__inner:before {
@@ -33,8 +33,6 @@
   height: 100%;
   right: 0;
 }
-
-
 
 .Marker.is-low .Marker__inner:before {
   content: '';
