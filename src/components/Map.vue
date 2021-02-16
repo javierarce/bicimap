@@ -61,7 +61,6 @@ export default {
 
           let what = value? 'free_bases' : 'dock_bikes'
 
-          element.classList.toggle(`is-bikes`, what === 'dock_bikes')
           element.classList.toggle(`is-docks`, what === 'free_bases')
 
           element.classList.toggle('is-empty', location[what] === 0)
@@ -93,11 +92,10 @@ export default {
       }
     },
     getIconClassNames (location) {
-      let classNames = [ 'icon' ]
+      let classNames = [ 'Marker' ]
 
       let what = this.mode ? 'free_bases' : 'dock_bikes'
-
-      classNames.push(this.mode ? 'is-docks' : 'is-bikes')
+      classNames.push(this.mode ? 'is-docks' : '')
 
       if (location && location[what] === 0) {
         classNames.push('is-empty')
@@ -169,7 +167,7 @@ export default {
     getIcon (location) {
       return new L.divIcon({
         className: this.getIconClassNames(location),
-        html: '<div class="data"></div>',
+        html: `<div class="Marker__inner"></div>`,
         iconSize: [30, 30],
         iconAnchor: new L.Point(15, 0)
       })
@@ -225,8 +223,8 @@ export default {
         }
 
         let icon = new L.divIcon({
-          className: 'icon is-you',
-          html: '<div class="marker"></div>',
+          className: 'Marker is-you',
+          html: '<div class="Marker__inner"></div>',
           iconSize: [30, 30],
           iconAnchor: new L.Point(15, 0)
         })
@@ -290,6 +288,11 @@ export default {
           let bikes = L.DomUtil.create('div', 'Control__modeBikes')
           let docks = L.DomUtil.create('div', 'Control__modeDocks')
 
+          L.DomEvent.on(div, 'dblclick', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+          })
+
           L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
             e.stopPropagation()
             e.preventDefault()
@@ -315,6 +318,11 @@ export default {
         onAdd: ()  => {
           let div = L.DomUtil.create('div', 'Control Control__help')
 
+          L.DomEvent.on(div, 'dblclick', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+          })
+
           L.DomEvent.on(div, 'click', (e) => {
             e.stopPropagation()
             e.preventDefault()
@@ -333,6 +341,11 @@ export default {
         },
         onAdd: ()  => {
           let div = L.DomUtil.create('div', 'Control Control__lanes')
+
+          L.DomEvent.on(div, 'dblclick', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+          })
 
           L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
             e.stopPropagation()
