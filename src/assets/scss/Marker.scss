@@ -4,7 +4,7 @@
 
 .Marker.is-docks .Marker__inner {
   border-radius: 4px;
-  transform: scale(1);
+  transform: scale(1) rotate(90deg);
 }
 
 .Marker:hover .Marker__inner {
@@ -14,13 +14,35 @@
   transform: scale(0.9);
 }
 
-.Marker.is-low .Marker__inner:before {
+.Marker.is-docks.is-low .Marker__inner:before {
+  content: '';
+  position: absolute;
+  background: #000;
+  opacity: 0.2;
+  width: 30%;
+  height: 100%;
+  right: 0;
+}
+
+.Marker.is-docks.is-ok .Marker__inner:before {
   content: '';
   position: absolute;
   background: #000;
   opacity: 0.1;
+  width: 50%;
+  height: 100%;
+  right: 0;
+}
+
+
+
+.Marker.is-low .Marker__inner:before {
+  content: '';
+  position: absolute;
+  background: #000;
+  opacity: 0.2;
   width: 100%;
-  height: 20%;
+  height: 30%;
   bottom: 0;
 }
 
