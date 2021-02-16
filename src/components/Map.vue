@@ -17,21 +17,21 @@ export default {
   mixins: [mixins],
   data() {
     return {
-      you: undefined,
-      mode: PICKUP_MODE,
-      lanes: {},
-      stations: [],
       cluster: {},
-      map: {},
-      showLanes: false,
+      coordinates: undefined,
+      expanded: false,
       helpControl: null,
+      lanes: {},
       lanesControl: null,
       locateControl: null,
+      map: {},
+      marker: undefined,
+      mode: PICKUP_MODE,
       modeControl: null,
-      expanded: false,
-      coordinates: undefined,
       options: {},
-      marker: undefined
+      showLanes: false,
+      stations: [],
+      you: undefined
     }
   },
   mounted () {
@@ -368,7 +368,6 @@ export default {
             e.stopPropagation()
             e.preventDefault()
 
-            L.DomEvent.disableClickPropagation(div)
             this.map.locate({setView: false })
 
             window.bus.$emit(config.ACTIONS.START_LOADING)
