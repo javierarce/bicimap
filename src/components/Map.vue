@@ -435,7 +435,10 @@ export default {
       let header = L.DomUtil.create('div', 'Popup__header', content)
       let body = L.DomUtil.create('div', 'Popup__body', content)
       let popupDescription = L.DomUtil.create('div', 'Popup__description', body)
-      let popupAddress = L.DomUtil.create('div', 'Popup__address', body)
+      let popupAddress = L.DomUtil.create('a', 'Popup__address', body)
+      popupAddress.href = `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`
+      popupAddress.target = '_blank'
+      popupAddress.title = 'Abrir en Google Maps'
 
       header.innerHTML = name
       popupDescription.innerHTML = description

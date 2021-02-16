@@ -25,11 +25,17 @@
   padding: 0.8em;
   word-break: break-word;
 }
+
 .Popup__address {
   font-size: 0.8em;
   width: 100%;
   opacity: 0.5;
   line-height: 135%;
+  transition: opacity 150ms ease-in-out;
+}
+
+.Popup__address:hover {
+  opacity: 0.8;
 }
 
 .Popup__button {
@@ -172,6 +178,11 @@
   box-shadow: 0 2px 4px rgba(#000, 0.2);
 }
 
+.leaflet-container a {
+  color: #000;
+  text-decoration: none;
+}
+
 .leaflet-container a.leaflet-popup-close-button {
   display: none;
 }
@@ -198,6 +209,7 @@
 
 .Item:first-child {
   margin: 0 0.2em 0 0;
+  border-radius: 100%;
 }
 .Item:last-child {
   margin: 0 0 0 0.2em;
@@ -205,12 +217,12 @@
 .Item {
   display: flex;
   width: 100px;
-  height: 90px;
+  height: 100px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.03);
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 .Item__amount {
