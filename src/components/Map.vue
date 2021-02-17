@@ -259,14 +259,15 @@ export default {
         minZoom: 0
       }).addTo(this.map)
 
-      this.map.whenReady(this.onMapReady)
       this.addLanes()
+      this.map.whenReady(this.onMapReady)
     },
     onMapMoveEnd () {
       this.saveToLocalStorage('bounds',this.map.getBounds().toBBoxString())
     },
     onMapReady () {
       let bounds = this.retrieveFromLocalStorage('bounds')
+
       try {
         if (bounds) {
           let [west, south, east, north] = bounds.split(',').map(parseFloat)
@@ -284,7 +285,7 @@ export default {
         onRemove: () => {
         },
         onAdd: ()  => {
-          let div = L.DomUtil.create('div', 'Control Control__mode')
+          let div = L.DomUtil.create('div', 'Control is-hidden Control__mode')
           let bikes = L.DomUtil.create('div', 'Control__modeBikes')
           let docks = L.DomUtil.create('div', 'Control__modeDocks')
 
@@ -304,6 +305,10 @@ export default {
           div.appendChild(bikes)
           div.appendChild(docks)
 
+          setTimeout(() => {
+            div.classList.remove('is-hidden')
+          }, 800)
+
           return div
         }
       })
@@ -316,7 +321,7 @@ export default {
         onRemove: () => {
         },
         onAdd: ()  => {
-          let div = L.DomUtil.create('div', 'Control Control__help')
+          let div = L.DomUtil.create('div', 'Control is-hidden Control__help')
 
           L.DomEvent.on(div, 'dblclick', (e) => {
             e.stopPropagation()
@@ -329,6 +334,11 @@ export default {
 
             window.bus.$emit(config.ACTIONS.OPEN_ABOUT)
           })
+
+          setTimeout(() => {
+            div.classList.remove('is-hidden')
+          }, 800)
+
           return div
         }
       })
@@ -340,7 +350,7 @@ export default {
         onRemove: () => {
         },
         onAdd: ()  => {
-          let div = L.DomUtil.create('div', 'Control Control__lanes')
+          let div = L.DomUtil.create('div', 'Control is-hidden Control__lanes')
 
           L.DomEvent.on(div, 'dblclick', (e) => {
             e.stopPropagation()
@@ -354,6 +364,11 @@ export default {
             this.showLanes = !this.showLanes
             div.classList.toggle('is-selected', this.showLanes)
           })
+
+          setTimeout(() => {
+            div.classList.remove('is-hidden')
+          }, 800)
+
           return div
         }
       })
@@ -372,7 +387,7 @@ export default {
         onRemove: () => {
         },
         onAdd: ()  => {
-          let div = L.DomUtil.create('div', 'Control Control__locate')
+          let div = L.DomUtil.create('div', 'Control is-hidden Control__locate')
           let spinner = L.DomUtil.create('div', 'Spinner is-mini')
 
           div.appendChild(spinner)
@@ -386,6 +401,11 @@ export default {
             window.bus.$emit(config.ACTIONS.START_LOADING)
             this.locateControl.startLoading()
           })
+
+          setTimeout(() => {
+            div.classList.remove('is-hidden')
+          }, 800)
+
           return div
         }
       })

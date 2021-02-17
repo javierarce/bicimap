@@ -47,6 +47,10 @@
 
 /* Map controls */
 
+.Control.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
 .Control:hover {
   background-color: #f4f4f4;
 }
@@ -59,6 +63,7 @@
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
+  transition: opacity 500ms ease-in-out;
 }
 
 .Control__locate:before {
