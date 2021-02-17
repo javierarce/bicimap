@@ -1,12 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 25.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:none;stroke:#2477BE;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-</style>
-<g>
-	<rect x="8.3" y="4.8" class="st0" width="7.4" height="14.3"/>
-	<line class="st0" x1="12" y1="9.5" x2="12" y2="18.8"/>
-</g>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 8.37396V19.174" stroke="#2477BE" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12.6688 5.45H14.4312V15.0729C14.4312 17.656 16.5252 19.75 19.1083 19.75H19.2298C19.5612 19.75 19.8298 19.4814 19.8298 19.15C19.8298 18.8186 19.5612 18.55 19.2298 18.55H19.1083C17.188 18.55 15.6312 16.9932 15.6312 15.0729V4.85C15.6312 4.51863 15.3626 4.25 15.0312 4.25H12.6688H11.3312H8.9688C8.63743 4.25 8.3688 4.51863 8.3688 4.85V15.0729C8.3688 16.9932 6.81204 18.55 4.89167 18.55H4.77017C4.4388 18.55 4.17017 18.8186 4.17017 19.15C4.17017 19.4814 4.4388 19.75 4.77017 19.75H4.89167C7.47478 19.75 9.5688 17.656 9.5688 15.0729V5.45H11.3312H12.6688Z" fill="#2477BE"/>
 </svg>
