@@ -246,13 +246,6 @@ export default {
       this.addModeControl()
       this.addLocateControl()
 
-      this.cluster = L.markerClusterGroup({
-        disableClusteringAtZoom: 14,
-        spiderfyOnMaxZoom: false,
-        showCoverageOnHover: false,
-        zoomToBoundsOnClick: true
-      })
-
       this.layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}' + (L.Browser.retina ? '@2x.png' : '.png'), {
         attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
@@ -279,6 +272,12 @@ export default {
       } catch (error) {
         console.log(error)
       }
+
+      this.cluster = L.markerClusterGroup({
+        disableClusteringAtZoom: 14,
+        spiderfyOnMaxZoom: false,
+        showCoverageOnHover: false
+      })
     },
 
     addModeControl () {
