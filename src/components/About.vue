@@ -5,7 +5,7 @@
       <div class="About__content">
         <div class="About__description">
 
-          <p><strong>BiciMap</strong> es un mapa no oficial y de código abierto del servicio de alquiler de bicicletas <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> de Madrid.</p>
+          <p><strong @click="reload">BiciMap</strong> es un mapa no oficial y de código abierto del servicio de alquiler de bicicletas <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> de Madrid.</p>
 
           <p>Este proyecto trata de ofrecer una alternativa amable y usable al mapa de estaciones oficial.</p>
           </div>
@@ -32,6 +32,9 @@ import config from '../../config'
 export default {
   props: ['updatedAt'],
   methods: {
+    reload () {
+      window.location.reload(true)
+    },
     onClickOutside () {
       window.bus.$emit(config.ACTIONS.TOGGLE_ABOUT)
     },
