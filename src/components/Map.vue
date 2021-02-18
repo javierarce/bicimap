@@ -165,7 +165,7 @@ export default {
       let icon = this.getIcon(location)
       popup.setContent(this.getPopupContent(location))
 
-      let marker = L.marker(latlng, { icon, location }).addTo(this.map)
+      let marker = L.marker(latlng, { icon, location })
 
       this.bindMarker(marker, this.getTooltipContent(location, this.mode), popup)
 
