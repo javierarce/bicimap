@@ -249,7 +249,8 @@ export default {
       this.cluster = L.markerClusterGroup({
         disableClusteringAtZoom: 14,
         spiderfyOnMaxZoom: false,
-        showCoverageOnHover: false
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: true
       })
 
       this.layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}' + (L.Browser.retina ? '@2x.png' : '.png'), {

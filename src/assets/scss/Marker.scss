@@ -9,6 +9,7 @@
 
 .Marker:hover .Marker__inner {
   transform: scale(0.9);
+  border-width: 5px;
 }
 .Marker.is-docks:hover .Marker__inner {
   transform: scale(0.9) rotate(90deg);
@@ -123,6 +124,9 @@
 .marker-cluster {
   background-clip: padding-box;
   border-radius: 100%;
+  display: flex;
+  justify-content:center;
+  align-items: center;
 }
 .marker-cluster:hover div {
   transform: scale(0.8);
@@ -131,14 +135,15 @@
 .marker-cluster div {
   width: 30px;
   height: 30px;
-  margin: 5px 0 0 5px;
-  color: transparent;
-  font-weight: 600;
   text-align: center;
+  color: var(--white);
+  font-weight: bold;
   border-radius: 100%;
   transition: transform 250ms ease-in-out;
 }
+
 .marker-cluster span {
+  text-align: center;
   line-height: 30px;
 }
 
@@ -179,6 +184,4 @@
 .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
   border: none;
 }
-
-
 
