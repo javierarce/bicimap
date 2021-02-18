@@ -8,8 +8,8 @@ const App = require('./app.vue').default
 
 import config from '../config'
 
-import './assets/scss/style.scss?v=1.3'
-import './registerServiceWorker'
+import './assets/scss/style.scss?v=1.4'
+import './registerServiceWorker?v=1.4'
 
 Vue.use(VueRouter)
 
