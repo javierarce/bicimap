@@ -48,7 +48,7 @@
   border: none;
   outline: none;
   background: #2A84D2;
-  color: #fff;
+  color: var(--white);
   font-weight: bold;
   text-align: center;
   text-decoration: none;
@@ -70,7 +70,7 @@
 
 .can-send .Popup__controls .Popup__button,
 .can-send .Popup__controls .Popup__button {
-  background: #2477BE;
+  background: var(--blue);
 }
 
 .Popup__body {
@@ -120,10 +120,10 @@
   align-items: flex-start;
   justify-content: flex-start;
   border-radius: 4px 4px 0 0;
-	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, var(--green));
 	background-size: 400% 400%;
   padding: 0.8em;
-  color: #fff;
+  color: var(--white);
   line-height: 135%;
   font-weight: bold;
   text-transform: uppercase;
@@ -132,7 +132,7 @@
 }
 
 .Popup__user {
-  color: #000;
+  color: var(--black);
 }
 .Popup__userAvatar {
   display: block;
@@ -147,17 +147,17 @@
   border-radius: 4px;
   padding: 0;
   border: none;
-  background: #fff;
-  color: #000;
+  background: var(--white);
+  color: var(--black);
   font-size: 14px;
   line-height: 24px;
-  box-shadow: 0 2px 4px rgba(#000, 0.2);
+  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
 }
 
 .Popup.leaflet-popup .leaflet-popup-close-button {
   top: 9px;
   right: 5px;
-  color: #fff;
+  color: var(--white);
   font-size: 16px;
   font-weight: normal;
 }
@@ -174,12 +174,12 @@
   margin: -10px auto 0;
   padding: 1px;
   border: 1px solid transparent;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(#000, 0.2);
+  background: var(--white);
+  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
 }
 
 .leaflet-container a {
-  color: #000;
+  color: var(--black);
   text-decoration: none;
 }
 

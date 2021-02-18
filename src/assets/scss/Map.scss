@@ -13,23 +13,31 @@
 .Map {
   position: relative;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(#000, 0.2);
+  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
 }
 
 
 .Map .leaflet-control-zoom-in, 
 .Map .leaflet-control-zoom-out {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
-  background: #fff;
+  box-shadow: 0 2px 4px rgba(var(--shadow), .2);
+  background: var(--white);
   width: 32px;
   height: 32px;
+  color: var(--blue);
   cursor: pointer;
   user-select: none;
   font-size: 1.4em;
+  transition: opacity 500ms ease-in-out, background 200ms ease-in-out;
+}
+
+.Map .leaflet-control-zoom-in:hover, 
+.Map .leaflet-control-zoom-out:hover {
+  color: var(--blue);
+  background: var(--gray);
 }
 
 .Map .leaflet-container a {
-  background: #2477BE;
+  background: var(--blue);
 }
 .Map .leaflet-bar a:first-child {
   border-top-left-radius: 4px;
@@ -42,28 +50,28 @@
 }
 
 .leaflet-container a {
-  color: #2477BE;
+  color: var(--blue);
 }
 
 /* Map controls */
 
-.Control.is-hidden {
-  visibility: hidden;
-  opacity: 0;
-}
-.Control:hover {
-  background-color: #f4f4f4;
-}
-
 .Control {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
-  background: #fff;
+  box-shadow: 0 2px 4px rgba(var(--shadow), .2);
+  background: var(--white);
   width: 32px;
   height: 32px;
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
-  transition: opacity 500ms ease-in-out;
+  transition: opacity 500ms ease-in-out, background 200ms ease-in-out;
+}
+.Control.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.Control:hover {
+  background-color: var(--gray);
 }
 
 .Control__locate:before {
@@ -73,7 +81,7 @@
   left: 8px;
   width: 12px;
   height: 12px;
-  border: 2px solid #2477BE;
+  border: 2px solid var(--blue);
   border-radius: 100%;
 }
 
@@ -89,16 +97,16 @@
 }
 
 .Control__lanes.is-selected {
-  background: #2477BE;
+  background: var(--blue);
 }
 
 .Control__lanes.is-selected {
   background-image: url(/img/lanes_white.svg);
-  background-color: #2477BE;
+  background-color: var(--blue);
 }
 
 .Control__lanes {
-  background-color: #fff;
+  background-color: var(--white);
   background-image: url(/img/lanes.svg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -118,7 +126,7 @@
 }
 
 .Control__mode .Control__modeBikes {
-  background-color: #2477BE;
+  background-color: var(--blue);
   border-radius: 4px 4px 0 0;
   background-image: url(/img/bike_white.svg);
   background-repeat: no-repeat;
@@ -132,11 +140,11 @@
   background-repeat: no-repeat;
 }
 .Control__mode.is-docks .Control__modeBikes {
-  background-color: #fff;
+  background-color: var(--white);
   background-image: url(/img/bike.svg)
 }
 .Control__mode.is-docks .Control__modeDocks {
-  background-color: #2477BE;
+  background-color: var(--blue);
   background-image: url(/img/dock_white.svg)
 }
 

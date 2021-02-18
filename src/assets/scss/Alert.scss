@@ -17,9 +17,9 @@
 }
 
 .Alert__content {
-  background: #fff;
+  background: var(--white);
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
   padding: 32px;
   width: 500px;
   transition: all 250ms ease-in-out;
@@ -39,7 +39,7 @@
 }
 
 .Alert__backdrop {
-	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, var(--green));
 	opacity: 0.5;
   top: 0;
   right: 0;
@@ -65,7 +65,7 @@
   border: none;
   outline: none;
   background: #2A84D2;
-  color: #fff;
+  color: var(--white);
   font-weight: bold;
   text-align: center;
   text-decoration: none;
