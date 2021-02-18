@@ -119,9 +119,17 @@ export default {
       if (this.stations && this.stations.length) {
         this.updateStations(stations)
       } else {
+
+        this.cluster = L.markerClusterGroup({
+          disableClusteringAtZoom: 14,
+          spiderfyOnMaxZoom: false,
+          showCoverageOnHover: false
+        })
+
+        this.map.addLayer(this.cluster)
+
         this.stations = stations
         this.stations.forEach(this.addMarker.bind(this))
-        this.map.addLayer(this.cluster)
       }
     },
     updateStations (stations) {
