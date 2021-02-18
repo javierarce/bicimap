@@ -212,6 +212,12 @@ export default {
 
       this.map.on('moveend', this.onMapMoveEnd)
 
+      this.cluster = L.markerClusterGroup({
+        disableClusteringAtZoom: 14,
+        spiderfyOnMaxZoom: false,
+        showCoverageOnHover: false
+      })
+
       this.map.on('locationfound', (data) => {
         window.bus.$emit(config.ACTIONS.STOP_LOADING)
         this.locateControl.stopLoading()
@@ -272,12 +278,6 @@ export default {
       } catch (error) {
         console.log(error)
       }
-
-      this.cluster = L.markerClusterGroup({
-        disableClusteringAtZoom: 14,
-        spiderfyOnMaxZoom: false,
-        showCoverageOnHover: false
-      })
     },
 
     addModeControl () {
