@@ -2,6 +2,18 @@
   background: #ccc;
 }
 
+.Marker:focus {
+  outline: none;
+}
+.Marker:focus .Marker__inner {
+  transform: scale(1.5) rotate(0deg);
+  box-shadow: 0 3px 5px rgba(var(--shadow), 0.4);
+}
+.Marker.is-docks:focus .Marker__inner {
+  transform: scale(1.5) rotate(90deg);
+  border-width: 4px;
+}
+
 .Marker.is-docks .Marker__inner {
   border-radius: 4px;
   transform: scale(1) rotate(90deg);
