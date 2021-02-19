@@ -12,17 +12,22 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 - Install dependecies: `cd bicimap; yarn`
 - Download stations: `node public/stations.js`
 - Run server: `yarn serve`
-- Follow the instructions in your console
+- Follow the instructions in your terminal
 
 ### TODO
 
-- [ ] Allow marking stations as favorites for easier access
 - [ ] Add tooltips for the map controllers
 - [ ] Fix error alerts
-- [ ] Add numbers in the markers for better accesibility
+
+### WISHLIST
+
+- [ ] Add air quality information
+- [ ] Add weather information
+- [ ] Allow marking stations as favorites for easier access
+- [ ] Add routing between stations
 - [ ] Show nearby stations to a given station
 
-### Done
+### DONE
 
 - [x] Create PWA
 - [x] Add screenshot/GIF in this documentation
