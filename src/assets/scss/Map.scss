@@ -89,6 +89,9 @@
   display: none;
 }
 
+.Control.is-loading {
+  background-image: none;
+}
 .Control.is-loading:before {
   display: none;
 }

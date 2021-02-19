@@ -18,6 +18,7 @@ export default {
   data() {
     return {
       cluster: {},
+      loadedLanes: false,
       coordinates: undefined,
       expanded: false,
       helpControl: null,
@@ -259,6 +260,7 @@ export default {
       this.addHelpControl()
       this.addModeControl()
       this.addLocateControl()
+      this.addLanesControl()
 
       this.layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}' + (L.Browser.retina ? '@2x.png' : '.png'), {
         attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -267,7 +269,6 @@ export default {
         minZoom: 0
       }).addTo(this.map)
 
-      this.addLanes()
       this.map.whenReady(this.onMapReady)
     },
     onMapMoveEnd () {
@@ -355,10 +356,23 @@ export default {
     },
     addLanesControl () {
       L.Control.LanesControl = L.Control.extend({
+        startLoading: () => {
+          this.lanesControl._container.classList.add('is-loading')
+        },
+        stopLoading: () => {
+          this.lanesControl._container.classList.remove('is-loading')
+        },
+        toggle: (value) => {
+          this.lanesControl._container.classList.toggle('is-selected', value)
+        },
         onRemove: () => {
         },
         onAdd: ()  => {
           let div = L.DomUtil.create('div', 'Control is-hidden Control__lanes')
+
+          let spinner = L.DomUtil.create('div', 'Spinner is-mini')
+
+          div.appendChild(spinner)
 
           L.DomEvent.on(div, 'dblclick', (e) => {
             e.stopPropagation()
@@ -369,8 +383,12 @@ export default {
             e.stopPropagation()
             e.preventDefault()
 
-            this.showLanes = !this.showLanes
-            div.classList.toggle('is-selected', this.showLanes)
+            if (!this.loadedLanes) {
+              this.loadLanes()
+            } else {
+              this.showLanes = !this.showLanes
+              this.lanesControl.toggle(this.showLanes)
+            }
           })
 
           setTimeout(() => {
@@ -404,7 +422,7 @@ export default {
             e.stopPropagation()
             e.preventDefault()
 
-            this.map.locate({setView: false })
+            this.map.locate({ setView: false })
 
             window.bus.$emit(config.ACTIONS.START_LOADING)
             this.locateControl.startLoading()
@@ -421,16 +439,30 @@ export default {
       this.locateControl = new L.Control.LocateControl({ position: 'topright' }).addTo(this.map)
     },
 
-    addLanes () {
+    loadLanes () {
+
+      window.bus.$emit(config.ACTIONS.START_LOADING)
+      this.lanesControl.startLoading()
+
       this.get('/lanes.min.geojson')
         .then(this.onGetLanes.bind(this))
         .catch((error) => {
+
+          window.bus.$emit(config.ACTIONS.STOP_LOADING)
+          this.lanesControl.stopLoading()
+
           console.error(error)
         })
     },
 
     onGetLanes (response) {
       response.json().then((data) => {
+
+        this.loadedLanes = true
+
+        window.bus.$emit(config.ACTIONS.STOP_LOADING)
+        this.lanesControl.stopLoading()
+
         this.lanes = L.geoJSON(data, {
           style: () => {
             return {
@@ -442,7 +474,8 @@ export default {
           }
         })
 
-        this.addLanesControl()
+        this.showLanes = true
+        this.lanesControl.toggle(true)
       })
     },
 
