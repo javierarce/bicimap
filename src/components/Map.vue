@@ -422,7 +422,7 @@ export default {
     },
 
     addLanes () {
-      this.get('/lanes.geojson')
+      this.get('/lanes.min.geojson')
         .then(this.onGetLanes.bind(this))
         .catch((error) => {
           console.error(error)
