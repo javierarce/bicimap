@@ -96,20 +96,15 @@
   display: block;
 }
 
-.Control__lanes.is-selected {
-  background: var(--blue);
-}
-
-.Control__lanes.is-selected {
-  background-image: url(/img/lanes_white.svg);
-  background-color: var(--blue);
-}
-
 .Control__lanes {
   background-color: var(--white);
   background-image: url(/img/lanes.svg);
   background-repeat: no-repeat;
   background-size: cover;
+}
+.Control__lanes.is-selected {
+  background-image: url(/img/lanes_white.svg);
+  background-color: var(--blue);
 }
 
 .Control__help {

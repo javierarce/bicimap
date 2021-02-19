@@ -1,5 +1,5 @@
 <template>
-  <div class="App">
+  <div class="Home">
     <transition name="slide-fade">
     <Alert v-if="showAlert" :title="alertTitle" :description="alertDescription" :footer="alertFooter" />
     </transition>

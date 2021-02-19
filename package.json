@@ -1,6 +1,6 @@
 {
-  "name": "bicimap.new",
-  "version": "0.1.0",
+  "name": "BiciMap",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,7 +12,6 @@
     "core-js": "^3.6.5",
     "css-loader": "^5.0.2",
     "date-fns": "^2.17.0",
-    "dotenv": "^8.2.0",
     "leaflet": "^1.7.1",
     "leaflet.markercluster": "^1.4.1",
     "postcss-loader": "^5.0.0",
@@ -20,8 +19,7 @@
     "sass": "^1.32.7",
     "sass-loader": "^10.1.1",
     "style-loader": "^2.0.0",
-    "vue": "^2.6.11",
-    "vue-router": "^3.5.1"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -29,8 +27,8 @@
     "@vue/cli-plugin-pwa": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint": "^7.20.0",
+    "eslint-plugin-vue": "^7.6.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
