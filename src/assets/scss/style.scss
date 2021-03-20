@@ -11,8 +11,11 @@
 @import 'Input';
 @import 'Locations';
 @import 'Map';
-@import 'Marker';
-@import 'Popup';
+@import 'BikeStationMarker';
+@import 'BikeStationPopup';
+@import 'AirStationMarker';
+@import 'AirStationPopup';
+@import 'MarkerCluster';
 @import 'Spinner';
 @import 'Toggle';
 @import 'Tooltip';
@@ -40,6 +43,23 @@ body {
 
 	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, var(--green));
 	background-size: 400% 400%;
+}
+
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  color: var(--light);
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
 }
 
 a {

@@ -12,6 +12,7 @@ import * as L from 'leaflet'
 require('leaflet.markercluster')
 
 const PICKUP_MODE = 0
+const AIR_QUALITY_DESCRIPTION = ['muy mala', 'mala', 'regular', 'buena', 'muy buena']
 
 export default {
   mixins: [mixins],
@@ -91,8 +92,9 @@ export default {
         }
       }
     },
-    getIconClassNames (location) {
-      let classNames = [ 'Marker' ]
+
+    getStationIconClassNames (location) {
+      let classNames = [ 'BikeStationMarker' ]
 
       let what = this.mode ? 'free_bases' : 'dock_bikes'
       classNames.push(this.mode ? 'is-docks' : '')
@@ -115,6 +117,15 @@ export default {
 
       return classNames.join(' ')
     },
+
+    getAirIconClassNames (data) {
+      let classNames = [ 'AirStationMarker' ]
+
+      classNames.push(`is-${data.qualityIndex}`)
+
+      return classNames.join(' ')
+    },
+
     onAddStations (stations) {
       if (this.stations && this.stations.length) {
         this.updateStations(stations)
@@ -129,7 +140,7 @@ export default {
         this.map.addLayer(this.cluster)
 
         this.stations = stations
-        this.stations.forEach(this.addMarker.bind(this))
+        this.stations.forEach(this.addStationMarker.bind(this))
       }
     },
     updateStations (stations) {
@@ -142,9 +153,9 @@ export default {
         let station = this.getStationById(id)
 
         if (station) {
-          let content = this.getPopupContent(station)
+          let content = this.getBikeStationPopupContent(station)
           let tooltipContent = this.getTooltipContent(station, this.mode)
-          let icon = this.getIcon(station)
+          let icon = this.getStationIcon(station)
 
           marker.setPopupContent(content)
           marker.setTooltipContent(tooltipContent)
@@ -152,41 +163,69 @@ export default {
         }
       })
     },
+
     getStationById (id) {
       return this.stations.find(station => station.id === id)
     },
-    addMarker (location) {
+
+    addStationMarker (location) {
       let latlng = [location.latitude, location.longitude]
 
       let popup = L.popup({
-        className: 'Popup'
+        className: 'BikeStationPopup',
+        offset: [0, 12]
       })
 
-      let icon = this.getIcon(location)
-      popup.setContent(this.getPopupContent(location))
+      let icon = this.getStationIcon(location)
+      popup.setContent(this.getBikeStationPopupContent(location))
 
       let marker = L.marker(latlng, { icon, location })
 
-      this.bindMarker(marker, this.getTooltipContent(location, this.mode), popup)
+      this.bindStationMarker(marker, this.getTooltipContent(location, this.mode), popup)
 
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
     },
-    getIcon (location) {
+
+    addAirMarker(data) {
+      let popup = L.popup({
+        className: 'AirStationPopup',
+        offset: [0, 12]
+      })
+
+      let icon = this.getAirIcon(data)
+      popup.setContent(this.getAirPopupContent(data))
+
+      let marker = L.marker([data.lat, data.lng], { icon, data }).addTo(this.map)
+      marker.bindPopup(popup, { maxWidth: 'auto' })
+    },
+
+    getAirIcon (data) {
       return new L.divIcon({
-        className: this.getIconClassNames(location),
-        html: `<div class="Marker__inner"></div>`,
+        className: this.getAirIconClassNames(data),
+        html: `<div class="AirStationMarker__inner"></div>`,
         iconSize: [30, 30],
         iconAnchor: new L.Point(15, 0)
       })
     },
+
+    getStationIcon (location) {
+      return new L.divIcon({
+        className: this.getStationIconClassNames(location),
+        html: `<div class="BikeStationMarker__inner"></div>`,
+        iconSize: [30, 30],
+        iconAnchor: new L.Point(15, 0)
+      })
+    },
+
     getTooltipContent (location, mode) {
       let parts = [this.pluralize(location.dock_bikes, 'bici', 'bicis'), this.pluralize(location.free_bases, 'base', 'bases')]
       let description = mode ? parts.reverse() : parts
 
       return description.join(' / ')
     },
-    bindMarker (marker, description, popup) {
+
+    bindStationMarker (marker, description, popup) {
       marker.on('click', () => {
         setTimeout(() => {
           marker.closeTooltip()
@@ -203,9 +242,10 @@ export default {
       marker.bindTooltip(description, {
         direction: 'top',
         offset: [0, -2],
-        className: 'Marker__tooltip'
+        className: 'BikeStationMarker__tooltip'
       })
     },
+
     init () {
       let options = { 
         scrollWheelZoom: true,
@@ -237,7 +277,7 @@ export default {
         }
 
         let icon = new L.divIcon({
-          className: 'Marker is-you',
+          className: 'BikeStationMarker is-you',
           html: '<div class="Marker__inner"></div>',
           iconSize: [30, 30],
           iconAnchor: new L.Point(15, 0)
@@ -268,6 +308,7 @@ export default {
       }).addTo(this.map)
 
       this.addLanes()
+      this.addAir()
       this.map.whenReady(this.onMapReady)
     },
     onMapMoveEnd () {
@@ -446,7 +487,21 @@ export default {
       })
     },
 
-    getPopupContent (location) {
+    addAir () {
+      this.get('/air.json')
+        .then(this.onGetAir.bind(this))
+        .catch((error) => {
+          console.error(error)
+        })
+    },
+
+    onGetAir (response) {
+      response.json().then((data) => {
+        data.forEach(this.addAirMarker.bind(this))
+      })
+    },
+
+    getBikeStationPopupContent (location) {
       let name = `<div class="Station__id">${location.number}</div> ${location.name}`
 
       let bikes = this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas', { showAmount: false })
@@ -459,11 +514,11 @@ export default {
 
       let address = location.address
 
-      let content = L.DomUtil.create('div', 'Popup__content')
-      let header = L.DomUtil.create('div', 'Popup__header', content)
-      let body = L.DomUtil.create('div', 'Popup__body', content)
-      let popupDescription = L.DomUtil.create('div', 'Popup__description', body)
-      let popupAddress = L.DomUtil.create('a', 'Popup__address', body)
+      let content = L.DomUtil.create('div', 'BikeStationPopup__content')
+      let header = L.DomUtil.create('div', 'BikeStationPopup__header', content)
+      let body = L.DomUtil.create('div', 'BikeStationPopup__body', content)
+      let popupDescription = L.DomUtil.create('div', 'BikeStationPopup__description', body)
+      let popupAddress = L.DomUtil.create('a', 'BikeStationPopup__address', body)
       popupAddress.href = `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`
       popupAddress.target = '_blank'
       popupAddress.title = 'Abrir en Google Maps'
@@ -471,6 +526,43 @@ export default {
       header.innerHTML = name
       popupDescription.innerHTML = description
       popupAddress.innerText = address
+
+      return content
+    },
+
+    getAirPopupContent (data) {
+      let content = L.DomUtil.create('div', 'AirStationPopup__content')
+      let header = L.DomUtil.create('div', 'AirStationPopup__header', content)
+      let body = L.DomUtil.create('div', 'AirStationPopup__body', content)
+
+      if (data.qualityIndex !== undefined) {
+        let popupDescription = L.DomUtil.create('div', 'AirStationPopup__description', body)
+        popupDescription.innerHTML = `<strong>Calidad del aire</strong>: ${AIR_QUALITY_DESCRIPTION[data.qualityIndex - 1]} <a class="AirStationPopup__pollutantHelp" href="https://github.com/javierarce/aire-madrid/wiki/How-are-quality-indexes-calculated" target="_blank">?</a>`
+      }
+
+      let popupPollutants = L.DomUtil.create('div', 'AirStationPopup__pollutants', body)
+      let popupAddress = L.DomUtil.create('a', 'AirStationPopup__address', body)
+      popupAddress.href = `https://www.google.com/maps/search/?api=1&query=${data.lat},${data.lng}`
+      popupAddress.target = '_blank'
+      popupAddress.title = 'Abrir en Google Maps'
+
+      header.innerHTML = `${data.name}`
+
+      if (data.pollutants) {
+        data.pollutants.forEach((pollutant) => {
+          if (pollutant.quality) {
+            let $pollutant = L.DomUtil.create('div', 'AirStationPopup__pollutant', popupPollutants)
+            let $pollutantName = L.DomUtil.create('div', 'AirStationPopup__pollutantName', $pollutant)
+            let $pollutantValue = L.DomUtil.create('div', 'AirStationPopup__pollutantValue', $pollutant)
+            $pollutantName.innerHTML = `${pollutant.name }:`
+            let value = pollutant.quality.lastValue
+            let time = pollutant.quality.time
+            $pollutantValue.innerHTML = `${value}<span class="AirStationPopup__pollutantUnit">µg/m<sup>3</sup></span> a las <span>${time}h</span>`
+          }
+        })
+      }
+
+      popupAddress.innerText = data.address
 
       return content
     },

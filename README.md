@@ -16,12 +16,12 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### TODO
 
+- [ ] Add air quality information using [aire-madrid](https://github.com/javierarce/aire-madrid)
 - [ ] Add tooltips for the map controllers
 - [ ] Fix error alerts
 
 ### WISHLIST
 
-- [ ] Add air quality information
 - [ ] Add weather information
 - [ ] Allow marking stations as favorites for easier access
 - [ ] Add routing between stations
