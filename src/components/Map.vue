@@ -537,10 +537,16 @@ export default {
 
       if (data.qualityIndex !== undefined) {
         let popupDescription = L.DomUtil.create('div', 'AirStationPopup__description', body)
-        popupDescription.innerHTML = `<strong>Calidad del aire</strong>: ${AIR_QUALITY_DESCRIPTION[data.qualityIndex - 1]} <a class="AirStationPopup__pollutantHelp" href="https://github.com/javierarce/aire-madrid/wiki/How-are-quality-indexes-calculated" target="_blank">?</a>`
+        let quality = AIR_QUALITY_DESCRIPTION[data.qualityIndex - 1]
+        popupDescription.innerHTML = `La calidad del aire es <strong>${quality}</strong>`
+        let button = L.DomUtil.create('button', 'AirStationPopup__more', popupDescription)
+        button.innerHTML = '(ver más)'
+        button.onclick = () => {
+          popupPollutants.classList.toggle('is-hidden')
+        }
       }
 
-      let popupPollutants = L.DomUtil.create('div', 'AirStationPopup__pollutants', body)
+      let popupPollutants = L.DomUtil.create('div', 'AirStationPopup__pollutants is-hidden', body)
       let popupAddress = L.DomUtil.create('a', 'AirStationPopup__address', body)
       popupAddress.href = `https://www.google.com/maps/search/?api=1&query=${data.lat},${data.lng}`
       popupAddress.target = '_blank'
@@ -561,6 +567,9 @@ export default {
           }
         })
       }
+
+      let popupPollutantsInfo = L.DomUtil.create('div', 'AirStationPopup__pollutantsInfo', popupPollutants)
+      popupPollutantsInfo.innerHTML = '<a class="AirStationPopup__pollutantHelp" href="https://github.com/javierarce/aire-madrid/wiki/How-are-quality-indexes-calculated" target="_blank">Más información</a>'
 
       popupAddress.innerText = data.address
 
