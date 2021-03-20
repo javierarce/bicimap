@@ -94,15 +94,33 @@
   }
 }
 
+.AirStationPopup__more.is-hidden {
+  display: none;
+}
+
+.AirStationPopup__more:hover {
+  background: #f0f0f0;
+}
 .AirStationPopup__more {
-  color: #000;
+  display: flex;
   text-decoration: underline;
-  display: inline-block;
-  margin: 0 0.4em;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: #f6f8fa;
+  padding: 0.8em;
+  border-radius: 2px;
+  color: #000;
+  margin: 0 0 0.8em;
+  transition: background 250ms ease-in-out;
 }
 
 .AirStationPopup__pollutants.is-hidden {
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .AirStationPopup__pollutants {
@@ -111,7 +129,7 @@
   background: #f6f8fa;
   border-radius: 4px;
   padding: .8em;
-  transition: all 500ms ease-in-out;
+  transition: opacity 500ms ease-in-out;
 }
 
 .AirStationPopup__pollutantUnit {
