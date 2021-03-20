@@ -16,7 +16,6 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### TODO
 
-- [ ] Add air quality information using [aire-madrid](https://github.com/javierarce/aire-madrid)
 - [ ] Add tooltips for the map controllers
 - [ ] Fix error alerts
 
@@ -29,6 +28,7 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### DONE
 
+- [x] Add air quality information using [aire-madrid](https://github.com/javierarce/aire-madrid)
 - [x] Create PWA
 - [x] Add screenshot/GIF in this documentation
 - [x] Add station refresh on a set interval
