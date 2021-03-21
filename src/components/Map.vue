@@ -278,7 +278,7 @@ export default {
 
         let icon = new L.divIcon({
           className: 'BikeStationMarker is-you',
-          html: '<div class="Marker__inner"></div>',
+          html: '<div class="BikeStationMarker__inner"></div>',
           iconSize: [30, 30],
           iconAnchor: new L.Point(15, 0)
         })
@@ -561,6 +561,7 @@ export default {
       popupAddress.href = `https://www.google.com/maps/search/?api=1&query=${data.lat},${data.lng}`
       popupAddress.target = '_blank'
       popupAddress.title = 'Abrir en Google Maps'
+      popupAddress.innerText = data.address
 
       header.innerHTML = `${data.name}`
 
@@ -581,7 +582,6 @@ export default {
       let popupPollutantsInfo = L.DomUtil.create('div', 'AirStationPopup__pollutantsInfo', popupPollutants)
       popupPollutantsInfo.innerHTML = '<a class="AirStationPopup__pollutantHelp" href="https://github.com/javierarce/aire-madrid/wiki/How-are-quality-indexes-calculated" target="_blank">Más información</a>'
 
-      popupAddress.innerText = data.address
 
       return content
     },
