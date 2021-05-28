@@ -298,7 +298,6 @@ export default {
 
       this.addHelpControl()
       this.addModeControl()
-      this.addLocateControl()
 
       this.layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}' + (L.Browser.retina ? '@2x.png' : '.png'), {
         attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -423,6 +422,7 @@ export default {
       })
 
       this.lanesControl = new L.Control.LanesControl({ position: 'topright' }).addTo(this.map)
+      this.addLocateControl()
     },
 
     addLocateControl () {

@@ -74,15 +74,11 @@
   background-color: var(--gray);
 }
 
-.Control__locate:before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  width: 12px;
-  height: 12px;
-  border: 2px solid var(--blue);
-  border-radius: 100%;
+.Control__locate {
+  background-color: var(--white);
+  background-image: url(/img/location.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .Control .Spinner {
@@ -171,6 +167,44 @@
   }
   .Map__buttons {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .Control,
+  .Control__modeBikes, 
+  .Control__modeDocks {
+    width: 48px;
+    height: 48px;
+  }
+  .Control__mode {
+    width: 96px;
+    flex-direction: row;
+  }
+
+  .Control.Control__help  {
+    position: fixed;
+    right: 1em;
+    top: 1em;
+
+    width: 32px;
+    height: 32px;
+  }
+  .leaflet-top.leaflet-right {
+    width: 100%;
+    display: flex;
+    bottom: 2em;
+    left: 1em;
+    right: auto;
+    top: auto;
+    justify-content: center;
+  }
+
+  .Control__mode .Control__modeBikes {
+    border-radius: 4px 0 0 4px;
+  }
+  .Control__mode .Control__modeDocks {
+    border-radius: 0 4px 4px 0;
   }
 }
 
