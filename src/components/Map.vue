@@ -342,7 +342,12 @@ export default {
             e.preventDefault()
           })
 
-          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
+          L.DomEvent.on(div, 'click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+          })
+
+          L.DomEvent.on(div, 'touchstart', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
