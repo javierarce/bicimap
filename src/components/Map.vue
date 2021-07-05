@@ -139,7 +139,7 @@ export default {
     parseAddress(address) {
       let parts = []
 
-      let tpl = 'road, house_number, city, country'
+      let tpl = 'road, house_number, city'
 
       tpl.split(', ').forEach((part) => {
         if (address && address[part]) {
@@ -147,7 +147,7 @@ export default {
         }
       })
 
-      return parts.length ? parts.join(', ') : 'Mysterious location'
+      return parts.length ? parts.join(', ') : 'Lugar misterioso'
     },
 
     onSetView (result) {
