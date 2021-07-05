@@ -2,19 +2,6 @@
   outline: none;
 }
 
-.LocationMarker:focus .LocationMarker__inner {
-  transform: scale(1.2) rotate(0deg);
-  box-shadow: 0 3px 5px rgba(var(--shadow), 0.4);
-}
-.LocationMarker.is-docks:focus .LocationMarker__inner {
-  transform: scale(1.2) rotate(90deg);
-}
-
-.LocationMarker.is-docks .LocationMarker__inner {
-  border-radius: 4px;
-  transform: scale(1) rotate(90deg);
-}
-
 .LocationMarker:hover .LocationMarker__inner {
   transform: scale(0.9);
   border-width: 5px;

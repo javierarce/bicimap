@@ -151,8 +151,6 @@ export default {
     },
 
     onSetView (result) {
-      this.removeMarker()
-
       let latlng = [result.lat, result.lon]
       this.coordinates = { lat: latlng[0], lng: latlng[1] }
 
@@ -160,7 +158,7 @@ export default {
       let address = (result && this.parseAddress(result.address)) || undefined
 
       this.addLocationMarker(latlng, name, address)
-      this.map.setView(latlng, result.zoom)
+      this.map.setView(latlng, 19)
     },
 
     onAddStations (stations) {
@@ -212,8 +210,7 @@ export default {
 
       this.bindLocationMarker(marker, address)
 
-      this.cluster.addLayer(marker)
-      window.bus.markers.push(marker)
+      this.map.addLayer(marker)
     },
 
     addStationMarker (location) {
