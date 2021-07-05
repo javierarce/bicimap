@@ -1,8 +1,9 @@
 <template>
   <div class="Search">
     <div class="Search__content">
-      <input type="text" class="Search__input" :placeholder="placeholder" ref="search" v-on:keyup="onKeyUp" v-on:keyup.enter="onSubmit" />
+      <input type="text" class="Search__input" :placeholder="placeholder" ref="search" v-on:keyup="onKeyUp" v-on:keyup.enter="onSubmit" :value="q" />
       <div class="Spinner Search__spinner"></div>
+      <button class="Search__clean" @click="onClean"></button>
     </div>
   </div>
 </template>
@@ -20,12 +21,23 @@ export default {
       q: undefined
     }
   },
-  mounted () {
-  },
   methods: {
     onKeyUp () {
       this.q = this.$refs.search.value
+
+      if (this.q) {
+        this.$el.classList.add('is-filled')
+      } else {
+        this.$el.classList.remove('is-filled')
+      }
     },
+
+    onClean (e) {
+      e.preventDefault()
+      e.stopPropagation()
+      this.q = ''
+    },
+
     onSubmit (e) {
       e.preventDefault()
       e.stopPropagation()
