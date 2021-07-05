@@ -208,7 +208,7 @@ export default {
 
       let marker = L.marker(latlng, { icon, location })
 
-      this.bindLocationMarker(marker, address)
+      this.bindLocationMarker(marker, latlng, address)
 
       this.map.addLayer(marker)
     },
@@ -279,7 +279,11 @@ export default {
       return description.join(' / ')
     },
 
-    bindLocationMarker (marker, description) {
+    bindLocationMarker (marker, latlng, description) {
+
+      marker.on('click', () => {
+        this.map.setView(latlng, 19, { animate: true, easeLinearity: 0.5, duration: 0.5 })
+      })
       marker.bindTooltip(description, {
         direction: 'top',
         offset: [0, -2],

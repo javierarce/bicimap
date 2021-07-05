@@ -58,7 +58,7 @@
 }
 
 .Search__content .Search__input {
-  width: 260px;
+  width: 320px;
   margin-right: 24px;
   color: #000;
   border: none;
@@ -75,7 +75,7 @@
 
 .Search__input::placeholder {
   opacity: .5;
-  color: #fff;
+  color: var(--black);
 }
 
 @media only screen and (max-width: 800px) {

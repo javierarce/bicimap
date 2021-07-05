@@ -7,7 +7,7 @@ const MAP = {
 }
 
 const TEXTS = {
-  SEARCH_PLACEHOLDER: 'Search for a place or an address',
+  SEARCH_PLACEHOLDER: 'Busca por dirección o comercio',
   NO_RESULTS_TITLE:  'Oh, no… we couldn’t find "{q}."',
   NO_RESULTS_DESCRIPTION: `<p><strong>Map with Me</strong> uses data from <a href="https://www.openstreetmap.org">OpenStreetMap</a> 
   (a collaborative project which aims to create a free editable map of the world) and that place hasn’t been added yet.</p>
