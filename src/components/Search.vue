@@ -58,9 +58,8 @@ export default {
         } else {
           let title = config.TEXTS.NO_RESULTS_TITLE.replace('{q}', this.q)
           let description = config.TEXTS.NO_RESULTS_DESCRIPTION
-          let footer = `<a class="Button Alert__button" href="https://www.openstreetmap.org/search?query=${this.q}#map=${config.MAP.ZOOM}/${config.MAP.LAT}/${config.MAP.LON}" target="__blank">Add this place in OSM</a>`
 
-          window.bus.$emit(config.ACTIONS.TOGGLE_ALERT, title, description, footer)
+          window.bus.$emit(config.ACTIONS.TOGGLE_ALERT, title, description)
         }
       })
     }

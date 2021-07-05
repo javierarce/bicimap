@@ -8,10 +8,8 @@ const MAP = {
 
 const TEXTS = {
   SEARCH_PLACEHOLDER: 'Busca por dirección o comercio',
-  NO_RESULTS_TITLE:  'Oh, no… we couldn’t find "{q}."',
-  NO_RESULTS_DESCRIPTION: `<p><strong>Map with Me</strong> uses data from <a href="https://www.openstreetmap.org">OpenStreetMap</a> 
-  (a collaborative project which aims to create a free editable map of the world) and that place hasn’t been added yet.</p>
-  <p>But the good news is that you can add it to OSM yourself and help improve a free and open map of the world! Visit <a href="https://www.openstreetmap.org">OSM</a>, zoom to an area, and click "edit".</p>`,
+  NO_RESULTS_TITLE:  'Lo siento, no encuentro "{q}"',
+  NO_RESULTS_DESCRIPTION: `<p><strong>Bicimap</strong> usa datos de <a href="https://www.openstreetmap.org">OpenStreetMap</a> (un proyecto colaborativo cuyo objetivo es construir un mapa editable y gratuito del mundo entero) y ese lugar aún no se ha agregado.</p>`,
 }
 
 const ACTIONS = {
