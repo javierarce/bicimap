@@ -21,15 +21,19 @@ export default {
       q: undefined
     }
   },
-  methods: {
-    onKeyUp () {
-      this.q = this.$refs.search.value
 
-      if (this.q) {
+  watch: {
+    q (value) {
+      if (value) {
         this.$el.classList.add('is-filled')
       } else {
         this.$el.classList.remove('is-filled')
       }
+    }
+  },
+  methods: {
+    onKeyUp () {
+      this.q = this.$refs.search.value
     },
 
     onClean (e) {
