@@ -1,5 +1,6 @@
 <template>
   <div class="Map__container">
+    <Search />
     <div id="map" class="Map show-bikes"></div>
   </div>
 </template>
@@ -7,6 +8,8 @@
 <script>
 import mixins from '../mixins'
 import config from '../../config'
+
+import Search from './Search.vue'
 
 import * as L from 'leaflet'
 require('leaflet.markercluster')
@@ -16,6 +19,9 @@ const AIR_QUALITY_DESCRIPTION = ['muy mala', 'mala', 'regular', 'buena', 'muy bu
 
 export default {
   mixins: [mixins],
+  components: {
+    Search
+  },
   data() {
     return {
       cluster: {},
@@ -82,7 +88,11 @@ export default {
       this.bindKeys()
       window.bus.$off(config.ACTIONS.ADD_STATIONS)
       window.bus.$on(config.ACTIONS.ADD_STATIONS, this.onAddStations)
+
+      window.bus.$off(config.ACTIONS.SET_VIEW)
+      window.bus.$on(config.ACTIONS.SET_VIEW, this.onSetView)
     },
+
     bindKeys () {
       document.onkeydown = (e) => {
         e = e || window.event
@@ -124,6 +134,33 @@ export default {
       classNames.push(`is-${data.qualityIndex}`)
 
       return classNames.join(' ')
+    },
+
+    parseAddress(address) {
+      let parts = []
+
+      let tpl = 'road, house_number, city, country'
+
+      tpl.split(', ').forEach((part) => {
+        if (address && address[part]) {
+          parts.push(address[part])
+        }
+      })
+
+      return parts.length ? parts.join(', ') : 'Mysterious location'
+    },
+
+    onSetView (result) {
+      this.removeMarker()
+
+      let latlng = [result.lat, result.lon]
+      this.coordinates = { lat: latlng[0], lng: latlng[1] }
+
+      let name = result.display_name.split(',')[0]
+      let address = (result && this.parseAddress(result.address)) || undefined
+
+      this.addLocationMarker(latlng, name, address)
+      this.map.setView(latlng, result.zoom)
     },
 
     onAddStations (stations) {
@@ -168,6 +205,24 @@ export default {
       return this.stations.find(station => station.id === id)
     },
 
+    addLocationMarker (latlng, name, address) {
+
+      let popup = L.popup({
+        className: 'BikeStationPopup',
+        offset: [0, 12]
+      })
+
+      let icon = this.getLocationIcon(location)
+      popup.setContent(this.getLocationPopupContent(name, address))
+
+      let marker = L.marker(latlng, { icon, location })
+
+      this.bindStationMarker(marker, this.getTooltipContent(location, this.mode), popup)
+
+      this.cluster.addLayer(marker)
+      window.bus.markers.push(marker)
+    },
+
     addStationMarker (location) {
       let latlng = [location.latitude, location.longitude]
 
@@ -204,6 +259,15 @@ export default {
       return new L.divIcon({
         className: this.getAirIconClassNames(data),
         html: `<div class="AirStationMarker__inner"></div>`,
+        iconSize: [30, 30],
+        iconAnchor: new L.Point(15, 0)
+      })
+    },
+
+    getLocationIcon () {
+      return new L.divIcon({
+        className: 'LocationMarker',
+        html: `<div class="LocationMarker__inner"></div>`,
         iconSize: [30, 30],
         iconAnchor: new L.Point(15, 0)
       })
@@ -514,6 +578,25 @@ export default {
       response.json().then((data) => {
         data.forEach(this.addAirMarker.bind(this))
       })
+    },
+
+    getLocationPopupContent (name, address) {
+      let description = `${name} ${address}`
+
+      let content = L.DomUtil.create('div', 'LocationPopup__content')
+      let header = L.DomUtil.create('div', 'LocationPopup__header', content)
+      let body = L.DomUtil.create('div', 'LocationPopup__body', content)
+      let popupDescription = L.DomUtil.create('div', 'LocationPopup__description', body)
+      let popupAddress = L.DomUtil.create('a', 'LocationPopup__address', body)
+      popupAddress.href = `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`
+      popupAddress.target = '_blank'
+      popupAddress.title = 'Abrir en Google Maps'
+
+      header.innerHTML = description
+      popupDescription.innerHTML = description
+      popupAddress.innerText = address
+
+      return content
     },
 
     getBikeStationPopupContent (location) {
