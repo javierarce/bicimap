@@ -1,13 +1,8 @@
-.is-expanded .Search {
-  right: 30px;
-}
-
 .Search {
-  opacity: 1;
-  visibility: visible;
-
   position: absolute;
-  right: 330px;
+  top: 26px;
+  display: flex;
+  left: 80px;
   display: flex;
   transition: opacity 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000), right 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
   z-index: 10000;
@@ -28,13 +23,13 @@
   width: 16px;
   height: 16px;
   position: absolute;
-  bottom: 2px;
-  right: 2px;
+  bottom: 12px;
+  right: 36px;
 
-  border-top: 2px solid rgba(255, 255, 255, 0.5);
-  border-right: 2px solid rgba(255, 255, 255, 0.5);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-  border-left: 2px solid #fff;
+  border-top: 2px solid var(--blue);
+  border-right: 2px solid var(--blue);
+  border-bottom: 2px solid var(--blue);
+  border-left: 2px solid var(--white);
 }
 
 .Search__content {
@@ -63,7 +58,6 @@
 }
 
 .Search__content .Search__input {
-  padding: 0;
   width: 260px;
   margin-right: 24px;
   color: #000;
@@ -72,11 +66,10 @@
   box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
   background: var(--white);
   border-radius: 4px;
-  padding: 8px;
+  padding: 12px 12px;
   cursor: pointer;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 1em;
-  text-align: right;
+  font-size: .9em;
   outline: none;
 }
 

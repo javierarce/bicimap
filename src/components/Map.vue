@@ -206,18 +206,11 @@ export default {
     },
 
     addLocationMarker (latlng, name, address) {
-
-      let popup = L.popup({
-        className: 'BikeStationPopup',
-        offset: [0, 12]
-      })
-
       let icon = this.getLocationIcon(location)
-      popup.setContent(this.getLocationPopupContent(name, address))
 
       let marker = L.marker(latlng, { icon, location })
 
-      this.bindStationMarker(marker, this.getTooltipContent(location, this.mode), popup)
+      this.bindLocationMarker(marker, address)
 
       this.cluster.addLayer(marker)
       window.bus.markers.push(marker)
@@ -287,6 +280,14 @@ export default {
       let description = mode ? parts.reverse() : parts
 
       return description.join(' / ')
+    },
+
+    bindLocationMarker (marker, description) {
+      marker.bindTooltip(description, {
+        direction: 'top',
+        offset: [0, -2],
+        className: 'LocationMarker__tooltip'
+      })
     },
 
     bindStationMarker (marker, description, popup) {
