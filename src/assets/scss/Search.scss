@@ -4,7 +4,7 @@
   display: flex;
   left: 80px;
   display: flex;
-  transition: opacity 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000), right 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
+  transition: all 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
   z-index: 10000;
 }
 
@@ -105,12 +105,7 @@
 
 @media only screen and (max-width: 800px) {
   .Search {
-    display: none;
-    position: relative;
-    right: auto;
-    visibility: hidden; 
-    margin-left: 40px;
-    opacity: 0;
-    transition: opacity 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000), right 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
+    left: 60px;
+    top: 8px;
   }
 }
