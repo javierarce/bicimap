@@ -28,6 +28,7 @@ This is my attempt to make a more useful and nicer version of the [current BiciM
 
 ### DONE
 
+- [x] Add address search
 - [x] Add air quality information using [aire-madrid](https://github.com/javierarce/aire-madrid)
 - [x] Create PWA
 - [x] Add screenshot/GIF in this documentation
