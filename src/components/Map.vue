@@ -147,7 +147,16 @@ export default {
         }
       })
 
-      return parts.length ? parts.join(', ') : 'Lugar misterioso'
+      let description = 'Lugar misterioso'
+
+      if (parts.length) {
+        if (address['shop']) {
+          description = `<strong>${address['shop']}</strong> / `
+        }
+        description += parts.join(', ')
+      }
+
+      return description
     },
 
     onSetView (result) {
