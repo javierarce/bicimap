@@ -158,7 +158,7 @@ export default {
       let address = (result && this.parseAddress(result.address)) || undefined
 
       this.addLocationMarker(latlng, name, address)
-      this.map.setView(latlng, 19)
+      this.map.setView(latlng, 17)
     },
 
     onAddStations (stations) {

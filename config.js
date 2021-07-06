@@ -3,7 +3,7 @@ const MAP = {
   LAT: "40.41948626649347",
   LON: "-3.6930539666172475",
   ZOOM: "14",
-  DEFAULT_SEARCH_LOCATION: "Madrid"
+  DEFAULT_SEARCH_LOCATION: "Madrid, Spain"
 }
 
 const TEXTS = {
