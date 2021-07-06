@@ -17,10 +17,16 @@
   font-weight: 600;
 }
 
+.About__content p.is-small {
+  width: auto;
+  font-size: 0.9em;
+}
+
 .About__inner p {
   margin: 0 0 16px 0;
   line-height: 135%;
 }
+
 .About__inner p:last-child {
   margin: 0;
 }

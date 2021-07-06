@@ -14,6 +14,9 @@
             <p>Sigue el desarrollo de este mapa, sugiere mejoras e informa de errores en GitHub.</p>
             <a href="https://github.com/javierarce/bicimap" class="Button About__button is-bold" title="Visita el repositorio en GitHub" target="_blank">Accede al código</a>
           </div>
+          <p class="is-small">Esta web utiliza datos de <a href="https://www.openstreetmap.org/copyright">Nominatim</a>.</p>
+
+
 
 
         <div class="About__footer">
