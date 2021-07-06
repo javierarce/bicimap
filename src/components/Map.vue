@@ -151,9 +151,10 @@ export default {
 
       if (parts.length) {
         if (address['shop']) {
-          description = `<strong>${address['shop']}</strong> / `
+          description = `<strong>${address['shop']}</strong> / ${parts.join(', ') }`
+        } else {
+          description = parts.join(', ')
         }
-        description += parts.join(', ')
       }
 
       return description
