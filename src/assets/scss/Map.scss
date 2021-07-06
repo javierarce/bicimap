@@ -184,12 +184,12 @@
 
   .Control.Control__help  {
     position: fixed;
-    right: 0;
-    top: 0;
-
-    width: 32px;
-    height: 32px;
+    left: 10px;
+    top: 68px;
+    width: 30px;
+    height: 30px;
   }
+  
   .leaflet-top.leaflet-right {
     width: 100%;
     display: flex;
