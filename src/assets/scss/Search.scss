@@ -107,7 +107,14 @@
 }
 
 @media only screen and (max-width: 640px) {
-.Search__content .Search__input {
-    width: 200px;
+  .Search {
+    left: auto;
+    top: auto;
+    padding: 10px;
+  }
+  .Search,
+  .Search__content,
+  .Search__content .Search__input {
+    width: 100%;
   }
 }

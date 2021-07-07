@@ -77,3 +77,20 @@
   background: #1c598e;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 800px) {
+
+  .Alert__content {
+    width: 90%;
+    padding: 1em;
+  }
+
+  .Alert__content p {
+    font-size: 0.9em;
+  }
+
+  .Alert__button {
+    font-size: 0.9em;
+  }
+}
+
