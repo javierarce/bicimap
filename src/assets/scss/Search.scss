@@ -38,6 +38,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
+  background: var(--white);
+
+  background: var(--white);
+  border-radius: 4px;
 }
 
 .is-searching.is-filled .Search__clean,
@@ -82,10 +87,6 @@
   width: 320px;
   color: #000;
   border: none;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
-  background: var(--white);
-  border-radius: 4px;
   padding: 12px 12px 12px 38px;
   cursor: pointer;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -116,11 +117,5 @@
   .Search__content,
   .Search__content .Search__input {
     width: 100%;
-  }
-
-  .Map__container .Search__content .Search__input,
-  .Map__container .Search__content input.Search__input,
-  .Map__container .Search__content input {
-    box-shadow: 0 2px 4px rgba(var(--shadow), 0.2) !important;
   }
 }

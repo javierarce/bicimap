@@ -158,6 +158,11 @@
   margin-top: 8px;
 }
 
+.leaflet-tooltip-pane strong,
+.Marker__tooltip strong {
+  font-weight: bold;
+}
+
 @media only screen and (max-width: 800px) {
   .Map__container {
     width: 100%;
@@ -184,7 +189,7 @@
   .Control.Control__help  {
     position: fixed;
     left: 10px;
-    top: 124px;
+    top: 128px;
     width: 30px;
     height: 30px;
   }
@@ -200,7 +205,7 @@
   }
 
   .leaflet-top  {
-    margin-top: 54px;
+    margin-top: 60px;
   }
 
   .Control__mode .Control__modeBikes {
@@ -209,10 +214,5 @@
   .Control__mode .Control__modeDocks {
     border-radius: 0 4px 4px 0;
   }
-}
-
-.leaflet-tooltip-pane strong,
-.Marker__tooltip strong {
-  font-weight: bold;
 }
 
