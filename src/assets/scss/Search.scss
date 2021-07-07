@@ -117,4 +117,8 @@
   .Search__content .Search__input {
     width: 100%;
   }
+
+  .Map__container .Search__content .Search__input {
+    box-shadow: 0 2px 4px rgba(var(--shadow), 0.2) !important;
+  }
 }
