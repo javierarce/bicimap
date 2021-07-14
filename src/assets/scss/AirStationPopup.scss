@@ -21,10 +21,10 @@
   word-break: break-word;
 }
 
-.AirStationPopup__address {
-  font-size: 0.8em;
+.leaflet-container .AirStationPopup__address {
   width: 100%;
   opacity: 0.5;
+  font-size: 0.8em;
   line-height: 135%;
   transition: opacity 150ms ease-in-out;
   color: #333;
