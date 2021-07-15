@@ -181,7 +181,7 @@ export default {
         this.pointA = this.pointB
         this.pointB = undefined
 
-        this.get(`/api/route?start=${start}&end=${end}`).then((result) => {
+        this.get(`https://last.javierarce.com/api/route?start=${start}&end=${end}`).then((result) => {
           result.json().then((data) => {
             let layer =  L.geoJSON(data, {
               style: () => {
