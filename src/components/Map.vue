@@ -19,7 +19,6 @@ import * as L from 'leaflet'
 require('leaflet.markercluster')
 
 const PICKUP_MODE = 0
-const AIR_QUALITY_DESCRIPTION = ['muy mala', 'mala', 'regular', 'buena', 'muy buena']
 
 export default {
   mixins: [mixins],
