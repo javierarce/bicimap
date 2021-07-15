@@ -176,11 +176,27 @@ export default {
       } 
 
       if (this.pointA && this.pointB) {
-        console.log(this.pointA)
         let start = this.pointA.reverse().join(',')
         let end = this.pointB.reverse().join(',')
-        this.get(`https://last.javierarce.com/api/route?start=${start}&end=${end}`).then((result) => {
-          console.log(result)
+        this.pointA = this.pointB
+        this.pointB = undefined
+
+        this.get(`/api/route?start=${start}&end=${end}`).then((result) => {
+          result.json().then((data) => {
+            let layer =  L.geoJSON(data, {
+              style: () => {
+                return {
+                  interactive:false,
+                  "color": "#23D5AB",
+                  "weight": 8,
+                  "opacity": 0.5
+                }
+              }
+            })
+
+            this.map.addLayer(layer)
+          })
+
         }).catch((error) => {
           console.error(error)
         })
