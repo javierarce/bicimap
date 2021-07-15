@@ -10,6 +10,9 @@ import mixins from '../mixins'
 import config from '../../config'
 
 import Search from './Search.vue'
+import Popup from './Popup.vue'
+
+import Vue from 'vue';
 
 import * as L from 'leaflet'
 require('leaflet.markercluster')
@@ -24,6 +27,8 @@ export default {
   },
   data() {
     return {
+      pointA: undefined,
+      pointB: undefined,
       cluster: {},
       coordinates: undefined,
       expanded: false,
@@ -188,6 +193,7 @@ export default {
         this.stations.forEach(this.addStationMarker.bind(this))
       }
     },
+
     updateStations (stations) {
       this.stations = stations
 
@@ -195,14 +201,18 @@ export default {
 
       markers.forEach((marker) => { 
         let id = marker.options.location.id
-        let station = this.getStationById(id)
+        let location = this.getStationById(id)
 
-        if (station) {
-          let content = this.getBikeStationPopupContent(station)
-          let tooltipContent = this.getTooltipContent(station, this.mode)
-          let icon = this.getStationIcon(station)
+        if (location) {
+          console.log(location)
 
-          marker.setPopupContent(content)
+          let tooltipContent = this.getTooltipContent(location, this.mode)
+          let icon = this.getStationIcon(location)
+
+          let PopupClass = Vue.extend(Popup)
+          let popupContent = new PopupClass({ propsData: { location } })
+
+          marker.setPopupContent(popupContent.$mount().$el)
           marker.setTooltipContent(tooltipContent)
           marker.setIcon(icon)
         }
@@ -224,6 +234,9 @@ export default {
     },
 
     addStationMarker (location) {
+      let PopupClass = Vue.extend(Popup)
+      let popupContent = new PopupClass({ propsData: { location } })
+
       let latlng = [location.latitude, location.longitude]
 
       let popup = L.popup({
@@ -232,7 +245,7 @@ export default {
       })
 
       let icon = this.getStationIcon(location)
-      popup.setContent(this.getBikeStationPopupContent(location))
+      popup.setContent(popupContent.$mount().$el)
 
       let marker = L.marker(latlng, { icon, location })
 
@@ -605,35 +618,6 @@ export default {
       popupAddress.title = 'Abrir en Google Maps'
 
       header.innerHTML = description
-      popupDescription.innerHTML = description
-      popupAddress.innerText = address
-
-      return content
-    },
-
-    getBikeStationPopupContent (location) {
-      let name = `<div class="Station__id">${location.number}</div> ${location.name}`
-
-      let bikes = this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas', { showAmount: false })
-      let descriptionBikes = `<div class="Item"><div class="Item__amount">${location.dock_bikes}</div><div class="Item__title">${bikes}</div></div>`
-
-      let bases = this.pluralize(location.free_bases, 'base libre', 'bases libres', { showAmount: false })
-      let descriptionDocks = `<div class="Item"><div class="Item__amount">${location.free_bases}</div><div class="Item__title">${bases}</div></div>`
-
-      let description = `<div class="Items">${descriptionBikes} ${descriptionDocks}</div>`
-
-      let address = location.address
-
-      let content = L.DomUtil.create('div', 'BikeStationPopup__content')
-      let header = L.DomUtil.create('div', 'BikeStationPopup__header', content)
-      let body = L.DomUtil.create('div', 'BikeStationPopup__body', content)
-      let popupDescription = L.DomUtil.create('div', 'BikeStationPopup__description', body)
-      let popupAddress = L.DomUtil.create('a', 'BikeStationPopup__address', body)
-      popupAddress.href = `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`
-      popupAddress.target = '_blank'
-      popupAddress.title = 'Abrir en Google Maps'
-
-      header.innerHTML = name
       popupDescription.innerHTML = description
       popupAddress.innerText = address
 
