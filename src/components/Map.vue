@@ -181,14 +181,7 @@ export default {
         this.pointA = this.pointB
         this.pointB = undefined
 
-fetch('https://last.javierarce.com/api/route?start=-3.6956178,40.4132798&end=-3.6991147,40.41220470').then((result) => { 
-          result.json().then((data) => {
-console.log(data)
-          })
-})
-
-
-        this.get(`https://last.javierarce.com/api/route?start=${start}&end=${end}`).then((result) => {
+        fetch(`https://last.javierarce.com/api/route?start=${start}&end=${end}`).then((result) => {
           result.json().then((data) => {
             let layer =  L.geoJSON(data, {
               style: () => {
