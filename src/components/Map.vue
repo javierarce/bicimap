@@ -204,8 +204,6 @@ export default {
         let location = this.getStationById(id)
 
         if (location) {
-          console.log(location)
-
           let tooltipContent = this.getTooltipContent(location, this.mode)
           let icon = this.getStationIcon(location)
 
