@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     href () {
-      return `https://www.google.com/maps/search/?api=1&amp;query=${location.latitude},${location.longitude}`
+      return `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`
     },
     bases () {
       return this.pluralize(location.free_bases, 'base libre', 'bases libres', { showAmount: false })

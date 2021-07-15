@@ -11,6 +11,7 @@ import config from '../../config'
 
 import Search from './Search.vue'
 import Popup from './Popup.vue'
+import AirPopup from './AirPopup.vue'
 
 import Vue from 'vue';
 
@@ -262,7 +263,11 @@ export default {
       })
 
       let icon = this.getAirIcon(data)
-      popup.setContent(this.getAirPopupContent(data))
+
+      let PopupClass = Vue.extend(AirPopup)
+      let popupContent = new PopupClass({ propsData: { station: data } })
+
+      popup.setContent(popupContent.$mount().$el)
 
       let marker = L.marker([data.lat, data.lng], { icon, data }).addTo(this.map)
       marker.bindPopup(popup, { maxWidth: 'auto' })
@@ -624,68 +629,14 @@ export default {
       return content
     },
 
-    getAirPopupContent (data) {
-      let content = L.DomUtil.create('div', 'AirStationPopup__content')
-      let header = L.DomUtil.create('div', 'AirStationPopup__header', content)
-      let body = L.DomUtil.create('div', 'AirStationPopup__body', content)
-
-      let time = undefined
-
-      data.pollutants.forEach((pollutant) => {
-        if (pollutant.quality) {
-          time = pollutant.quality.time
-        }
-      })
-
-      if (data.qualityIndex !== undefined) {
-        let popupDescription = L.DomUtil.create('div', 'AirStationPopup__description', body)
-        let quality = AIR_QUALITY_DESCRIPTION[data.qualityIndex - 1]
-        popupDescription.innerHTML = `La calidad del aire a las <strong>${time}h</strong> es <strong>${quality}</strong>`
-
-        let button = L.DomUtil.create('button', 'AirStationPopup__more', body)
-        button.innerHTML = 'Ver detalles'
-        button.onclick = () => {
-          popupPollutants.classList.toggle('is-hidden')
-          button.classList.add('is-hidden')
-        }
-      }
-
-      let popupPollutants = L.DomUtil.create('div', 'AirStationPopup__pollutants is-hidden', body)
-      let popupAddress = L.DomUtil.create('a', 'AirStationPopup__address', body)
-      popupAddress.href = `https://www.google.com/maps/search/?api=1&query=${data.lat},${data.lng}`
-      popupAddress.target = '_blank'
-      popupAddress.title = 'Abrir en Google Maps'
-      popupAddress.innerText = data.address
-
-      header.innerHTML = `${data.name}`
-
-      if (data.pollutants) {
-        data.pollutants.forEach((pollutant) => {
-          if (pollutant.quality) {
-            let $pollutant = L.DomUtil.create('div', 'AirStationPopup__pollutant', popupPollutants)
-            let $pollutantName = L.DomUtil.create('div', 'AirStationPopup__pollutantName', $pollutant)
-            let $pollutantValue = L.DomUtil.create('div', 'AirStationPopup__pollutantValue', $pollutant)
-            $pollutantName.innerHTML = `${ pollutant.name }:`
-            let value = pollutant.quality.lastValue
-            let time = pollutant.quality.time
-            $pollutantValue.innerHTML = `${value}<span class="AirStationPopup__pollutantUnit">µg/m<sup>3</sup></span> a las <span>${time}h</span>`
-          }
-        })
-      }
-
-      let popupPollutantsInfo = L.DomUtil.create('div', 'AirStationPopup__pollutantsInfo', popupPollutants)
-      popupPollutantsInfo.innerHTML = '<a class="AirStationPopup__pollutantHelp" href="https://github.com/javierarce/aire-madrid/wiki/How-are-quality-indexes-calculated" target="_blank">Más información</a>'
-
-
-      return content
-    },
-
     startLoading () {
       window.bus.$emit(config.ACTIONS.START_LOADING)
     },
+
     stopLoading () {
       window.bus.$emit(config.ACTIONS.STOP_LOADING)
     },
+
     removeMarker () {
       this.map.closePopup()
 
