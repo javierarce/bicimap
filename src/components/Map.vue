@@ -169,7 +169,6 @@ export default {
     },
 
     onGetPoint (point) {
-      console.log(point)
       if (this.pointA) {
         this.pointB = point
       } else {
@@ -180,11 +179,9 @@ export default {
         console.log(this.pointA)
         let start = this.pointA.reverse().join(',')
         let end = this.pointB.reverse().join(',')
-        this.get(`//last.javierarce.com/api/route?start=${start}&end=${end}`)
-          .then((result) => {
-            console.log(result)
-          })
-        .catch((error) => {
+        this.get(`https://last.javierarce.com/api/route?start=${start}&end=${end}`).then((result) => {
+          console.log(result)
+        }).catch((error) => {
           console.error(error)
         })
       }
