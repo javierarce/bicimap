@@ -14,9 +14,6 @@
             </span>a las <span v-html="time"></span> </div>
         </div>
 
-
-
-
         <div class="AirStationPopup__pollutantsInfo">
           <a class="AirStationPopup__pollutantHelp" href="https://github.com/javierarce/aire-madrid/wiki/How-are-quality-indexes-calculated" target="_blank">
             Más información</a>
@@ -38,10 +35,6 @@ export default {
     return {
       showPollutants: false
     }
-  },
-  mounted () {
-    this.$nextTick(() => {
-    })
   },
   computed: {
     pollutants () {
@@ -67,6 +60,7 @@ export default {
       return `La calidad del aire a las <strong>${this.time}</strong> es <strong>${this.quality}</strong>.`
     }
   },
+
   methods: {
     togglePollutatns () {
       this.showPollutants = !this.showPollutants

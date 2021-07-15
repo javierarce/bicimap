@@ -2,7 +2,8 @@
   <div class="BikeStationPopup__content">
     <div class="BikeStationPopup__header">
       <div class="Station__id" v-html="location.number"></div>
-      <span v-html="location.name"></span></div>
+      <span v-html="location.name"></span>
+    </div>
     <div class="BikeStationPopup__body">
       <div class="BikeStationPopup__description">
         <div class="Items">
@@ -16,24 +17,21 @@
           </div>
         </div>
       </div>
-      <a class="BikeStationPopup__address" :href="href" target="_blank" title="Abrir en Google Maps" v-html="location.address"></a>
+      <div class="BikeStationPopup__footer">
+        <a class="BikeStationPopup__address" :href="href" target="_blank" title="Abrir en Google Maps" v-html="location.address"></a>
+        <button class="BikeStationPopup__button Button is-small" @click="onClickDirection">Dirección</button>
+      </div>
     </div>
   </div>
-
 </template>
 
 <script>
 import mixins from '../mixins'
+import config from '../../config'
 
 export default {
   mixins: [mixins],
   props: ['location'],
-  mounted () {
-    this.$nextTick(() => {
-    })
-  },
-  watch: {
-  },
   computed: {
     href () {
       return `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`
@@ -44,7 +42,11 @@ export default {
     bikes () {
       return this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas', { showAmount: false })
     }
+  },
+  methods: {
+    onClickDirection () {
+      window.bus.$emit(config.ACTIONS.ADD_POINT, [this.location.latitude, this.location.longitude])
+    }
   }
 }
 </script>
-

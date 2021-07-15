@@ -96,6 +96,9 @@ export default {
 
       window.bus.$off(config.ACTIONS.SET_VIEW)
       window.bus.$on(config.ACTIONS.SET_VIEW, this.onSetView)
+
+      window.bus.$off(config.ACTIONS.ADD_POINT)
+      window.bus.$on(config.ACTIONS.ADD_POINT, this.onGetPoint)
     },
 
     bindKeys () {
@@ -163,6 +166,28 @@ export default {
       }
 
       return description
+    },
+
+    onGetPoint (point) {
+      console.log(point)
+      if (this.pointA) {
+        this.pointB = point
+      } else {
+        this.pointA = point
+      } 
+
+      if (this.pointA && this.pointB) {
+        console.log(this.pointA)
+        let start = this.pointA.reverse().join(',')
+        let end = this.pointB.reverse().join(',')
+        this.get(`//last.javierarce.com/api/route?start=${start}&end=${end}`)
+          .then((result) => {
+            console.log(result)
+          })
+        .catch((error) => {
+          console.error(error)
+        })
+      }
     },
 
     onSetView (result) {

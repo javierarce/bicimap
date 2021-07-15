@@ -13,6 +13,7 @@ const TEXTS = {
 }
 
 const ACTIONS = {
+  ADD_POINT: 'add-point',
   ADD_MARKER: 'add-marker',
   ADD_MARKERS: 'add-markers',
   ADD_STATION: 'add-location',
