@@ -19,7 +19,7 @@
       </div>
       <div class="BikeStationPopup__footer">
         <a class="BikeStationPopup__address" :href="href" target="_blank" title="Abrir en Google Maps" v-html="location.address"></a>
-        <button class="BikeStationPopup__button Button is-small" @click="onClickDirection">Dirección</button>
+        <button class="BikeStationPopup__button Button is-small" @click="onClickDirection" v-if="false">Dirección</button>
       </div>
     </div>
   </div>
