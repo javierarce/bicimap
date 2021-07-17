@@ -40,8 +40,6 @@
   justify-content: space-between;
   box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
   background: var(--white);
-
-  background: var(--white);
   border-radius: 4px;
 }
 
@@ -93,6 +91,7 @@
   font-size: .9em;
   outline: none;
   transition: all 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
+  border-radius: 4px;
 }
 
 .Search__input::placeholder {

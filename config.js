@@ -8,8 +8,8 @@ const MAP = {
 
 const TEXTS = {
   SEARCH_PLACEHOLDER: 'Busca por dirección o comercio',
-  NO_RESULTS_TITLE:  'Lo siento, no encuentro "{q}"',
-  NO_RESULTS_DESCRIPTION: `<p><strong>Bicimap</strong> usa datos de <a href="https://www.openstreetmap.org">OpenStreetMap</a> (un proyecto colaborativo cuyo objetivo es construir un mapa editable y gratuito del mundo entero) y ese lugar aún no se ha agregado.</p>`,
+  NO_RESULTS_TITLE:  'Dirección no encontrada',
+  NO_RESULTS_DESCRIPTION: `<p><strong>Bicimap</strong> usa datos públicos de <a href="https://www.openstreetmap.org">OpenStreetMap</a>  y la dirección que has buscado ({q}) aún no se ha agregado.</p>`,
 }
 
 const ACTIONS = {
