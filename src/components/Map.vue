@@ -111,26 +111,35 @@ export default {
       }
     },
 
+    getPercentageOfBikes (location) {
+      let bikes = location.dock_bikes - location.reservations_count
+      let bases = location.total_bases
+
+      return Math.round((bikes / bases.toFixed()) * 100)
+    },
+
     getStationIconClassNames (location) {
       let classNames = [ 'BikeStationMarker' ]
 
       let what = this.mode ? 'free_bases' : 'dock_bikes'
       classNames.push(this.mode ? 'is-docks' : '')
 
-      if (location && location[what] === 0) {
-        classNames.push('is-empty')
-      } else if (location && location[what] < 3) {
-        classNames.push('is-low')
-      } else if (location && location[what] >= 3 && location[what] < 5) {
-        classNames.push('is-ok')
-      } else if (location && location[what] >= 5) {
-        classNames.push('is-good')
-      } else {
-        classNames.push('is-bad')
-      }
+      if (location) {
+        if (location[what] === 0) {
+          classNames.push('is-empty')
+        } else if (location[what] < 3) {
+          classNames.push('is-low')
+        } else if (location[what] >= 3 && location[what] < 5) {
+          classNames.push('is-ok')
+        } else if (location[what] >= 5) {
+          classNames.push('is-good')
+        } else {
+          classNames.push('is-bad')
+        }
 
-      if (location && !location.activate) {
-        classNames.push('is-disabled')
+        if (!location.activate) {
+          classNames.push('is-disabled')
+        }
       }
 
       return classNames.join(' ')
@@ -169,6 +178,8 @@ export default {
     },
 
     onGetPoint (point) {
+      console.log(this.pointA, this.pointB)
+
       if (this.pointA) {
         this.pointB = point
       } else {
@@ -178,10 +189,8 @@ export default {
       if (this.pointA && this.pointB) {
         let start = this.pointA.reverse().join(',')
         let end = this.pointB.reverse().join(',')
-        this.pointA = this.pointB
-        this.pointB = undefined
 
-        fetch(`https://last.javierarce.com/api/route?start=${start}&end=${end}`).then((result) => {
+        fetch(`/api/route?start=${start}&end=${end}`).then((result) => {
           result.json().then((data) => {
             let layer =  L.geoJSON(data, {
               style: () => {
@@ -193,6 +202,9 @@ export default {
                 }
               }
             })
+
+            this.pointA = undefined
+            this.pointB = undefined
 
             this.map.addLayer(layer)
           })
@@ -643,25 +655,6 @@ export default {
       response.json().then((data) => {
         data.forEach(this.addAirMarker.bind(this))
       })
-    },
-
-    getLocationPopupContent (name, address) {
-      let description = `${name} ${address}`
-
-      let content = L.DomUtil.create('div', 'LocationPopup__content')
-      let header = L.DomUtil.create('div', 'LocationPopup__header', content)
-      let body = L.DomUtil.create('div', 'LocationPopup__body', content)
-      let popupDescription = L.DomUtil.create('div', 'LocationPopup__description', body)
-      let popupAddress = L.DomUtil.create('a', 'LocationPopup__address', body)
-      popupAddress.href = `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`
-      popupAddress.target = '_blank'
-      popupAddress.title = 'Abrir en Google Maps'
-
-      header.innerHTML = description
-      popupDescription.innerHTML = description
-      popupAddress.innerText = address
-
-      return content
     },
 
     startLoading () {

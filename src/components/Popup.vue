@@ -34,7 +34,7 @@ export default {
   props: ['location'],
   computed: {
     href () {
-      return `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`
+      return `https://www.google.com/maps/place/${this.location.address},Madrid/${this.location.latitude},${this.location.longitude},17z`
     },
     bases () {
       return this.pluralize(location.free_bases, 'base libre', 'bases libres', { showAmount: false })
