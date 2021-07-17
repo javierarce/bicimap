@@ -72,8 +72,8 @@ export default {
         if (results.length) {
           window.bus.$emit(config.ACTIONS.SET_VIEW, results[0])
         } else {
-          let title = config.TEXTS.NO_RESULTS_TITLE.replace('{q}', this.q)
-          let description = config.TEXTS.NO_RESULTS_DESCRIPTION
+          let title = config.TEXTS.NO_RESULTS_TITLE
+          let description = config.TEXTS.NO_RESULTS_DESCRIPTION.replace('{q}', this.q)
           let footer = `<a class="Button Alert__button" href="https://www.openstreetmap.org/search?query=${this.q}#map=${config.MAP.ZOOM}/${config.MAP.LAT}/${config.MAP.LON}" target="__blank">Añade este lugar en OSM</a>`
           window.bus.$emit(config.ACTIONS.TOGGLE_ALERT, title, description, footer)
         }
