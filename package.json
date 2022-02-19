@@ -10,6 +10,7 @@
   "dependencies": {
     "aire-madrid": "^4.0.4",
     "bicimad": "^1.0.1",
+    "bicing": "^1.0.0",
     "core-js": "^3.18.0",
     "css-loader": "^5.2.7",
     "date-fns": "^2.24.0",

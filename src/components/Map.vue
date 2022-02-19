@@ -18,6 +18,7 @@ import Vue from 'vue';
 import * as L from 'leaflet'
 require('leaflet.markercluster')
 
+const CITIES = ['barcelona', 'madrid']
 const PICKUP_MODE = 0
 
 export default {
@@ -65,15 +66,22 @@ export default {
       window.bus.markers.forEach((marker) => {
         let element = marker.getElement()
         let location = marker.options.location
+        let city = marker.options.city
 
         if (element) {
-          let tooltipDescription = this.getTooltipContent(location, value)
+          let tooltipDescription = this.getTooltipContent(location, city, value)
 
           marker.setTooltipContent(tooltipDescription)
 
           let what = value? 'free_bases' : 'dock_bikes'
+          let whatLabel = 'free_bases'
 
-          element.classList.toggle(`is-docks`, what === 'free_bases')
+          if (city === 'barcelona') {
+            what = value? 'slots' : 'bikes'
+            whatLabel = 'slots'
+          }
+
+          element.classList.toggle(`is-docks`, what === whatLabel)
 
           element.classList.toggle('is-empty', location[what] === 0)
           element.classList.toggle('is-low', location[what] > 0 && location[what] < 3)
@@ -118,10 +126,15 @@ export default {
       return Math.round((bikes / bases.toFixed()) * 100)
     },
 
-    getStationIconClassNames (location) {
+    getStationIconClassNames (location, city) {
       let classNames = [ 'BikeStationMarker' ]
 
       let what = this.mode ? 'free_bases' : 'dock_bikes'
+
+      if (city === 'barcelona') {
+        what = this.mode ? 'slots' : 'bikes'
+      }
+
       classNames.push(this.mode ? 'is-docks' : '')
 
       if (location) {
@@ -137,7 +150,9 @@ export default {
           classNames.push('is-bad')
         }
 
-        if (!location.activate) {
+        if (city === 'madrid' && !location.activate) {
+          classNames.push('is-disabled')
+        } else if (city === 'barcelona' && location.status !== 1) {
           classNames.push('is-disabled')
         }
       }
@@ -226,39 +241,30 @@ export default {
       this.map.setView(latlng, 17)
     },
 
-    onAddStations (stations) {
-      if (this.stations && this.stations.length) {
-        this.updateStations(stations)
-      } else {
-
-        this.cluster = L.markerClusterGroup({
-          disableClusteringAtZoom: 14,
-          spiderfyOnMaxZoom: false,
-          showCoverageOnHover: false
-        })
-
-        this.map.addLayer(this.cluster)
-
-        this.stations = stations
-        this.stations.forEach(this.addStationMarker.bind(this))
+    onAddStations (stations, city) {
+      if (this.stations[city]) {
+        this.updateStations(stations, city)
+        return
       }
+      this.stations[city] = stations
+      CITIES.forEach(this.addStationMarker.bind(this))
     },
 
-    updateStations (stations) {
-      this.stations = stations
+    updateStations (stations, city) {
+      this.stations[city] = stations
 
       let markers = this.cluster.getLayers()
 
       markers.forEach((marker) => { 
         let id = marker.options.location.id
-        let location = this.getStationById(id)
+        let location = this.getStationByCityAndId(city, id)
 
         if (location) {
-          let tooltipContent = this.getTooltipContent(location, this.mode)
-          let icon = this.getStationIcon(location)
+          let tooltipContent = this.getTooltipContent(location, city, this.mode)
+          let icon = this.getStationIcon(location, city)
 
           let PopupClass = Vue.extend(Popup)
-          let popupContent = new PopupClass({ propsData: { location } })
+          let popupContent = new PopupClass({ propsData: { location, city } })
 
           marker.setPopupContent(popupContent.$mount().$el)
           marker.setTooltipContent(tooltipContent)
@@ -267,8 +273,8 @@ export default {
       })
     },
 
-    getStationById (id) {
-      return this.stations.find(station => station.id === id)
+    getStationByCityAndId (city, id) {
+      return this.stations[city].find(station => station.id === id)
     },
 
     addLocationMarker (latlng, name, address) {
@@ -281,26 +287,35 @@ export default {
       this.map.addLayer(marker)
     },
 
-    addStationMarker (location) {
-      let PopupClass = Vue.extend(Popup)
-      let popupContent = new PopupClass({ propsData: { location } })
+    addStationMarker (city) {
+      let stations = this.stations[city]
 
-      let latlng = [location.latitude, location.longitude]
+      if (!stations) {
+        return
+      }
 
-      let popup = L.popup({
-        className: 'BikeStationPopup',
-        offset: [0, 12]
+      stations.forEach((location) => {
+
+        let PopupClass = Vue.extend(Popup)
+        let popupContent = new PopupClass({ propsData: { location, city } })
+
+        let latlng = [location.latitude, location.longitude]
+
+        let popup = L.popup({
+          className: 'BikeStationPopup',
+          offset: [0, 12]
+        })
+
+        let icon = this.getStationIcon(location, city)
+        popup.setContent(popupContent.$mount().$el)
+
+        let marker = L.marker(latlng, { icon, location, city })
+
+        this.bindStationMarker(marker, this.getTooltipContent(location, city, this.mode), popup)
+
+        this.cluster.addLayer(marker)
+        window.bus.markers.push(marker)
       })
-
-      let icon = this.getStationIcon(location)
-      popup.setContent(popupContent.$mount().$el)
-
-      let marker = L.marker(latlng, { icon, location })
-
-      this.bindStationMarker(marker, this.getTooltipContent(location, this.mode), popup)
-
-      this.cluster.addLayer(marker)
-      window.bus.markers.push(marker)
     },
 
     addAirMarker(data) {
@@ -338,17 +353,19 @@ export default {
       })
     },
 
-    getStationIcon (location) {
+    getStationIcon (location, city) {
       return new L.divIcon({
-        className: this.getStationIconClassNames(location),
+        className: this.getStationIconClassNames(location, city),
         html: `<div class="BikeStationMarker__inner"></div>`,
         iconSize: [30, 30],
         iconAnchor: new L.Point(15, 0)
       })
     },
 
-    getTooltipContent (location, mode) {
-      let parts = [this.pluralize(location.dock_bikes, 'bici', 'bicis'), this.pluralize(location.free_bases, 'base', 'bases')]
+    getTooltipContent (location, city, mode) {
+      let bikes = city === 'madrid' ? location.dock_bikes : location.bikes
+      let bases = city === 'madrid' ? location.free_bases : location.slots
+      let parts = [this.pluralize(bikes, 'bici', 'bicis'), this.pluralize(bases, 'base', 'bases')]
       let description = mode ? parts.reverse() : parts
 
       return description.join(' / ')
@@ -395,7 +412,14 @@ export default {
         tap: false
       }
 
-      this.map = L.map('map', options).setView([config.MAP.LAT, config.MAP.LON], config.MAP.ZOOM)
+      let bounds = this.retrieveFromLocalStorage('bounds')
+
+      if (bounds) {
+        this.map = L.map('map', options)
+        this.centerToBounds(bounds)
+      } else {
+        this.map = L.map('map', options).setView([config.MAP.LAT, config.MAP.LON], config.MAP.ZOOM)
+      }
 
       this.map.zoomControl.setPosition('topleft')
 
@@ -455,14 +479,14 @@ export default {
       this.saveToLocalStorage('bounds',this.map.getBounds().toBBoxString())
     },
     onMapReady () {
-      let bounds = this.retrieveFromLocalStorage('bounds')
+      this.map.addLayer(this.cluster)
+    },
 
+    centerToBounds(bounds) {
       try {
-        if (bounds) {
-          let [west, south, east, north] = bounds.split(',').map(parseFloat)
-          let newBounds = new L.LatLngBounds(new L.LatLng(south, west), new L.LatLng(north, east))
-          this.map.flyToBounds(newBounds)
-        }
+        let [west, south, east, north] = bounds.split(',').map(parseFloat)
+        let newBounds = new L.LatLngBounds(new L.LatLng(south, west), new L.LatLng(north, east))
+        this.map.fitBounds(newBounds)
 
       } catch (error) {
         console.log(error)

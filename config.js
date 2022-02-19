@@ -13,18 +13,18 @@ const TEXTS = {
 }
 
 const ACTIONS = {
-  ADD_POINT: 'add-point',
   ADD_MARKER: 'add-marker',
   ADD_MARKERS: 'add-markers',
-  ADD_STATION: 'add-location',
-  ADD_STATIONS: 'add-locations',
+  ADD_POINT: 'add-point',
+  ADD_STATION: 'add-station',
+  ADD_STATIONS: 'add-stations',
+  OPEN_ABOUT: 'open-about',
   SELECT_MARKER: 'select-marker',
   SET_VIEW: 'set-view',
   SHOW_ALERT: 'show-alert',
   START_LOADING: 'start-loading',
   STOP_LOADING: 'stop-loading',
   TOGGLE_ABOUT: 'toggle-about',
-  OPEN_ABOUT: 'open-about',
   TOGGLE_ALERT: 'toggle-alert',
   TOGGLE_LANES: 'toggle-lanes',
   UPDATED_AT: 'updated-at'
