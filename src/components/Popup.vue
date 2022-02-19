@@ -11,6 +11,10 @@
             <div class="Item__amount" v-html="bikes"></div>
             <div class="Item__title" v-html="bikesLabel"></div>
           </div>
+          <div class="Item" v-if="isBarcelona">
+            <div class="Item__amount" v-html="eBikes"></div>
+            <div class="Item__title" v-html="eBikesLabel"></div>
+          </div>
           <div class="Item">
             <div class="Item__amount" v-html="bases"></div>
             <div class="Item__title" v-html="basesLabel"></div>
@@ -32,6 +36,9 @@ export default {
   mixins: [mixins],
   props: ['location', 'city'],
   computed: {
+    isBarcelona () {
+      return this.city === 'barcelona'
+    },
     href () {
       return `https://www.google.com/maps/place/${this.address},${this.city}/${this.location.latitude},${this.location.longitude},17z`
     },
@@ -42,13 +49,19 @@ export default {
       return this.city === 'madrid' ? this.location.free_bases : this.location.slots
     },
     basesLabel () {
-      return this.pluralize(location.free_bases, 'base libre', 'bases libres', { showAmount: false })
+      return this.pluralize(location.free_bases, 'base', 'bases', { showAmount: false })
+    },
+    eBikes () {
+      return this.location.electrical_bikes
+    },
+    eBikesLabel () {
+      return this.pluralize(location.electrical_bikes, 'e-bici', 'e-bicis', { showAmount: false })
     },
     bikes () {
-      return this.city === 'madrid' ? this.location.dock_bikes : this.location.bikes
+      return this.city === 'madrid' ? this.location.dock_bikes : this.location.mechanical_bikes
     },
     bikesLabel () {
-      return this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas', { showAmount: false })
+      return this.pluralize(this.bikes, 'bici', 'bicis', { showAmount: false })
     },
     id () {
       return this.city === 'madrid' ? this.location.number : this.location.id

@@ -210,10 +210,10 @@
 
 .Item:first-child {
   margin: 0 0.2em 0 0;
-  border-radius: 100%;
 }
 .Item:last-child {
   margin: 0 0 0 0.2em;
+  border-radius: 8px;
 }
 .Item {
   display: flex;
@@ -223,7 +223,7 @@
   justify-content: center;
   align-items: center;
   background: #f6f8fa;
-  border-radius: 8px;
+  border-radius: 100%;
 }
 
 .Item__amount {

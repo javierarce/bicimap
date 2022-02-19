@@ -5,9 +5,9 @@
       <div class="About__content">
         <div class="About__description">
 
-          <p><strong @click="reload">BiciMap</strong> es un mapa no oficial y de código abierto del servicio de alquiler de bicicletas <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> de Madrid.</p>
+          <p><strong @click="reload">BiciMap</strong> es un mapa no oficial y de código abierto de los servicios de alquileres de bicis <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> de Madrid y <a href="https://bicing.barcelona/">Bicing</a> de Barcelona.</p>
 
-          <p>Este proyecto trata de ofrecer una alternativa amable y usable al mapa de estaciones oficial.</p>
+          <p>Este proyecto trata de ofrecer una alternativa amable y usable a los mapas de estaciones oficiales.</p>
           </div>
 
           <div class="About__highlight">

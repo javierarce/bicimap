@@ -1,5 +1,6 @@
 @import 'helpers/transitions';
 
+
 .BikeStationPopup__description {
   line-height: 135%;
   margin: 0 0 0.8em;
@@ -12,6 +13,10 @@
 .BikeStationPopup__content .BikeStationPopup__input {
   min-width: auto;
   font-size: 1em;
+}
+
+.BikeStationPopup__content {
+  user-select: none;
 }
 
 .BikeStationPopup__comment {
@@ -210,10 +215,10 @@
 
 .Item:first-child {
   margin: 0 0.2em 0 0;
-  border-radius: 100%;
 }
 .Item:last-child {
   margin: 0 0 0 0.2em;
+  border-radius: 8px;
 }
 .Item {
   display: flex;
@@ -223,7 +228,7 @@
   justify-content: center;
   align-items: center;
   background: #f6f8fa;
-  border-radius: 8px;
+  border-radius: 100%;
 }
 
 .Item__amount {
