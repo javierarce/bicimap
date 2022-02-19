@@ -208,24 +208,6 @@
   justify-content: center;
 }
 
-.Item:first-child {
-  margin: 0 0.2em 0 0;
-}
-.Item:last-child {
-  margin: 0 0 0 0.2em;
-  border-radius: 8px;
-}
-.Item {
-  display: flex;
-  width: 100px;
-  height: 100px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #f6f8fa;
-  border-radius: 100%;
-}
-
 .Item__amount {
   font-weight: bold;
   font-size: 1.4em;

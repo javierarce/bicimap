@@ -8,16 +8,16 @@
       <div class="BikeStationPopup__description">
         <div class="Items">
           <div class="Item">
+            <div class="Item__icon is-bike"></div>
             <div class="Item__amount" v-html="bikes"></div>
-            <div class="Item__title" v-html="bikesLabel"></div>
           </div>
           <div class="Item" v-if="isBarcelona">
+            <div class="Item__icon is-bike"></div>
             <div class="Item__amount" v-html="eBikes"></div>
-            <div class="Item__title" v-html="eBikesLabel"></div>
           </div>
           <div class="Item">
+            <div class="Item__icon is-base"></div>
             <div class="Item__amount" v-html="bases"></div>
-            <div class="Item__title" v-html="basesLabel"></div>
           </div>
         </div>
       </div>

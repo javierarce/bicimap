@@ -214,11 +214,10 @@
 }
 
 .Item:first-child {
-  margin: 0 0.2em 0 0;
+  margin: 0 0.4em 0 0;
 }
 .Item:last-child {
-  margin: 0 0 0 0.2em;
-  border-radius: 8px;
+  margin: 0 0 0 0.4em;
 }
 .Item {
   display: flex;
@@ -227,8 +226,27 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #f6f8fa;
-  border-radius: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  //border-radius: 100%;
+}
+
+.Item__icon.is-bike {
+  width: 50px;
+  height: 50px;
+  background-image: url(/img/bike.svg);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+.Item__icon.is-base {
+  width: 50px;
+  height: 50px;
+  background-image: url(/img/dock.svg);
+  background-repeat: no-repeat;
+  background-size: 75%;
+  background-position: center;
 }
 
 .Item__amount {
