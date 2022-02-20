@@ -34,7 +34,8 @@ export default {
       coordinates: undefined,
       expanded: false,
       helpControl: null,
-      lanes: {},
+      madridLanes: {},
+      barcelonaLanes: {},
       lanesControl: null,
       locateControl: null,
       map: {},
@@ -57,9 +58,11 @@ export default {
   watch: {
     showLanes (state) {
       if (state) {
-        this.map.addLayer(this.lanes)
+        this.map.addLayer(this.barcelonaLanes)
+        this.map.addLayer(this.madridLanes)
       } else {
-        this.map.removeLayer(this.lanes)
+        this.map.removeLayer(this.madridLanes)
+        this.map.removeLayer(this.barcelonaLanes)
       }
     },
     mode (value) {
@@ -643,16 +646,37 @@ export default {
     },
 
     addLanes () {
-      this.get('/lanes.min.geojson')
-        .then(this.onGetLanes.bind(this))
+      this.get('/barcelona.geojson')
+        .then(this.onGetBarcelonaLanes.bind(this))
+        .catch((error) => {
+          console.error(error)
+        })
+
+      this.get('/madrid.min.geojson')
+        .then(this.onGetMadridLanes.bind(this))
         .catch((error) => {
           console.error(error)
         })
     },
 
-    onGetLanes (response) {
+    onGetBarcelonaLanes (response) {
       response.json().then((data) => {
-        this.lanes = L.geoJSON(data, {
+        this.barcelonaLanes = L.geoJSON(data, {
+          style: () => {
+            return {
+              interactive:false,
+              "color": "#23D5AB",
+              "weight": 8,
+              "opacity": 0.5
+            }
+          }
+        })
+
+      })
+    },
+    onGetMadridLanes (response) {
+      response.json().then((data) => {
+        this.madridLanes = L.geoJSON(data, {
           style: () => {
             return {
               interactive:false,

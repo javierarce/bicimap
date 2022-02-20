@@ -12,6 +12,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/air.sh"
   },
   {
+    "revision": "1adc0d6614678c870d0009beb4bb72e6",
+    "url": "/barcelona.geojson"
+  },
+  {
     "revision": "8725961262e2d3aaa50a2c75ad8d0e97",
     "url": "/barcelona.json"
   },
@@ -24,7 +28,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/cron.sh"
   },
   {
-    "revision": "c3fb02526be55b936fe3",
+    "revision": "720d0b73c73d76154b7d",
     "url": "/css/app.2939ecaf.css"
   },
   {
@@ -104,12 +108,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/markers/5.svg"
   },
   {
-    "revision": "5ba3aa7bab907883bfa602ff12537214",
+    "revision": "01bc9c8ad7e04418cd680ba50ba691ad",
     "url": "/index.html"
   },
   {
-    "revision": "c3fb02526be55b936fe3",
-    "url": "/js/app.22ac2f3f.js"
+    "revision": "720d0b73c73d76154b7d",
+    "url": "/js/app.2add6203.js"
   },
   {
     "revision": "97832375fe46cfa7cf18",
@@ -117,15 +121,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   },
   {
     "revision": "35b4dbdb350e8a988fa4395b59fb3f29",
-    "url": "/lanes.geojson"
-  },
-  {
-    "revision": "ee19ed5bc68c904ef0d4cfb93e20db4b",
-    "url": "/lanes.min.geojson"
+    "url": "/madrid.geojson"
   },
   {
     "revision": "edaaaad1f68504082518a1523e277b0d",
     "url": "/madrid.json"
+  },
+  {
+    "revision": "ee19ed5bc68c904ef0d4cfb93e20db4b",
+    "url": "/madrid.min.geojson"
   },
   {
     "revision": "3022d7d62292d72dd501aadc9c68d7e2",
