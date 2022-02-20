@@ -28,8 +28,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/cron.sh"
   },
   {
-    "revision": "720d0b73c73d76154b7d",
-    "url": "/css/app.2939ecaf.css"
+    "revision": "56caff58ba01851b6975",
+    "url": "/css/app.2521add5.css"
   },
   {
     "revision": "cd84583bf8d9e565093f9eac2adf17fd",
@@ -108,11 +108,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/markers/5.svg"
   },
   {
-    "revision": "01bc9c8ad7e04418cd680ba50ba691ad",
+    "revision": "6dbb3bdc9b799e9540d6a6bbc9968b74",
     "url": "/index.html"
   },
   {
-    "revision": "720d0b73c73d76154b7d",
+    "revision": "56caff58ba01851b6975",
     "url": "/js/app.2add6203.js"
   },
   {

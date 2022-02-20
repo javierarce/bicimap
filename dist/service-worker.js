@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.25a41581bad08069f50a6d896a5601e7.js"
+  "/precache-manifest.e60074cd8d2dceaf82fb25933213a608.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "Bicimap"});
