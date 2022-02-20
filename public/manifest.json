@@ -1,11 +1,11 @@
 {
   "start_url": "/",
-  "name": "BiciMap",
+  "name": "Bicimap",
   "lang": "es-ES",
   "version": "1.0",
-  "categories": ["map", "bike", "bike sharing", "Madrid"],
-  "description": "Mapa alternativo y amable de estaciones de BiciMAD",
-  "short_name": "BiciMap",
+  "categories": ["map", "bike", "bike sharing", "Madrid", "Barcelona", "bicing", "bicimad"],
+  "description": "Mapa alternativo y amable de estaciones de BiciMAD y Bicing",
+  "short_name": "Bicimap",
   "icons": [
     {
       "src": "/img/icons/android-chrome-192x192.png",

@@ -1,5 +1,5 @@
 {
-  "name": "BiciMap",
+  "name": "Bicimap",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -12,15 +12,15 @@
     "bicimad": "^1.0.1",
     "bicing": "^1.0.0",
     "core-js": "^3.18.0",
-    "css-loader": "^5.2.7",
+    "css-loader": "^6.6.0",
     "date-fns": "^2.24.0",
     "leaflet": "^1.7.1",
     "leaflet.markercluster": "^1.5.1",
-    "postcss-loader": "^5.3.0",
+    "postcss-loader": "^6.2.1",
     "register-service-worker": "^1.7.1",
     "sass": "^1.42.1",
-    "sass-loader": "^10.2.0",
-    "style-loader": "^2.0.0",
+    "sass-loader": "^10.0.0",
+    "style-loader": "^3.3.1",
     "vue": "^2.6.14"
   },
   "devDependencies": {

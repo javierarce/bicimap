@@ -1,4 +1,4 @@
-# BiciMap
+# Bicimap
 
 🌍 Unofficial map of BiciMAD & Bicing stations. 
 

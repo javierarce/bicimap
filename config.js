@@ -1,5 +1,5 @@
 const MAP = {
-  TITLE: 'BiciMap',
+  TITLE: 'Bicimap',
   LAT: "40.41948626649347",
   LON: "-3.6930539666172475",
   ZOOM: "14",

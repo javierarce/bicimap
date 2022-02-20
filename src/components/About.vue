@@ -1,11 +1,11 @@
 <template>
   <div class="About" @click="onClickOutside"> 
     <div class="About__inner has-transition" @click="onClickInside">
-      <div class="About__title">Acerca de BiciMap</div>
+      <div class="About__title">Acerca de Bicimap</div>
       <div class="About__content">
         <div class="About__description">
 
-          <p><strong @click="reload">BiciMap</strong> ofrece una alternativa amable y usable a los mapas de bicis oficiales de <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> y <a href="https://bicing.barcelona/">Bicing</a>.</p>
+          <p><strong @click="reload">Bicimap</strong> ofrece una alternativa amable y usable a los mapas de bicis oficiales de <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> y <a href="https://bicing.barcelona/">Bicing</a>.</p>
 
           </div>
 
