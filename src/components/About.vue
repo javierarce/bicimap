@@ -1,22 +1,20 @@
 <template>
   <div class="About" @click="onClickOutside"> 
     <div class="About__inner has-transition" @click="onClickInside">
-      <div class="About__title">Acerca de este proyecto</div>
+      <div class="About__title">Acerca de BiciMap</div>
       <div class="About__content">
         <div class="About__description">
 
-          <p><strong @click="reload">BiciMap</strong> es un mapa no oficial y de código abierto de los servicios de alquileres de bicis <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> de Madrid y <a href="https://bicing.barcelona/">Bicing</a> de Barcelona.</p>
+          <p><strong @click="reload">BiciMap</strong> trata de ofrecer una alternativa amable y usable a los mapas de bicis oficiales de <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> y <a href="https://bicing.barcelona/">Bicing</a>.</p>
 
-          <p>Este proyecto trata de ofrecer una alternativa amable y usable a los mapas de estaciones oficiales.</p>
           </div>
 
           <div class="About__highlight">
-            <p>Sigue el desarrollo de este mapa, sugiere mejoras e informa de errores en GitHub.</p>
+            <p>Sigue el desarrollo del proyecto, sugiere mejoras e informa de errores en GitHub.</p>
             <a href="https://github.com/javierarce/bicimap" class="Button About__button is-bold" title="Visita el repositorio en GitHub" target="_blank">Accede al código</a>
           </div>
+
           <p class="is-small">Esta web utiliza datos de <a href="https://www.openstreetmap.org/copyright" target="_blank">Nominatim</a>.</p>
-
-
 
 
         <div class="About__footer">

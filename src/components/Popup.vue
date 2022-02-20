@@ -12,7 +12,7 @@
             <div class="Item__amount" v-html="bikes"></div>
           </div>
           <div class="Item" v-if="isBarcelona">
-            <div class="Item__icon is-bike"></div>
+            <div class="Item__icon is-ebike"></div>
             <div class="Item__amount" v-html="eBikes"></div>
           </div>
           <div class="Item">
@@ -40,10 +40,11 @@ export default {
       return this.city === 'barcelona'
     },
     href () {
-      return `https://www.google.com/maps/place/${this.address},${this.city}/${this.location.latitude},${this.location.longitude},17z`
+      return `https://www.google.com/maps/place/${this.address}, ${this.city}/${this.location.latitude},${this.location.longitude},17z`
     },
     address () {
-      return this.city === 'madrid' ? this.location.address : this.location.streetName
+      let value = this.city === 'madrid' ? this.location.address : this.location.streetName
+      return value.replace('C/', '').replace('Calle', '').replace(/\(.*?\)/, '')
     },
     bases () {
       return this.city === 'madrid' ? this.location.free_bases : this.location.slots
@@ -67,7 +68,8 @@ export default {
       return this.city === 'madrid' ? this.location.number : this.location.id
     },
     street () {
-      return this.city === 'madrid' ? this.location.name : this.location.streetName
+      let value = this.city === 'madrid' ? this.location.name : this.location.streetName
+      return value.replace('C/', '').replace('Calle', '')
     }
   },
   methods: {
