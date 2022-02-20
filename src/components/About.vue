@@ -5,7 +5,7 @@
       <div class="About__content">
         <div class="About__description">
 
-          <p><strong @click="reload">BiciMap</strong> trata de ofrecer una alternativa amable y usable a los mapas de bicis oficiales de <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> y <a href="https://bicing.barcelona/">Bicing</a>.</p>
+          <p><strong @click="reload">BiciMap</strong> ofrece una alternativa amable y usable a los mapas de bicis oficiales de <a href="https://www.bicimad.com" target="_blank">BiciMAD</a> y <a href="https://bicing.barcelona/">Bicing</a>.</p>
 
           </div>
 
