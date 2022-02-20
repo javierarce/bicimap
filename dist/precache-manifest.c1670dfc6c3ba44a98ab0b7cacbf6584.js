@@ -40,7 +40,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/bike_white.svg"
   },
   {
-    "revision": "53600803386bbfb812f20451f54214eb",
+    "revision": "47b484c29e881892b797206e47cbeb18",
     "url": "/img/card.png"
   },
   {
@@ -104,7 +104,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/markers/5.svg"
   },
   {
-    "revision": "e33cd19a530ee656052b180972bb25ff",
+    "revision": "e114319f6973a46717d3f6a158dc3881",
     "url": "/index.html"
   },
   {
