@@ -2,7 +2,7 @@
   <div class="BikeStationPopup__content">
     <div class="BikeStationPopup__header">
       <div class="Station__id" v-html="id"></div>
-      <span v-html="street"></span>
+      <span v-html="title"></span>
     </div>
     <div class="BikeStationPopup__body">
       <div class="BikeStationPopup__description">
@@ -44,7 +44,7 @@ export default {
     },
     address () {
       let value = this.city === 'madrid' ? this.location.address : this.location.streetName
-      return value.replace('C/', '').replace('Calle', '').replace(/\(.*?\)/, '')
+      return value.replace('C/', '').replace('C /', '').replace('Calle', '').replace(/\(.*?\)/, '')
     },
     bases () {
       return this.city === 'madrid' ? this.location.free_bases : this.location.slots
@@ -67,9 +67,9 @@ export default {
     id () {
       return this.city === 'madrid' ? this.location.number : this.location.id
     },
-    street () {
+    title () {
       let value = this.city === 'madrid' ? this.location.name : this.location.streetName
-      return value.replace('C/', '').replace('Calle', '')
+      return value.replace('C/', '').replace('C /', '').replace('Calle', '').replace(/\(.*?\)/, '').replace(/,(.*?)$/, '')
     }
   },
   methods: {
