@@ -2,7 +2,7 @@
 
 🌍 Unofficial map of BiciMAD & Bicing stations. 
 
-This project is my attempt to make a friendlier version of the current [BiciMAD](https://u.bicimad.com/mapa) and [Bicing](https://bicing.barcelona/mapa-de-disponibilitat) bike-sharing maps.
+This project is my attempt to make a friendlier version of the current [BiciMAD](https://u.bicimad.com/mapa) and [Bicing](https://bicing.barcelona/mapa-de-disponibilitat) bike-sharing maps. Visit the map [[here]](https://bicimap.javierarce.com)
 
 ![card](public/img/card.png)
 
