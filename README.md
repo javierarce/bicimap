@@ -2,29 +2,28 @@
 
 🌍 Unofficial map of BiciMAD & Bicing stations. 
 
-This is my attempt to make a more useful and nicer version of the current [BiciMAD](https://u.bicimad.com/mapa) and [Bicing](https://bicing.barcelona/mapa-de-disponibilitat) maps.
+This project is my attempt to make a friendlier version of the current [BiciMAD](https://u.bicimad.com/mapa) and [Bicing](https://bicing.barcelona/mapa-de-disponibilitat) bike-sharing maps.
 
 ![card](public/img/card.png)
 
 ### HOW TO INSTALL IT
 
-- Clone this repo: `git clone git@github.com:javierarce/bicimap.git`
-- Install dependecies: `cd bicimap; yarn`
-- Download stations: `node public/stations.js`
-- Run server: `yarn serve`
-- Follow the instructions in your terminal
+- Clone this repo with `git clone git@github.com:javierarce/bicimap.git`
+- Install its dependecies: `cd bicimap; yarn`
+- Retrieve the stations data: `node public/stations.js`
+- Run the server: `yarn serve`
+- Follow the instructions in your terminal.
 
 ### TODO
 
-- [ ] Add tooltips for the map controllers
-- [ ] Fix error alerts
+- [ ] Add tooltips for the map controllers.
+- [ ] Add routing between stations.
 
 ### WISHLIST
 
-- [ ] Add weather information
-- [ ] Allow marking stations as favorites for easier access
-- [ ] Add routing between stations
-- [ ] Show nearby stations to a given station
+- [ ] Add weather information.
+- [ ] Allow marking stations as favorites for easier access.
+- [ ] Show nearby stations to a given station.
 
 ### DONE
 
