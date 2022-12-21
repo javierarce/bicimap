@@ -1,0 +1,39 @@
+.Marker,
+.Cluster {
+  width: 32px;
+  height: 32px;
+  background: var(--blue);
+  background-size: 400% 400%;
+  border: 5px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 100%;
+  transition: border 150ms ease-in-out, background 150ms ease-in-out; }
+
+.Marker.leaflet-zoom-animated.leaflet-interactive:hover {
+  border: 8px solid #fff; }
+
+.Cluster {
+  background-color: var(--green);
+  color: #fff;
+  line-height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; }
+
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+  border: none; }
+
+.leaflet-cluster-anim .leaflet-marker-icon,
+.leaflet-cluster-anim .leaflet-marker-shadow {
+  -webkit-transition: -webkit-transform 0.3s ease-out, opacity 0.3s ease-in;
+  -moz-transition: -moz-transform 0.3s ease-out, opacity 0.3s ease-in;
+  -o-transition: -o-transform 0.3s ease-out, opacity 0.3s ease-in;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-in; }
+
+.leaflet-cluster-spider-leg {
+  -webkit-transition: -webkit-stroke-dashoffset 0.3s ease-out, -webkit-stroke-opacity 0.3s ease-in;
+  -moz-transition: -moz-stroke-dashoffset 0.3s ease-out, -moz-stroke-opacity 0.3s ease-in;
+  -o-transition: -o-stroke-dashoffset 0.3s ease-out, -o-stroke-opacity 0.3s ease-in;
+  transition: stroke-dashoffset 0.3s ease-out, stroke-opacity 0.3s ease-in; }
