@@ -12,10 +12,30 @@
 .Marker.leaflet-zoom-animated.leaflet-interactive:hover {
   border: 8px solid #fff; }
 
+.Marker.leaflet-zoom-animated.leaflet-interactive:focus-visible {
+  border: 8px solid #fff;
+  outline: 2px solid var(--blue); }
+
+.Marker.is-good {
+  background: var(--green); }
+
+.Marker.is-bad {
+  background: red; }
+
+.Marker.is-ok {
+  background: var(--yellow); }
+
+.Marker.is-low {
+  background: var(--red); }
+
+.Marker.is-empty {
+  background: var(--darkgray); }
+
 .Cluster {
-  background-color: var(--green);
+  font-weight: bold;
+  background-color: var(--blue);
   color: #fff;
-  line-height: 30px;
+  line-height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;

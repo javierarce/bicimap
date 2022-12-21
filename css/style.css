@@ -49,6 +49,7 @@ table {
   --black: #000000;
   --blue: #2477BE;
   --gray: #F4F4F4;
+  --darkgray: #666666;
   --green: #23D5AB;
   --red: #F44336;
   --shadow: 0,0,0;
@@ -673,617 +674,6 @@ table {
 .Marker__tooltip strong {
   font-weight: bold; }
 
-.BikeStationMarker.is-disabled {
-  background: #ccc; }
-
-.BikeStationMarker:focus {
-  outline: none; }
-
-.BikeStationMarker:focus .BikeStationMarker__inner {
-  transform: scale(1.2) rotate(0deg);
-  box-shadow: 0 3px 5px rgba(var(--shadow), 0.4); }
-
-.BikeStationMarker.is-docks:focus .BikeStationMarker__inner {
-  transform: scale(1.2) rotate(90deg); }
-
-.BikeStationMarker.is-docks .BikeStationMarker__inner {
-  border-radius: 4px;
-  transform: scale(1) rotate(90deg); }
-
-.BikeStationMarker:hover .BikeStationMarker__inner {
-  transform: scale(0.9);
-  border-width: 5px; }
-
-.BikeStationMarker.is-docks:hover .BikeStationMarker__inner {
-  transform: scale(0.9) rotate(90deg); }
-
-.BikeStationMarker.is-docks.is-low .BikeStationMarker__inner:before {
-  content: '';
-  position: absolute;
-  background: var(--black);
-  opacity: 0.2;
-  width: 30%;
-  height: 100%;
-  right: 0; }
-
-.BikeStationMarker.is-docks.is-ok .BikeStationMarker__inner:before {
-  content: '';
-  position: absolute;
-  background: var(--black);
-  opacity: 0.1;
-  width: 50%;
-  height: 100%;
-  right: 0; }
-
-.BikeStationMarker.is-low .BikeStationMarker__inner:before {
-  content: '';
-  position: absolute;
-  background: var(--black);
-  opacity: 0.2;
-  width: 100%;
-  height: 30%;
-  bottom: 0; }
-
-.BikeStationMarker.is-ok .BikeStationMarker__inner:before {
-  content: '';
-  position: absolute;
-  background: var(--black);
-  opacity: 0.1;
-  width: 100%;
-  height: 50%;
-  bottom: 0; }
-
-.BikeStationMarker .BikeStationMarker__inner {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  color: var(--white);
-  border: 4px solid var(--white);
-  overflow: hidden;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
-  padding: 0.4em;
-  background: var(--green);
-  border-radius: 100%;
-  line-height: auto;
-  transition: border 150ms ease-in-out, border-radius 250ms ease-in-out, background 150ms ease-in-out, transform 500ms cubic-bezier(0, 0, 0.25, 1);
-  transform: scale(1); }
-
-.BikeStationMarker.is-good .BikeStationMarker__inner {
-  background: var(--green); }
-
-.BikeStationMarker.is-ok .BikeStationMarker__inner {
-  background: var(--yellow); }
-
-.BikeStationMarker.is-empty .BikeStationMarker__inner {
-  background: #666; }
-
-.BikeStationMarker.is-low .BikeStationMarker__inner {
-  background: var(--red); }
-
-.BikeStationMarker.is-good .BikeStationMarker__inner,
-.BikeStationMarker.is-ok .BikeStationMarker__inner {
-  color: rgba(0, 0, 0, 0.8); }
-
-.BikeStationMarker.is-empty .BikeStationMarker__inner,
-.BikeStationMarker.is-low .BikeStationMarker__inner {
-  color: var(--white); }
-
-.BikeStationMarker.is-you {
-  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
-  border-radius: 100%;
-  width: 24px !important;
-  height: 24px !important;
-  display: flex;
-  align-items: center;
-  justify-content: center; }
-
-.BikeStationMarker.is-you .BikeStationMarker__inner {
-  position: relative;
-  width: 24px;
-  height: 24px;
-  background: var(--blue);
-  border: 4px solid var(--white);
-  box-shadow: 0 0 0 0 white;
-  animation: pulse 1000ms ease-in-out infinite; }
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(36, 119, 190, 0.7); }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 20px rgba(36, 119, 190, 0); }
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(36, 119, 190, 0); } }
-
-@keyframes load8 {
-  0% {
-    transform: rotate(0deg); }
-  100% {
-    transform: rotate(360deg); } }
-
-@keyframes Gradient {
-  0% {
-    background-position: 0% 50%; }
-  50% {
-    background-position: 100% 50%; }
-  100% {
-    background-position: 0% 50%; } }
-
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-  transition: all 250ms ease-in-out; }
-
-.slide-fade-enter .has-transition,
-.slide-fade-leave-to .has-transition {
-  transform: translateY(20px);
-  opacity: 0; }
-
-.slide-fade-enter .Config__backdrop,
-.slide-fade-leave-to .Config__backdrop,
-.slide-fade-enter .About__backdrop,
-.slide-fade-leave-to .About__backdrop,
-.slide-fade-enter .Alert__backdrop,
-.slide-fade-leave-to .Alert__backdrop {
-  opacity: 0; }
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s; }
-
-.fade-enter, .fade-leave-to {
-  opacity: 0; }
-
-.BikeStationPopup__description {
-  line-height: 135%;
-  margin: 0 0 0.8em; }
-
-.BikeStationPopup__description strong {
-  font-weight: bold; }
-
-.BikeStationPopup__content .BikeStationPopup__input {
-  min-width: auto;
-  font-size: 1em; }
-
-.BikeStationPopup__comment {
-  width: 100%;
-  min-height: 30px;
-  transition: all ease-in-out 250ms; }
-
-.BikeStationPopup__body {
-  position: relative;
-  padding: 0.8em;
-  word-break: break-word; }
-
-.BikeStationPopup__address {
-  font-size: 0.8em;
-  width: 100%;
-  opacity: 0.5;
-  line-height: 135%;
-  transition: opacity 150ms ease-in-out; }
-
-.BikeStationPopup__address:hover {
-  opacity: 0.8; }
-
-.BikeStationPopup__button {
-  display: inline-block;
-  border-radius: 4px;
-  width: 100%;
-  margin: auto;
-  font-size: 1.2em;
-  padding: 16px 0;
-  border: none;
-  outline: none;
-  background: #2A84D2;
-  color: var(--white);
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  box-shadow: none;
-  transition: background 250ms ease-in-out; }
-
-.can-send .BikeStationPopup__controls .BikeStationPopup__button:hover,
-.BikeStationPopup__controls .BikeStationPopup__button:hover {
-  background: #1c598e;
-  cursor: pointer; }
-
-.BikeStationPopup__controls .BikeStationPopup__button,
-.BikeStationPopup__controls .BikeStationPopup__button:hover {
-  background: #ccc; }
-
-.can-send .BikeStationPopup__controls .BikeStationPopup__button,
-.can-send .BikeStationPopup__controls .BikeStationPopup__button {
-  background: var(--blue); }
-
-.BikeStationPopup__body {
-  overflow: hidden; }
-
-.BikeStationPopup__spinner {
-  position: absolute;
-  margin-top: -15px;
-  visibility: hidden;
-  transition: all ease-in-out 250ms;
-  opacity: 0; }
-
-.BikeStationPopup__content.is-loading .BikeStationPopup__spinner {
-  opacity: 1;
-  visibility: visible; }
-
-.BikeStationPopup__content.is-loading .BikeStationPopup__controls {
-  opacity: 0;
-  visibility: hidden; }
-
-.BikeStationPopup__content.is-loading .BikeStationPopup__comment {
-  opacity: 0;
-  visibility: hidden; }
-
-.BikeStationPopup__content.is-readonly .BikeStationPopup__description {
-  display: block; }
-
-.BikeStationPopup__content.is-readonly .BikeStationPopup__input {
-  display: none; }
-
-.BikeStationPopup__content.is-readonly .BikeStationPopup__controls {
-  display: none; }
-
-.BikeStationPopup__content.is-readonly.leaflet-popup .leaflet-popup-close-button {
-  display: none; }
-
-.is-loading .BikeStationPopup__header {
-  animation: Gradient 3s ease-in-out infinite; }
-
-.BikeStationPopup__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  border-radius: 4px 4px 0 0;
-  background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, var(--green));
-  background-size: 400% 400%;
-  padding: 0.8em;
-  color: var(--white);
-  line-height: 135%;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 1.2em;
-  outline: none; }
-
-.BikeStationPopup__user {
-  color: var(--black); }
-
-.BikeStationPopup__userAvatar {
-  display: block;
-  margin: 0 4px 0 0;
-  border-radius: 100%;
-  width: 20px;
-  height: 20px;
-  overflow: hidden; }
-
-.BikeStationPopup .leaflet-popup-content-wrapper {
-  border-radius: 4px;
-  padding: 0;
-  border: none;
-  background: var(--white);
-  color: var(--black);
-  font-size: 14px;
-  line-height: 24px;
-  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2); }
-
-.BikeStationPopup.leaflet-popup .leaflet-popup-close-button {
-  top: 9px;
-  right: 5px;
-  color: var(--white);
-  font-size: 16px;
-  font-weight: normal; }
-
-.BikeStationPopup.leaflet-popup .leaflet-popup-close-button:hover {
-  color: #333; }
-
-.BikeStationPopup .leaflet-popup-content {
-  margin: 0; }
-
-.BikeStationPopup .leaflet-popup-tip {
-  border-radius: 0;
-  width: 12px;
-  height: 12px;
-  margin: -10px auto 0;
-  padding: 1px;
-  border: 1px solid transparent;
-  background: var(--white);
-  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2); }
-
-.leaflet-container a {
-  color: var(--black);
-  text-decoration: none; }
-
-.leaflet-container a.leaflet-popup-close-button {
-  display: none; }
-
-@media only screen and (max-width: 800px) {
-  .BikeStationPopup__header {
-    font-size: 1em; }
-  .BikeStationPopup__description {
-    font-size: 1.1em; }
-  .BikeStationPopup__body {
-    min-width: 200px; }
-  .BikeStationPopup__button {
-    font-size: 1em; } }
-
-.Items {
-  display: flex;
-  justify-content: center; }
-
-.Item:first-child {
-  margin: 0 0.2em 0 0;
-  border-radius: 100%; }
-
-.Item:last-child {
-  margin: 0 0 0 0.2em; }
-
-.Item {
-  display: flex;
-  width: 100px;
-  height: 100px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #f6f8fa;
-  border-radius: 8px; }
-
-.Item__amount {
-  font-weight: bold;
-  font-size: 1.4em;
-  margin: 0 0 0.2em; }
-
-.Station__id {
-  margin: 0 .4em 0 0; }
-
-.Station__id:after {
-  content: '';
-  position: relative;
-  width: 1px;
-  height: 100%;
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
-  left: 0.4em;
-  margin: 0 0.4em 0 0; }
-
-.AirStationMarker:focus {
-  outline: none; }
-
-.AirStationMarker:hover .AirStationMarker__inner {
-  transform: scale(0.9);
-  border-width: 3px; }
-
-.AirStationMarker .AirStationMarker__inner {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid var(--white);
-  width: 30px;
-  height: 30px;
-  color: var(--white);
-  overflow: hidden;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
-  padding: 0.4em;
-  background: var(--green);
-  border-radius: 100%;
-  line-height: auto;
-  transition: border 150ms ease-in-out, border-radius 250ms ease-in-out, background 150ms ease-in-out, transform 500ms cubic-bezier(0, 0, 0.25, 1);
-  transform: scale(1); }
-
-.AirStationMarker.is-5 .AirStationMarker__inner {
-  background: var(--white) url(/img/markers/5.svg);
-  background-repeat: no-repeat;
-  background-size: cover; }
-
-.AirStationMarker.is-4 .AirStationMarker__inner {
-  background: var(--white) url(/img/markers/4.svg);
-  background-repeat: no-repeat;
-  background-size: cover; }
-
-.AirStationMarker.is-3 .AirStationMarker__inner {
-  background: var(--white) url(/img/markers/3.svg);
-  background-repeat: no-repeat;
-  background-size: cover; }
-
-.AirStationMarker.is-2 .AirStationMarker__inner {
-  background: var(--white) url(/img/markers/2.svg);
-  background-repeat: no-repeat;
-  background-size: cover; }
-
-.AirStationMarker.is-1 .AirStationMarker__inner {
-  background: var(--white) url(/img/markers/1.jpg);
-  background-repeat: no-repeat;
-  background-size: cover; }
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(36, 119, 190, 0.7); }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 20px rgba(36, 119, 190, 0); }
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(36, 119, 190, 0); } }
-
-@keyframes load8 {
-  0% {
-    transform: rotate(0deg); }
-  100% {
-    transform: rotate(360deg); } }
-
-@keyframes Gradient {
-  0% {
-    background-position: 0% 50%; }
-  50% {
-    background-position: 100% 50%; }
-  100% {
-    background-position: 0% 50%; } }
-
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-  transition: all 250ms ease-in-out; }
-
-.slide-fade-enter .has-transition,
-.slide-fade-leave-to .has-transition {
-  transform: translateY(20px);
-  opacity: 0; }
-
-.slide-fade-enter .Config__backdrop,
-.slide-fade-leave-to .Config__backdrop,
-.slide-fade-enter .About__backdrop,
-.slide-fade-leave-to .About__backdrop,
-.slide-fade-enter .Alert__backdrop,
-.slide-fade-leave-to .Alert__backdrop {
-  opacity: 0; }
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s; }
-
-.fade-enter, .fade-leave-to {
-  opacity: 0; }
-
-.AirStationPopup__description {
-  width: 300px;
-  line-height: 135%;
-  margin: 0 0 0.8em; }
-
-.AirStationPopup__description strong {
-  font-weight: bold; }
-
-.AirStationPopup__content .AirStationPopup__input {
-  min-width: auto;
-  font-size: 1em; }
-
-.AirStationPopup__body {
-  position: relative;
-  padding: 0.8em;
-  word-break: break-word; }
-
-.AirStationPopup__address {
-  font-size: 0.8em;
-  width: 100%;
-  opacity: 0.5;
-  line-height: 135%;
-  transition: opacity 150ms ease-in-out; }
-
-.AirStationPopup__address:hover {
-  opacity: 0.8; }
-
-.AirStationPopup__body {
-  overflow: hidden; }
-
-.AirStationPopup__content.is-readonly.leaflet-popup .leaflet-popup-close-button {
-  display: none; }
-
-.AirStationPopup__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  border-radius: 4px 4px 0 0;
-  background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, var(--green));
-  background-size: 400% 400%;
-  padding: 0.8em;
-  color: var(--white);
-  line-height: 135%;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 1.2em;
-  outline: none; }
-
-.AirStationPopup .leaflet-popup-content-wrapper {
-  border-radius: 4px;
-  padding: 0;
-  border: none;
-  background: var(--white);
-  color: var(--black);
-  font-size: 14px;
-  line-height: 24px;
-  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2); }
-
-.AirStationPopup .leaflet-popup-content {
-  margin: 0; }
-
-.AirStationPopup .leaflet-popup-tip {
-  border-radius: 0;
-  width: 12px;
-  height: 12px;
-  margin: -10px auto 0;
-  padding: 1px;
-  border: 1px solid transparent;
-  background: var(--white);
-  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2); }
-
-@media only screen and (max-width: 800px) {
-  .AirStationPopup__header {
-    font-size: 1em; }
-  .AirStationPopup__description {
-    font-size: 1.1em; }
-  .AirStationPopup__body {
-    min-width: 200px; } }
-
-.AirStationPopup__more.is-hidden {
-  display: none; }
-
-.AirStationPopup__more:hover {
-  background: #f0f0f0; }
-
-.AirStationPopup__more {
-  display: flex;
-  text-decoration: underline;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  background: #f6f8fa;
-  padding: 0.8em;
-  border-radius: 2px;
-  color: #000;
-  margin: 0 0 0.8em;
-  transition: background 250ms ease-in-out; }
-
-.AirStationPopup__pollutants.is-hidden {
-  visibility: hidden;
-  opacity: 0;
-  height: 0;
-  margin: 0;
-  padding: 0; }
-
-.AirStationPopup__pollutants {
-  display: block;
-  margin: 0 0 0.8em;
-  background: #f6f8fa;
-  border-radius: 4px;
-  padding: .8em;
-  transition: opacity 500ms ease-in-out; }
-
-.AirStationPopup__pollutantUnit {
-  font-size: .9em; }
-
-.AirStationPopup__pollutant {
-  display: flex;
-  margin: 0 0 0.2em; }
-
-.AirStationPopup__pollutant:last-child {
-  margin-bottom: 0; }
-
-.AirStationPopup__pollutantName {
-  font-weight: 500;
-  margin: 0 0.4em 0 0; }
-
-.AirStationPopup__pollutantsInfo {
-  margin: .8em 0 0 0; }
-
-.AirStationPopup__body .AirStationPopup__pollutantHelp {
-  font-size: 0.9em;
-  text-decoration: underline;
-  color: #000; }
-
 .Marker,
 .Cluster {
   width: 32px;
@@ -1298,10 +688,30 @@ table {
 .Marker.leaflet-zoom-animated.leaflet-interactive:hover {
   border: 8px solid #fff; }
 
+.Marker.leaflet-zoom-animated.leaflet-interactive:focus-visible {
+  border: 8px solid #fff;
+  outline: 2px solid var(--blue); }
+
+.Marker.is-good {
+  background: var(--green); }
+
+.Marker.is-bad {
+  background: red; }
+
+.Marker.is-ok {
+  background: var(--yellow); }
+
+.Marker.is-low {
+  background: var(--red); }
+
+.Marker.is-empty {
+  background: var(--darkgray); }
+
 .Cluster {
-  background-color: var(--green);
+  font-weight: bold;
+  background-color: var(--blue);
   color: #fff;
-  line-height: 30px;
+  line-height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1431,6 +841,266 @@ table {
 .Tooltip:hover .Tooltip__text {
   visibility: visible;
   opacity: 1; }
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(36, 119, 190, 0.7); }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 20px rgba(36, 119, 190, 0); }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(36, 119, 190, 0); } }
+
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 250ms ease-in-out; }
+
+.slide-fade-enter .has-transition,
+.slide-fade-leave-to .has-transition {
+  transform: translateY(20px);
+  opacity: 0; }
+
+.slide-fade-enter .Config__backdrop,
+.slide-fade-leave-to .Config__backdrop,
+.slide-fade-enter .About__backdrop,
+.slide-fade-leave-to .About__backdrop,
+.slide-fade-enter .Alert__backdrop,
+.slide-fade-leave-to .Alert__backdrop {
+  opacity: 0; }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s; }
+
+.fade-enter, .fade-leave-to {
+  opacity: 0; }
+
+.Popup__description {
+  line-height: 135%;
+  margin: 0 0 0.8em; }
+
+.Popup__description strong {
+  font-weight: bold; }
+
+.Popup__content .Popup__input {
+  min-width: auto;
+  font-size: 1em; }
+
+.Popup__comment {
+  width: 100%;
+  min-height: 30px;
+  transition: all ease-in-out 250ms; }
+
+.Popup__body {
+  position: relative;
+  padding: 0.8em;
+  word-break: break-word; }
+
+.Popup__address {
+  font-size: 0.8em;
+  width: 100%;
+  opacity: 0.5;
+  line-height: 135%;
+  transition: opacity 150ms ease-in-out; }
+
+.Popup__address:hover {
+  opacity: 0.8; }
+
+.Popup__button {
+  display: inline-block;
+  border-radius: 4px;
+  width: 100%;
+  margin: auto;
+  font-size: 1.2em;
+  padding: 16px 0;
+  border: none;
+  outline: none;
+  background: #2A84D2;
+  color: var(--white);
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: none;
+  transition: background 250ms ease-in-out; }
+
+.can-send .Popup__controls .Popup__button:hover,
+.Popup__controls .Popup__button:hover {
+  background: #1c598e;
+  cursor: pointer; }
+
+.Popup__controls .Popup__button,
+.Popup__controls .Popup__button:hover {
+  background: #ccc; }
+
+.can-send .Popup__controls .Popup__button,
+.can-send .Popup__controls .Popup__button {
+  background: var(--blue); }
+
+.Popup__body {
+  overflow: hidden; }
+
+.Popup__spinner {
+  position: absolute;
+  margin-top: -15px;
+  visibility: hidden;
+  transition: all ease-in-out 250ms;
+  opacity: 0; }
+
+.Popup__content.is-loading .Popup__spinner {
+  opacity: 1;
+  visibility: visible; }
+
+.Popup__content.is-loading .Popup__controls {
+  opacity: 0;
+  visibility: hidden; }
+
+.Popup__content.is-loading .Popup__comment {
+  opacity: 0;
+  visibility: hidden; }
+
+.Popup__content.is-readonly .Popup__description {
+  display: block; }
+
+.Popup__content.is-readonly .Popup__input {
+  display: none; }
+
+.Popup__content.is-readonly .Popup__controls {
+  display: none; }
+
+.Popup__content.is-readonly.leaflet-popup .leaflet-popup-close-button {
+  display: none; }
+
+.is-loading .Popup__header {
+  animation: Gradient 3s ease-in-out infinite; }
+
+.Popup__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, var(--green));
+  background-size: 400% 400%;
+  padding: 0.8em;
+  color: var(--white);
+  line-height: 135%;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  outline: none; }
+
+.Popup__user {
+  color: var(--black); }
+
+.Popup__userAvatar {
+  display: block;
+  margin: 0 4px 0 0;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  overflow: hidden; }
+
+.Popup .leaflet-popup-content-wrapper {
+  border-radius: 4px;
+  padding: 0;
+  border: none;
+  background: var(--white);
+  color: var(--black);
+  font-size: 14px;
+  line-height: 24px;
+  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2); }
+
+.Popup.leaflet-popup .leaflet-popup-close-button {
+  top: 9px;
+  right: 5px;
+  color: var(--white);
+  font-size: 16px;
+  font-weight: normal; }
+
+.Popup.leaflet-popup .leaflet-popup-close-button:hover {
+  color: #333; }
+
+.Popup .leaflet-popup-content {
+  margin: 0; }
+
+.Popup .leaflet-popup-tip {
+  border-radius: 0;
+  width: 12px;
+  height: 12px;
+  margin: -10px auto 0;
+  padding: 1px;
+  border: 1px solid transparent;
+  background: var(--white);
+  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2); }
+
+.leaflet-container a {
+  color: var(--black);
+  text-decoration: none; }
+
+.leaflet-container a.leaflet-popup-close-button {
+  display: none; }
+
+@media only screen and (max-width: 800px) {
+  .Popup__header {
+    font-size: 1em; }
+  .Popup__description {
+    font-size: 1.1em; }
+  .Popup__body {
+    min-width: 200px; }
+  .Popup__button {
+    font-size: 1em; } }
+
+.Items {
+  display: flex;
+  justify-content: center; }
+
+.Item:first-child {
+  margin: 0 0.2em 0 0;
+  border-radius: 100%; }
+
+.Item:last-child {
+  margin: 0 0 0 0.2em; }
+
+.Item {
+  display: flex;
+  width: 100px;
+  height: 100px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f6f8fa;
+  border-radius: 8px; }
+
+.Item__amount {
+  font-weight: bold;
+  font-size: 1.4em;
+  margin: 0 0 0.2em; }
+
+.Station__id {
+  margin: 0 .4em 0 0; }
+
+.Station__id:after {
+  content: '';
+  position: relative;
+  width: 1px;
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  left: 0.4em;
+  margin: 0 0.4em 0 0; }
 
 * {
   box-sizing: border-box; }

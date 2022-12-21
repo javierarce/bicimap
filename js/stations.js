@@ -5,16 +5,45 @@ class Stations extends Base {
 
   getStationsFromCity (city) {
     return this.get(`/${city}.json`)
-      .then(this.onGetStations.bind(this))
-      .catch((error) => {
+      .then((response) => {
+        this.onGetStations(response, city)
+      }).catch((error) => {
         console.error(error)
       })
   }
 
-  onGetStations (response) {
+  onGetStations (response, city) {
     return response.json().then((response) => {
-      this.stations = response.stations
+      this.stations = response.stations.map(station => this.normalizeStationData(station, city))
       this.emit('data', this.stations)
     })
+  }
+
+  normalizeStationData (station, city) {
+    if (station.id == 8 && city == 'barcelona') {
+      console.log(station)
+    }
+    return { 
+      city,
+      id: station.id,
+      lat: station.latitude,
+      lng: station.longitude,
+      zoom: 17,
+      ...(city === 'madrid' ? {
+        name: station.name,
+        address: station.address,
+        mechanical: station.dock_bikes,
+        bases: station.free_bases,
+        bikes: station.dock_bikes,
+        electric: null
+      } : {
+        name: station.streetName,
+        address: station.streetName,
+        mechanical: station.mechanical_bikes,
+        electric: station.electrical_bikes,
+        bikes: station.bikes,
+        bases: station.slots
+      })
+    }
   }
 }

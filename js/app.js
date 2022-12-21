@@ -4,6 +4,7 @@ class App {
 
     this.stations = new Stations()
     this.stations.getStationsFromCity('madrid')
+    this.stations.getStationsFromCity('barcelona')
     this.map = new Map(COORDINATES)
 
     this.render()
