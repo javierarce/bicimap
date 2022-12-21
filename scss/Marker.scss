@@ -1,0 +1,25 @@
+.Marker,
+.Cluster {
+  width: 32px;
+  height: 32px;
+  background: var(--blue);
+  background-size: 400% 400%;
+  border: 5px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 100%;
+  transition: border 150ms ease-in-out, background 150ms ease-in-out;
+}
+
+.Marker.leaflet-zoom-animated.leaflet-interactive:hover {
+  border: 8px solid #fff;
+}
+
+.Cluster {
+  background-color: var(--green);
+  color: #fff;
+  line-height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

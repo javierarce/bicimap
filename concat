@@ -1,0 +1,4 @@
+cat public/js/base.js \
+    public/js/map.js \
+    public/js/app.js \
+    > public/js/dist/all.js

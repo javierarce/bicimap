@@ -2,53 +2,23 @@
   "name": "BiciMap",
   "version": "1.0.0",
   "private": true,
+  "main": "index.js",
+  "repository": "git@github.com:wtmap/wtmap.git",
+  "author": "Javier Arce <4933+javierarce@users.noreply.github.com>",
+  "license": "MIT",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "scss": "node-sass --watch scss -o css",
+    "stations": "bicimad"
   },
   "dependencies": {
     "aire-madrid": "^4.0.3",
     "bicimad": "^1.0.1",
-    "core-js": "^3.6.5",
-    "css-loader": "^5.1.0",
-    "date-fns": "^2.19.0",
-    "leaflet": "^1.7.1",
-    "leaflet.markercluster": "^1.5.0",
-    "postcss-loader": "^5.2.0",
-    "register-service-worker": "^1.7.1",
-    "sass": "^1.32.7",
-    "sass-loader": "^10.1.1",
-    "style-loader": "^2.0.0",
-    "vue": "^2.6.11"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-pwa": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.22.0",
-    "eslint-plugin-vue": "^7.7.0",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "bicing": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express-ejs-layouts": "^2.5.1",
+    "leaflet": "^1.9.3",
+    "leaflet.markercluster": "^1.5.3",
+    "node-sass": "^8.0.0"
+  }
 }

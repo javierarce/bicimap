@@ -1,0 +1,161 @@
+@import 'helpers/transitions';
+
+.AirStationPopup__description {
+  width: 300px;
+  line-height: 135%;
+  margin: 0 0 0.8em;
+}
+
+.AirStationPopup__description strong {
+  font-weight: bold;
+}
+
+.AirStationPopup__content .AirStationPopup__input {
+  min-width: auto;
+  font-size: 1em;
+}
+
+.AirStationPopup__body {
+  position: relative;
+  padding: 0.8em;
+  word-break: break-word;
+}
+
+.AirStationPopup__address {
+  font-size: 0.8em;
+  width: 100%;
+  opacity: 0.5;
+  line-height: 135%;
+  transition: opacity 150ms ease-in-out;
+}
+
+.AirStationPopup__address:hover {
+  opacity: 0.8;
+}
+
+.AirStationPopup__body {
+  overflow: hidden;
+}
+
+.AirStationPopup__content.is-readonly.leaflet-popup .leaflet-popup-close-button {
+  display: none;
+}
+
+.AirStationPopup__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, var(--green));
+  background-size: 400% 400%;
+  padding: 0.8em;
+  color: var(--white);
+  line-height: 135%;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  outline: none;
+}
+
+.AirStationPopup .leaflet-popup-content-wrapper {
+  border-radius: 4px;
+  padding: 0;
+  border: none;
+  background: var(--white);
+  color: var(--black);
+  font-size: 14px;
+  line-height: 24px;
+  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
+}
+
+.AirStationPopup .leaflet-popup-content {
+  margin: 0;
+}
+.AirStationPopup .leaflet-popup-tip {
+  border-radius: 0;
+  width: 12px;
+  height: 12px;
+  margin: -10px auto 0;
+  padding: 1px;
+  border: 1px solid transparent;
+  background: var(--white);
+  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
+}
+
+@media only screen and (max-width: 800px) {
+  .AirStationPopup__header {
+    font-size: 1em;
+  }
+  .AirStationPopup__description {
+    font-size: 1.1em;
+  }
+  .AirStationPopup__body {
+    min-width: 200px;
+  }
+}
+
+.AirStationPopup__more.is-hidden {
+  display: none;
+}
+
+.AirStationPopup__more:hover {
+  background: #f0f0f0;
+}
+.AirStationPopup__more {
+  display: flex;
+  text-decoration: underline;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: #f6f8fa;
+  padding: 0.8em;
+  border-radius: 2px;
+  color: #000;
+  margin: 0 0 0.8em;
+  transition: background 250ms ease-in-out;
+}
+
+.AirStationPopup__pollutants.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.AirStationPopup__pollutants {
+  display: block;
+  margin: 0 0 0.8em;
+  background: #f6f8fa;
+  border-radius: 4px;
+  padding: .8em;
+  transition: opacity 500ms ease-in-out;
+}
+
+.AirStationPopup__pollutantUnit {
+  font-size: .9em;
+}
+
+.AirStationPopup__pollutant {
+  display: flex;
+  margin: 0 0 0.2em;
+}
+
+.AirStationPopup__pollutant:last-child {
+  margin-bottom: 0;
+}
+
+.AirStationPopup__pollutantName {
+  font-weight: 500;
+  margin: 0 0.4em 0 0;
+}
+
+.AirStationPopup__pollutantsInfo {
+  margin: .8em 0 0 0;
+}
+
+.AirStationPopup__body .AirStationPopup__pollutantHelp {
+  font-size: 0.9em;
+  text-decoration: underline;
+  color: #000;
+}

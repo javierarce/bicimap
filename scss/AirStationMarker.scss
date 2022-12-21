@@ -1,0 +1,55 @@
+.AirStationMarker:focus {
+  outline: none;
+}
+
+.AirStationMarker:hover .AirStationMarker__inner {
+  transform: scale(0.9);
+  border-width: 3px;
+}
+
+.AirStationMarker .AirStationMarker__inner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--white);
+  width: 30px;
+  height: 30px;
+  color: var(--white);
+  overflow: hidden;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
+  padding: 0.4em;
+  background: var(--green);
+  border-radius: 100%;
+  line-height: auto;
+  transition: border 150ms ease-in-out, border-radius 250ms ease-in-out, background 150ms ease-in-out, transform 500ms cubic-bezier(0,0,0.25,1); 
+  transform: scale(1);
+}
+
+.AirStationMarker.is-5 .AirStationMarker__inner {
+  background: var(--white) url(/img/markers/5.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.AirStationMarker.is-4 .AirStationMarker__inner {
+  background: var(--white) url(/img/markers/4.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.AirStationMarker.is-3 .AirStationMarker__inner {
+  background: var(--white) url(/img/markers/3.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.AirStationMarker.is-2 .AirStationMarker__inner {
+  background: var(--white) url(/img/markers/2.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.AirStationMarker.is-1 .AirStationMarker__inner {
+  background: var(--white) url(/img/markers/1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
