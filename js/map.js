@@ -297,9 +297,8 @@ class Map extends Base {
           e.stopPropagation()
           e.preventDefault()
 
-          this.mode = (this.mode === 'bikes' ) ? 'bases' : 'bikes'
+          this.mode = (this.mode === 'bikes' ) ? MODE_BASES : MODE_BIKES
           div.classList.toggle('is-dock', this.mode === MODE_BASES)
-          console.log(div.classList)
           this.onModeChange()
         })
 

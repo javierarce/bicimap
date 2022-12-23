@@ -13,23 +13,6 @@
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(var(--shadow), 0.2); }
 
-.Map .leaflet-control-zoom-in,
-.Map .leaflet-control-zoom-out {
-  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
-  background: var(--white);
-  width: 32px;
-  height: 32px;
-  color: var(--blue);
-  cursor: pointer;
-  user-select: none;
-  font-size: 1.4em;
-  transition: opacity 500ms ease-in-out, background 200ms ease-in-out; }
-
-.Map .leaflet-control-zoom-in:hover,
-.Map .leaflet-control-zoom-out:hover {
-  color: var(--blue);
-  background: var(--gray); }
-
 .Map .leaflet-container a {
   background: var(--blue); }
 
@@ -44,101 +27,6 @@
 
 .leaflet-container a {
   color: var(--blue); }
-
-/* Map controls */
-.Control {
-  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
-  background: var(--white);
-  width: 32px;
-  height: 32px;
-  border-radius: 4px;
-  cursor: pointer;
-  user-select: none;
-  transition: opacity 500ms ease-in-out, background 200ms ease-in-out; }
-
-.Control.is-hidden {
-  visibility: hidden;
-  opacity: 0; }
-
-.Control:hover {
-  background-color: var(--gray); }
-
-.Control__locate:before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  width: 12px;
-  height: 12px;
-  border: 2px solid var(--blue);
-  border-radius: 100%; }
-
-.Control .Spinner {
-  display: none; }
-
-.Control.is-loading {
-  background-image: none; }
-
-.Control.is-loading:before {
-  display: none; }
-
-.Control.is-loading .Spinner {
-  display: block; }
-
-.Control__lanes {
-  background-color: var(--white);
-  background-image: url(/img/lanes.svg);
-  background-repeat: no-repeat;
-  background-size: cover; }
-
-.Control__lanes.is-selected {
-  background-image: url(/img/lanes_white.svg);
-  background-color: var(--blue); }
-
-.Control__help {
-  background-image: url(/img/help.svg);
-  background-repeat: no-repeat;
-  background-size: cover; }
-
-.Control__mode {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  height: 64px; }
-
-.Control__mode .Control__modeBikes {
-  background-color: var(--blue);
-  border-radius: 4px 4px 0 0;
-  background-image: url(/img/bike_white.svg);
-  background-repeat: no-repeat;
-  background-size: cover; }
-
-.Control__mode .Control__modeDocks {
-  border-radius: 0 0 4px 4px;
-  background-image: url(/img/dock.svg);
-  background-size: cover;
-  background-repeat: no-repeat; }
-
-.Control__mode.is-dock .Control__modeBikes {
-  background-color: var(--white);
-  background-image: url(/img/bike.svg); }
-
-.Control__mode.is-dock .Control__modeDocks {
-  background-color: var(--blue);
-  background-image: url(/img/dock_white.svg); }
-
-.Control__modeBikes,
-.Control__modeDocks {
-  width: 32px;
-  height: 32px; }
-
-.Control__divider {
-  border: 1px solid #ddd;
-  width: 1px;
-  height: 100%; }
-
-.Map .leaflet-top .leaflet-control {
-  margin-top: 8px; }
 
 @media only screen and (max-width: 800px) {
   .Map__container {
