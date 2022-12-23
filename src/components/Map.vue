@@ -1,5 +1,6 @@
 <template>
   <div class="Map__container">
+    <Search />
     <div id="map" class="Map show-bikes"></div>
   </div>
 </template>
@@ -8,21 +9,33 @@
 import mixins from '../mixins'
 import config from '../../config'
 
+import Search from './Search.vue'
+import Popup from './Popup.vue'
+import AirPopup from './AirPopup.vue'
+
+import Vue from 'vue';
+
 import * as L from 'leaflet'
 require('leaflet.markercluster')
 
+const CITIES = ['barcelona', 'madrid']
 const PICKUP_MODE = 0
-const AIR_QUALITY_DESCRIPTION = ['muy mala', 'mala', 'regular', 'buena', 'muy buena']
 
 export default {
   mixins: [mixins],
+  components: {
+    Search
+  },
   data() {
     return {
+      pointA: undefined,
+      pointB: undefined,
       cluster: {},
       coordinates: undefined,
       expanded: false,
       helpControl: null,
-      lanes: {},
+      madridLanes: {},
+      barcelonaLanes: {},
       lanesControl: null,
       locateControl: null,
       map: {},
@@ -45,24 +58,33 @@ export default {
   watch: {
     showLanes (state) {
       if (state) {
-        this.map.addLayer(this.lanes)
+        this.map.addLayer(this.barcelonaLanes)
+        this.map.addLayer(this.madridLanes)
       } else {
-        this.map.removeLayer(this.lanes)
+        this.map.removeLayer(this.madridLanes)
+        this.map.removeLayer(this.barcelonaLanes)
       }
     },
     mode (value) {
       window.bus.markers.forEach((marker) => {
         let element = marker.getElement()
         let location = marker.options.location
+        let city = marker.options.city
 
         if (element) {
-          let tooltipDescription = this.getTooltipContent(location, value)
+          let tooltipDescription = this.getTooltipContent(location, city, value)
 
           marker.setTooltipContent(tooltipDescription)
 
           let what = value? 'free_bases' : 'dock_bikes'
+          let whatLabel = 'free_bases'
 
-          element.classList.toggle(`is-docks`, what === 'free_bases')
+          if (city === 'barcelona') {
+            what = value? 'slots' : 'bikes'
+            whatLabel = 'slots'
+          }
+
+          element.classList.toggle(`is-docks`, what === whatLabel)
 
           element.classList.toggle('is-empty', location[what] === 0)
           element.classList.toggle('is-low', location[what] > 0 && location[what] < 3)
@@ -82,7 +104,14 @@ export default {
       this.bindKeys()
       window.bus.$off(config.ACTIONS.ADD_STATIONS)
       window.bus.$on(config.ACTIONS.ADD_STATIONS, this.onAddStations)
+
+      window.bus.$off(config.ACTIONS.SET_VIEW)
+      window.bus.$on(config.ACTIONS.SET_VIEW, this.onSetView)
+
+      window.bus.$off(config.ACTIONS.ADD_POINT)
+      window.bus.$on(config.ACTIONS.ADD_POINT, this.onGetPoint)
     },
+
     bindKeys () {
       document.onkeydown = (e) => {
         e = e || window.event
@@ -93,26 +122,42 @@ export default {
       }
     },
 
-    getStationIconClassNames (location) {
+    getPercentageOfBikes (location) {
+      let bikes = location.dock_bikes - location.reservations_count
+      let bases = location.total_bases
+
+      return Math.round((bikes / bases.toFixed()) * 100)
+    },
+
+    getStationIconClassNames (location, city) {
       let classNames = [ 'BikeStationMarker' ]
 
       let what = this.mode ? 'free_bases' : 'dock_bikes'
-      classNames.push(this.mode ? 'is-docks' : '')
 
-      if (location && location[what] === 0) {
-        classNames.push('is-empty')
-      } else if (location && location[what] < 3) {
-        classNames.push('is-low')
-      } else if (location && location[what] >= 3 && location[what] < 5) {
-        classNames.push('is-ok')
-      } else if (location && location[what] >= 5) {
-        classNames.push('is-good')
-      } else {
-        classNames.push('is-bad')
+      if (city === 'barcelona') {
+        what = this.mode ? 'slots' : 'bikes'
       }
 
-      if (location && !location.activate) {
-        classNames.push('is-disabled')
+      classNames.push(this.mode ? 'is-docks' : '')
+
+      if (location) {
+        if (location[what] === 0) {
+          classNames.push('is-empty')
+        } else if (location[what] < 3) {
+          classNames.push('is-low')
+        } else if (location[what] >= 3 && location[what] < 5) {
+          classNames.push('is-ok')
+        } else if (location[what] >= 5) {
+          classNames.push('is-good')
+        } else {
+          classNames.push('is-bad')
+        }
+
+        if (city === 'madrid' && !location.activate) {
+          classNames.push('is-disabled')
+        } else if (city === 'barcelona' && location.status !== 1) {
+          classNames.push('is-disabled')
+        }
       }
 
       return classNames.join(' ')
@@ -126,65 +171,154 @@ export default {
       return classNames.join(' ')
     },
 
-    onAddStations (stations) {
-      if (this.stations && this.stations.length) {
-        this.updateStations(stations)
+    parseAddress(address) {
+      let parts = []
+
+      let tpl = 'road, house_number, city'
+
+      tpl.split(', ').forEach((part) => {
+        if (address && address[part]) {
+          parts.push(address[part])
+        }
+      })
+
+      let description = 'Lugar misterioso'
+
+      if (parts.length) {
+        if (address['shop']) {
+          description = `<strong>${address['shop']}</strong> / ${parts.join(', ') }`
+        } else {
+          description = parts.join(', ')
+        }
+      }
+
+      return description
+    },
+
+    onGetPoint (point) {
+      console.log(this.pointA, this.pointB)
+
+      if (this.pointA) {
+        this.pointB = point
       } else {
+        this.pointA = point
+      } 
 
-        this.cluster = L.markerClusterGroup({
-          disableClusteringAtZoom: 14,
-          spiderfyOnMaxZoom: false,
-          showCoverageOnHover: false
+      if (this.pointA && this.pointB) {
+        let start = this.pointA.reverse().join(',')
+        let end = this.pointB.reverse().join(',')
+
+        fetch(`/api/route?start=${start}&end=${end}`).then((result) => {
+          result.json().then((data) => {
+            let layer =  L.geoJSON(data, {
+              style: () => {
+                return {
+                  interactive:false,
+                  "color": "#23D5AB",
+                  "weight": 8,
+                  "opacity": 0.5
+                }
+              }
+            })
+
+            this.pointA = undefined
+            this.pointB = undefined
+
+            this.map.addLayer(layer)
+          })
+
+        }).catch((error) => {
+          console.error(error)
         })
-
-        this.map.addLayer(this.cluster)
-
-        this.stations = stations
-        this.stations.forEach(this.addStationMarker.bind(this))
       }
     },
-    updateStations (stations) {
-      this.stations = stations
+
+    onSetView (result) {
+      let latlng = [result.lat, result.lon]
+      this.coordinates = { lat: latlng[0], lng: latlng[1] }
+
+      let name = result.display_name.split(',')[0]
+      let address = (result && this.parseAddress(result.address)) || undefined
+
+      this.addLocationMarker(latlng, name, address)
+      this.map.setView(latlng, 17)
+    },
+
+    onAddStations (stations, city) {
+      if (this.stations[city]) {
+        this.updateStations(stations, city)
+        return
+      }
+      this.stations[city] = stations
+      CITIES.forEach(this.addStationMarker.bind(this))
+    },
+
+    updateStations (stations, city) {
+      this.stations[city] = stations
 
       let markers = this.cluster.getLayers()
 
       markers.forEach((marker) => { 
         let id = marker.options.location.id
-        let station = this.getStationById(id)
+        let location = this.getStationByCityAndId(city, id)
 
-        if (station) {
-          let content = this.getBikeStationPopupContent(station)
-          let tooltipContent = this.getTooltipContent(station, this.mode)
-          let icon = this.getStationIcon(station)
+        if (location) {
+          let tooltipContent = this.getTooltipContent(location, city, this.mode)
+          let icon = this.getStationIcon(location, city)
 
-          marker.setPopupContent(content)
+          let PopupClass = Vue.extend(Popup)
+          let popupContent = new PopupClass({ propsData: { location, city } })
+
+          marker.setPopupContent(popupContent.$mount().$el)
           marker.setTooltipContent(tooltipContent)
           marker.setIcon(icon)
         }
       })
     },
 
-    getStationById (id) {
-      return this.stations.find(station => station.id === id)
+    getStationByCityAndId (city, id) {
+      return this.stations[city].find(station => station.id === id)
     },
 
-    addStationMarker (location) {
-      let latlng = [location.latitude, location.longitude]
-
-      let popup = L.popup({
-        className: 'BikeStationPopup',
-        offset: [0, 12]
-      })
-
-      let icon = this.getStationIcon(location)
-      popup.setContent(this.getBikeStationPopupContent(location))
+    addLocationMarker (latlng, name, address) {
+      let icon = this.getLocationIcon(location)
 
       let marker = L.marker(latlng, { icon, location })
 
-      this.bindStationMarker(marker, this.getTooltipContent(location, this.mode), popup)
+      this.bindLocationMarker(marker, latlng, address)
 
-      this.cluster.addLayer(marker)
-      window.bus.markers.push(marker)
+      this.map.addLayer(marker)
+    },
+
+    addStationMarker (city) {
+      let stations = this.stations[city]
+
+      if (!stations) {
+        return
+      }
+
+      stations.forEach((location) => {
+
+        let PopupClass = Vue.extend(Popup)
+        let popupContent = new PopupClass({ propsData: { location, city } })
+
+        let latlng = [location.latitude, location.longitude]
+
+        let popup = L.popup({
+          className: 'BikeStationPopup',
+          offset: [0, 12]
+        })
+
+        let icon = this.getStationIcon(location, city)
+        popup.setContent(popupContent.$mount().$el)
+
+        let marker = L.marker(latlng, { icon, location, city })
+
+        this.bindStationMarker(marker, this.getTooltipContent(location, city, this.mode), popup)
+
+        this.cluster.addLayer(marker)
+        window.bus.markers.push(marker)
+      })
     },
 
     addAirMarker(data) {
@@ -194,7 +328,11 @@ export default {
       })
 
       let icon = this.getAirIcon(data)
-      popup.setContent(this.getAirPopupContent(data))
+
+      let PopupClass = Vue.extend(AirPopup)
+      let popupContent = new PopupClass({ propsData: { station: data } })
+
+      popup.setContent(popupContent.$mount().$el)
 
       let marker = L.marker([data.lat, data.lng], { icon, data }).addTo(this.map)
       marker.bindPopup(popup, { maxWidth: 'auto' })
@@ -209,20 +347,43 @@ export default {
       })
     },
 
-    getStationIcon (location) {
+    getLocationIcon () {
       return new L.divIcon({
-        className: this.getStationIconClassNames(location),
+        className: 'LocationMarker',
+        html: `<div class="LocationMarker__inner"></div>`,
+        iconSize: [30, 30],
+        iconAnchor: new L.Point(15, 0)
+      })
+    },
+
+    getStationIcon (location, city) {
+      return new L.divIcon({
+        className: this.getStationIconClassNames(location, city),
         html: `<div class="BikeStationMarker__inner"></div>`,
         iconSize: [30, 30],
         iconAnchor: new L.Point(15, 0)
       })
     },
 
-    getTooltipContent (location, mode) {
-      let parts = [this.pluralize(location.dock_bikes, 'bici', 'bicis'), this.pluralize(location.free_bases, 'base', 'bases')]
+    getTooltipContent (location, city, mode) {
+      let bikes = city === 'madrid' ? location.dock_bikes : location.bikes
+      let bases = city === 'madrid' ? location.free_bases : location.slots
+      let parts = [this.pluralize(bikes, 'bici', 'bicis'), this.pluralize(bases, 'base', 'bases')]
       let description = mode ? parts.reverse() : parts
 
       return description.join(' / ')
+    },
+
+    bindLocationMarker (marker, latlng, description) {
+
+      marker.on('click', () => {
+        this.map.setView(latlng, 19, { animate: true, easeLinearity: 0.5, duration: 0.5 })
+      })
+      marker.bindTooltip(description, {
+        direction: 'top',
+        offset: [0, -2],
+        className: 'LocationMarker__tooltip'
+      })
     },
 
     bindStationMarker (marker, description, popup) {
@@ -254,7 +415,14 @@ export default {
         tap: false
       }
 
-      this.map = L.map('map', options).setView([config.MAP.LAT, config.MAP.LON], config.MAP.ZOOM)
+      let bounds = this.retrieveFromLocalStorage('bounds')
+
+      if (bounds) {
+        this.map = L.map('map', options)
+        this.centerToBounds(bounds)
+      } else {
+        this.map = L.map('map', options).setView([config.MAP.LAT, config.MAP.LON], config.MAP.ZOOM)
+      }
 
       this.map.zoomControl.setPosition('topleft')
 
@@ -298,7 +466,6 @@ export default {
 
       this.addHelpControl()
       this.addModeControl()
-      this.addLocateControl()
 
       this.layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}' + (L.Browser.retina ? '@2x.png' : '.png'), {
         attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -315,14 +482,14 @@ export default {
       this.saveToLocalStorage('bounds',this.map.getBounds().toBBoxString())
     },
     onMapReady () {
-      let bounds = this.retrieveFromLocalStorage('bounds')
+      this.map.addLayer(this.cluster)
+    },
 
+    centerToBounds(bounds) {
       try {
-        if (bounds) {
-          let [west, south, east, north] = bounds.split(',').map(parseFloat)
-          let newBounds = new L.LatLngBounds(new L.LatLng(south, west), new L.LatLng(north, east))
-          this.map.flyToBounds(newBounds)
-        }
+        let [west, south, east, north] = bounds.split(',').map(parseFloat)
+        let newBounds = new L.LatLngBounds(new L.LatLng(south, west), new L.LatLng(north, east))
+        this.map.fitBounds(newBounds)
 
       } catch (error) {
         console.log(error)
@@ -343,7 +510,12 @@ export default {
             e.preventDefault()
           })
 
-          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
+          L.DomEvent.on(div, 'click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+          })
+
+          L.DomEvent.on(div, 'touchstart', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
@@ -406,7 +578,12 @@ export default {
             e.preventDefault()
           })
 
-          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
+          L.DomEvent.on(div, 'click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+          })
+
+          L.DomEvent.on(div, 'touchstart', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
@@ -423,6 +600,7 @@ export default {
       })
 
       this.lanesControl = new L.Control.LanesControl({ position: 'topright' }).addTo(this.map)
+      this.addLocateControl()
     },
 
     addLocateControl () {
@@ -441,7 +619,12 @@ export default {
 
           div.appendChild(spinner)
 
-          L.DomEvent.on(div, 'click mousedown touchstart pointerdown', (e) => {
+          L.DomEvent.on(div, 'click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+          })
+
+          L.DomEvent.on(div, 'touchstart', (e) => {
             e.stopPropagation()
             e.preventDefault()
 
@@ -463,16 +646,37 @@ export default {
     },
 
     addLanes () {
-      this.get('/lanes.min.geojson')
-        .then(this.onGetLanes.bind(this))
+      this.get('/barcelona.geojson')
+        .then(this.onGetBarcelonaLanes.bind(this))
+        .catch((error) => {
+          console.error(error)
+        })
+
+      this.get('/madrid.min.geojson')
+        .then(this.onGetMadridLanes.bind(this))
         .catch((error) => {
           console.error(error)
         })
     },
 
-    onGetLanes (response) {
+    onGetBarcelonaLanes (response) {
       response.json().then((data) => {
-        this.lanes = L.geoJSON(data, {
+        this.barcelonaLanes = L.geoJSON(data, {
+          style: () => {
+            return {
+              interactive:false,
+              "color": "#23D5AB",
+              "weight": 8,
+              "opacity": 0.5
+            }
+          }
+        })
+
+      })
+    },
+    onGetMadridLanes (response) {
+      response.json().then((data) => {
+        this.madridLanes = L.geoJSON(data, {
           style: () => {
             return {
               interactive:false,
@@ -501,97 +705,14 @@ export default {
       })
     },
 
-    getBikeStationPopupContent (location) {
-      let name = `<div class="Station__id">${location.number}</div> ${location.name}`
-
-      let bikes = this.pluralize(location.dock_bikes, 'bicicleta', 'bicicletas', { showAmount: false })
-      let descriptionBikes = `<div class="Item"><div class="Item__amount">${location.dock_bikes}</div><div class="Item__title">${bikes}</div></div>`
-
-      let bases = this.pluralize(location.free_bases, 'base libre', 'bases libres', { showAmount: false })
-      let descriptionDocks = `<div class="Item"><div class="Item__amount">${location.free_bases}</div><div class="Item__title">${bases}</div></div>`
-
-      let description = `<div class="Items">${descriptionBikes} ${descriptionDocks}</div>`
-
-      let address = location.address
-
-      let content = L.DomUtil.create('div', 'BikeStationPopup__content')
-      let header = L.DomUtil.create('div', 'BikeStationPopup__header', content)
-      let body = L.DomUtil.create('div', 'BikeStationPopup__body', content)
-      let popupDescription = L.DomUtil.create('div', 'BikeStationPopup__description', body)
-      let popupAddress = L.DomUtil.create('a', 'BikeStationPopup__address', body)
-      popupAddress.href = `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`
-      popupAddress.target = '_blank'
-      popupAddress.title = 'Abrir en Google Maps'
-
-      header.innerHTML = name
-      popupDescription.innerHTML = description
-      popupAddress.innerText = address
-
-      return content
-    },
-
-    getAirPopupContent (data) {
-      let content = L.DomUtil.create('div', 'AirStationPopup__content')
-      let header = L.DomUtil.create('div', 'AirStationPopup__header', content)
-      let body = L.DomUtil.create('div', 'AirStationPopup__body', content)
-
-      let time = undefined
-
-      data.pollutants.forEach((pollutant) => {
-        if (pollutant.quality) {
-          time = pollutant.quality.time
-        }
-      })
-
-      if (data.qualityIndex !== undefined) {
-        let popupDescription = L.DomUtil.create('div', 'AirStationPopup__description', body)
-        let quality = AIR_QUALITY_DESCRIPTION[data.qualityIndex - 1]
-        popupDescription.innerHTML = `La calidad del aire a las <strong>${time}h</strong> es <strong>${quality}</strong>`
-
-        let button = L.DomUtil.create('button', 'AirStationPopup__more', body)
-        button.innerHTML = 'Ver detalles'
-        button.onclick = () => {
-          popupPollutants.classList.toggle('is-hidden')
-          button.classList.add('is-hidden')
-        }
-      }
-
-      let popupPollutants = L.DomUtil.create('div', 'AirStationPopup__pollutants is-hidden', body)
-      let popupAddress = L.DomUtil.create('a', 'AirStationPopup__address', body)
-      popupAddress.href = `https://www.google.com/maps/search/?api=1&query=${data.lat},${data.lng}`
-      popupAddress.target = '_blank'
-      popupAddress.title = 'Abrir en Google Maps'
-      popupAddress.innerText = data.address
-
-      header.innerHTML = `${data.name}`
-
-      if (data.pollutants) {
-        data.pollutants.forEach((pollutant) => {
-          if (pollutant.quality) {
-            let $pollutant = L.DomUtil.create('div', 'AirStationPopup__pollutant', popupPollutants)
-            let $pollutantName = L.DomUtil.create('div', 'AirStationPopup__pollutantName', $pollutant)
-            let $pollutantValue = L.DomUtil.create('div', 'AirStationPopup__pollutantValue', $pollutant)
-            $pollutantName.innerHTML = `${ pollutant.name }:`
-            let value = pollutant.quality.lastValue
-            let time = pollutant.quality.time
-            $pollutantValue.innerHTML = `${value}<span class="AirStationPopup__pollutantUnit">µg/m<sup>3</sup></span> a las <span>${time}h</span>`
-          }
-        })
-      }
-
-      let popupPollutantsInfo = L.DomUtil.create('div', 'AirStationPopup__pollutantsInfo', popupPollutants)
-      popupPollutantsInfo.innerHTML = '<a class="AirStationPopup__pollutantHelp" href="https://github.com/javierarce/aire-madrid/wiki/How-are-quality-indexes-calculated" target="_blank">Más información</a>'
-
-
-      return content
-    },
-
     startLoading () {
       window.bus.$emit(config.ACTIONS.START_LOADING)
     },
+
     stopLoading () {
       window.bus.$emit(config.ACTIONS.STOP_LOADING)
     },
+
     removeMarker () {
       this.map.closePopup()
 

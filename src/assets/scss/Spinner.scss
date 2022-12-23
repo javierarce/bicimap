@@ -18,10 +18,22 @@
 
 .Spinner.is-mini {
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
   width: 16px;
   height: 16px;
   border-radius: 100%;
 }
 
+
+@media only screen and (max-width: 640px) {
+
+  .Spinner.is-mini {
+    width: 24px;
+    height: 24px;
+    margin-left: -12px;
+    margin-top: -12px;
+  }
+}

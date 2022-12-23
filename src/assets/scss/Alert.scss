@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10000;
+  z-index: 100000;
 }
 .Alert__content p:last-child {
   margin: 0;
@@ -32,10 +32,14 @@
 
 .Alert__title {
   font-weight: bold;
+  font-size: 1.1em;
   margin: 0 0 16px 0;
 }
 .Alert__description strong {
   font-weight: bold;
+}
+.Alert__description em {
+  font-style: italic;
 }
 
 .Alert__backdrop {
@@ -77,3 +81,20 @@
   background: #1c598e;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 800px) {
+
+  .Alert__content {
+    width: 90%;
+    padding: 1em;
+  }
+
+  .Alert__content p {
+    font-size: 0.9em;
+  }
+
+  .Alert__button {
+    font-size: 0.9em;
+  }
+}
+

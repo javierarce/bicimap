@@ -23,6 +23,8 @@ import Map from './Map.vue'
 import { formatDistance } from 'date-fns'
 import { es } from 'date-fns/locale'
 
+const CITIES = ['madrid', 'barcelona']
+
 export default {
   mixins: [mixins],
   components: {
@@ -75,12 +77,6 @@ export default {
         this.showAbout = false
       }
     },
-    onGetStations (response) {
-      response.json().then((data) => {
-        this.updatedAt = formatDistance(data.updated_at, new Date(),  { locale: es })
-        window.bus.$emit(config.ACTIONS.ADD_STATIONS, data.stations)
-      })
-    },
     onStartLoading () {
       document.body.classList.add('is-loading')
     },
@@ -115,8 +111,19 @@ export default {
     },
     getStations () {
       console.log('Getting stations…')
-      this.get(`/stations.json?r=${Math.random() * 10000}`)
-        .then(this.onGetStations.bind(this))
+      CITIES.forEach(this.getStationForCity.bind(this))
+    },
+    onGetStations (response, city) {
+      response.json().then((data) => {
+        this.updatedAt = formatDistance(data.updated_at, new Date(),  { locale: es })
+        window.bus.$emit(config.ACTIONS.ADD_STATIONS, data.stations, city)
+      })
+    },
+    getStationForCity(city) {
+      this.get(`/${city}.json?r=${Math.random() * 10000}`)
+        .then((response) => {
+          return this.onGetStations(response, city)
+        })
         .catch((error) => {
           console.error(error)
         })

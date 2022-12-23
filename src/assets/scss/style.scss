@@ -6,16 +6,21 @@
 @import 'helpers/vars';
 
 @import 'About';
+@import 'AirStationMarker';
+@import 'AirStationPopup';
 @import 'Alert';
+@import 'BikeStationMarker';
+@import 'BikeStationPopup';
+
+@import 'LocationMarker';
+@import 'LocationPopup';
+
 @import 'Button';
 @import 'Input';
 @import 'Locations';
 @import 'Map';
-@import 'BikeStationMarker';
-@import 'BikeStationPopup';
-@import 'AirStationMarker';
-@import 'AirStationPopup';
 @import 'MarkerCluster';
+@import 'Search';
 @import 'Spinner';
 @import 'Toggle';
 @import 'Tooltip';

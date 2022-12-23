@@ -13,6 +13,27 @@
   background: #1c598e;
 }
 
+.Button.is-small:hover {
+  background: #1c598e;
+}
+
+.Button.is-small {
+  display: inline-block;
+  border-radius: 2px;
+  margin: auto;
+  font-size: 0.8em;
+  padding: 8px;
+  border: none;
+  outline: none;
+  background: #2A84D2;
+  color: var(--white);
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: none;
+  transition: all 250ms ease-in-out;
+}
+
 .Button.is-bold {
   display: inline-block;
   border-radius: 4px;
