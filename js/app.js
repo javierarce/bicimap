@@ -2,6 +2,7 @@ class App {
   constructor () {
     this.$el = document.getElementById('app')
 
+    this.about = new About()
     this.stations = new Stations()
     this.stations.getStationsFromCity('madrid')
     this.stations.getStationsFromCity('barcelona')
@@ -12,8 +13,16 @@ class App {
   }
 
   bindEvents () {
-    this.map.on('markerclick', (id) => {
-      //this.sidebar.selectLocation(id)
+    this.map.on('start-loading', () => {
+      document.body.classList.add('is-loading')
+    })
+
+    this.map.on('stop-loading', () => {
+      document.body.classList.remove('is-loading')
+    })
+
+    this.map.on('show-about', () => {
+      this.about.show()
     })
     
     this.stations.on('data', (stations) => {

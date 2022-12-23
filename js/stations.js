@@ -20,9 +20,6 @@ class Stations extends Base {
   }
 
   normalizeStationData (station, city) {
-    if (station.id == 8 && city == 'barcelona') {
-      console.log(station)
-    }
     return { 
       city,
       id: station.id,

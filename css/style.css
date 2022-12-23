@@ -642,11 +642,11 @@ table {
   background-size: cover;
   background-repeat: no-repeat; }
 
-.Control__mode.is-docks .Control__modeBikes {
+.Control__mode.is-dock .Control__modeBikes {
   background-color: var(--white);
   background-image: url(/img/bike.svg); }
 
-.Control__mode.is-docks .Control__modeDocks {
+.Control__mode.is-dock .Control__modeDocks {
   background-color: var(--blue);
   background-image: url(/img/dock_white.svg); }
 
@@ -695,9 +695,6 @@ table {
 .Marker.is-good {
   background: var(--green); }
 
-.Marker.is-bad {
-  background: red; }
-
 .Marker.is-ok {
   background: var(--yellow); }
 
@@ -706,6 +703,39 @@ table {
 
 .Marker.is-empty {
   background: var(--darkgray); }
+
+.Marker.is-user {
+  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
+  border-radius: 100%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.Marker.is-user .Marker__inner {
+  position: absolute;
+  border-radius: 100%;
+  width: 24px;
+  height: 24px;
+  background: var(--blue);
+  border: 4px solid var(--white);
+  box-shadow: 0 0 0 0 white;
+  animation: pulse 1000ms ease-in-out infinite; }
+
+.Marker.is-dock:focus .Marker__inner {
+  transform: scale(1.2) rotate(90deg); }
+
+.Marker.is-dock {
+  border-radius: 4px;
+  transform: scale(1) rotate(90deg); }
+
+.Marker.is-dock .Marker__inner {
+  border-radius: 4px;
+  transform: scale(1) rotate(90deg); }
+
+.Marker.is-dock:hover .Marker__inner {
+  transform: scale(0.9) rotate(90deg); }
 
 .Cluster {
   font-weight: bold;
