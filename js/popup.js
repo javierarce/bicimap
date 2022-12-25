@@ -8,7 +8,7 @@ class Popup extends Base {
   template () {
     return `<div class="Popup__content">
         <div class="Popup__header">
-          <div class="Station__id"><%= id -%></div>
+          <div class="Popup__id"><%= id -%></div>
           <span><%= name -%></span>
         </div>
         <div class="Popup__body">

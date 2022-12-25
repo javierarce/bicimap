@@ -54,7 +54,7 @@ class Map extends Base {
       if ($marker && station) {
         $marker.classList.toggle('is-dock', this.mode === MODE_BASES)
 
-        const classNames = ['is-empty', 'is-low', 'is-ok', 'is-good', 'is-bad']
+        const classNames = ['is-empty', 'is-low', 'is-ok', 'is-good']
 
         classNames.forEach((className) => {
           $marker.classList.remove(className)
@@ -189,7 +189,7 @@ class Map extends Base {
 
     let className = 'is-empty'
 
-    if (value < 3) {
+    if (value >= 1 && value < 3) {
       className = 'is-low'
     } else if (value >= 3 && value < 5) {
       className = 'is-ok'

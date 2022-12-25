@@ -299,3 +299,15 @@
   font-size: 0.9em;
   text-decoration: underline;
   color: #000; }
+
+.Popup__id {
+  margin: 0 .4em 0 0; }
+
+.Popup__id:after {
+  content: '';
+  position: relative;
+  width: 1px;
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  left: 0.4em;
+  margin: 0 0.4em 0 0; }
