@@ -195,85 +195,8 @@ table {
   .About__footer > div:first-child {
     margin: 0 0 0.2em; } }
 
-.Alert {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000; }
-
-.Alert__content p:last-child {
-  margin: 0; }
-
-.Alert__description a {
-  color: var(--black);
-  text-decoration: underline; }
-
-.Alert__content {
-  background: var(--white);
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
-  padding: 32px;
-  width: 500px;
-  transition: all 250ms ease-in-out;
-  z-index: 1000; }
-
-.Alert__content p {
-  margin: 0 0 16px; }
-
-.Alert__title {
-  font-weight: bold;
-  margin: 0 0 16px 0; }
-
-.Alert__description strong {
-  font-weight: bold; }
-
-.Alert__backdrop {
-  background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, var(--green));
-  opacity: 0.5;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  transition: opacity 250ms ease-in-out;
-  animation: Gradient 3s ease-in-out infinite;
-  cursor: pointer; }
-
-.Alert__footer {
-  margin-top: 16px; }
-
-.Alert__button {
-  display: inline-block;
-  border-radius: 4px;
-  width: 100%;
-  margin: auto;
-  font-size: 1.2em;
-  padding: 16px 0;
-  border: none;
-  outline: none;
-  background: #2A84D2;
-  color: var(--white);
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  box-shadow: none;
-  transition: background 250ms ease-in-out; }
-
-.Alert__button:hover {
-  background: #1c598e;
-  cursor: pointer; }
-
 .Button {
   margin: auto; }
-
-.Map__buttons {
-  position: absolute;
-  right: 40px;
-  top: 70px;
-  z-index: 1000; }
 
 .Button.is-bold:hover {
   background: #1c598e; }
@@ -426,208 +349,6 @@ table {
   color: var(--blue);
   background: var(--gray); }
 
-.Input__field {
-  background: #fff;
-  z-index: 1000; }
-
-.Input {
-  width: 100%;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  outline: none;
-  padding: 16px;
-  background: none;
-  font-size: 1em;
-  transition: all 250ms ease-in-out; }
-
-.Input:focus {
-  border: 1px solid #666; }
-
-.Input__title {
-  display: block;
-  font-weight: bold; }
-
-.Input__label {
-  display: block;
-  font-weight: bold;
-  margin: 0 0 12px;
-  opacity: 0.4; }
-
-.Input__checkbox {
-  display: flex;
-  align-items: flex-start; }
-
-@supports (-webkit-appearance: none) or (-moz-appearance: none) {
-  input[type='checkbox'] {
-    --active: #2A84D2;
-    --active-inner: #fff;
-    --focus: 2px rgba(0, 0, 0, 0.3);
-    --border: #ccc;
-    --border-hover: #2A84D2;
-    --background: #fff;
-    --disabled: #F6F8FF;
-    --disabled-inner: #E1E6F9;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    height: 21px;
-    outline: none;
-    display: inline-block;
-    vertical-align: top;
-    position: relative;
-    margin: 0;
-    cursor: pointer;
-    border: 1px solid var(--bc, var(--border));
-    background: var(--b, var(--background));
-    transition: all 250ms ease-in-out; }
-    input[type='checkbox']:after {
-      content: '';
-      display: block;
-      left: 0;
-      top: 0;
-      position: absolute;
-      transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s); }
-    input[type='checkbox']:checked {
-      --b: var(--active);
-      --bc: var(--active);
-      --d-o: .3s;
-      --d-t: .6s;
-      --d-t-e: cubic-bezier(.2, .85, .32, 1.2); }
-    input[type='checkbox']:disabled {
-      --b: var(--disabled);
-      cursor: not-allowed;
-      opacity: .9; }
-      input[type='checkbox']:disabled:checked {
-        --b: var(--disabled-inner);
-        --bc: var(--border); }
-      input[type='checkbox']:disabled + p {
-        cursor: not-allowed;
-        user-select: none; }
-    input[type='checkbox']:hover:not(:checked):not(:disabled) {
-      --bc: var(--border-hover); }
-    input[type='checkbox']:not(.switch) {
-      width: 21px; }
-      input[type='checkbox']:not(.switch):after {
-        opacity: var(--o, 0); }
-      input[type='checkbox']:not(.switch):checked {
-        --o: 1; }
-    input[type='checkbox'] + p {
-      flex: 1;
-      font-size: 0.9em;
-      cursor: pointer;
-      line-height: 125%;
-      user-select: none;
-      margin: 0 0 0 8px;
-      max-width: 160px; }
-  input[type='checkbox']:not(.switch) {
-    border-radius: 4px; }
-    input[type='checkbox']:not(.switch):after {
-      width: 5px;
-      height: 9px;
-      border: 2px solid var(--active-inner);
-      border-top: 0;
-      border-left: 0;
-      left: 6px;
-      top: 3px;
-      transform: rotate(var(--r, 20deg)); }
-    input[type='checkbox']:not(.switch):checked {
-      --r: 43deg; } }
-
-.is-medium {
-  width: 200px; }
-
-.is-small {
-  width: 100px; }
-
-.Locations {
-  margin: 0;
-  height: 100%;
-  overflow: hidden;
-  overflow-y: scroll; }
-
-.Locations__none {
-  display: flex;
-  width: 100%;
-  border: none;
-  padding: 16px 32px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  color: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: background 150ms ease-in-out, visibility 250ms ease-in-out, opacity 250ms ease-in-out;
-  text-align: center;
-  height: 100%; }
-
-.Locations__item:hover {
-  box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.1); }
-
-.Locations__item.is-active {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.1); }
-
-.Locations__item.is-rejected .Locations__itemName,
-.Locations__item.is-rejected .Locations__itemDescription,
-.Locations__item.is-rejected .Locations__itemAddress {
-  opacity: 0.4; }
-
-.Locations__item:hover {
-  cursor: pointer; }
-
-.Locations__item {
-  width: 100%;
-  border: none;
-  padding: 16px;
-  margin: 0 0 16px 0;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: box-shadow 150ms ease-in-out, background 150ms ease-in-out, visibility 250ms ease-in-out, opacity 250ms ease-in-out;
-  text-align: left;
-  font-size: 1em;
-  outline: none;
-  background: transparent;
-  color: #fff;
-  text-decoration: none;
-  box-shadow: none;
-  -webkit-appearance: none; }
-
-.Locations__item.is-hidden {
-  opacity: 0;
-  visibility: hidden; }
-
-.Locations__itemName {
-  margin: 0 0 8px 0;
-  font-weight: bold; }
-
-.Locations__itemDescription {
-  margin: 0 0 8px 0; }
-
-.Locations__itemAddress {
-  font-size: 0.7em;
-  color: rgba(0, 0, 0, 0.3); }
-
-.Locations__itemFooterOptions > * {
-  margin: 0 0 0 8px; }
-
-.Locations__itemFooterOptions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; }
-
-.Locations__itemFooter {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  font-size: .8em;
-  opacity: 0.8;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 8px 0 0 0;
-  padding: 8px 0 0 0; }
-
-@media only screen and (max-width: 800px) {
-  .Locations {
-    display: none; } }
-
 .is-expanded .Map__container {
   width: 100%; }
 
@@ -680,7 +401,7 @@ table {
   border-radius: 100%;
   transition: border 150ms ease-in-out, background 150ms ease-in-out; }
 
-.Marker.leaflet-zoom-animated.leaflet-interactive:hover {
+.Marker:hover {
   border: 8px solid #fff; }
 
 .Marker.leaflet-zoom-animated.leaflet-interactive:focus-visible {
@@ -759,113 +480,49 @@ table {
   -o-transition: -o-stroke-dashoffset 0.3s ease-out, -o-stroke-opacity 0.3s ease-in;
   transition: stroke-dashoffset 0.3s ease-out, stroke-opacity 0.3s ease-in; }
 
-.Spinner {
-  border-top: 2px solid #ddd;
-  border-right: 2px solid #ddd;
-  border-bottom: 2px solid #ddd;
-  border-left: 2px solid #0090d7;
-  animation: load8 0.8s infinite linear; }
-
-.Spinner, .Spinner:after {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%; }
-
-.Spinner.is-small {
-  width: 20px;
-  height: 20px; }
-
-.Spinner.is-mini {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  width: 16px;
-  height: 16px;
-  border-radius: 100%; }
-
-.Toggle {
+.Marker.is-air {
+  background: var(--white);
+  width: 32px;
+  height: 32px;
   display: flex;
+  justify-content: center;
   align-items: center; }
 
-.Toggle:hover .Toggle__input {
-  background: rgba(255, 255, 255, 0.3); }
-
-.Toggle__input {
-  margin: 0 .4em;
-  width: 50px;
-  height: 20px;
-  border-radius: 20px;
-  border: 2px solid #fff;
-  position: relative;
-  transition: all 350ms ease-in-out; }
-
-.Toggle__label {
-  position: relative;
-  user-select: none;
-  font-weight: bold; }
-
-.Toggle__button {
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  width: 14px;
-  height: 14px;
-  background: #fff;
+.Marker.is-air .Marker__inner {
+  border: 3px solid var(--white);
+  width: 32px;
+  height: 32px;
   border-radius: 100%;
-  transition: all 350ms ease-in-out; }
-
-.Toggle.is-active .Toggle__button {
-  left: calc(100% - 15px); }
-
-.Tooltip {
-  position: relative;
-  display: inline-block;
-  font-size: 0.8em;
-  margin: 0 0 0 4px;
-  display: inline-flex;
-  text-align: center;
-  vertical-align: baseline;
-  top: -2px;
-  line-height: 133%;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: white;
-  color: var(--black);
-  border: 1px solid #ccc;
-  text-indent: 0;
-  cursor: pointer;
-  transition: background 250ms ease-in-out; }
-
-.Tooltip:hover {
-  background: rgba(0, 0, 0, 0.05); }
-
-.Tooltip__text {
-  visibility: hidden;
-  text-align: center;
-  padding: 12px;
-  border-radius: 4px;
-  font-size: 1.1em;
-  line-height: 135%;
   position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  opacity: 0;
-  transition: opacity 250ms ease-in-out;
-  margin-left: -56px;
-  width: 120px;
-  background: var(--white);
-  color: var(--black);
-  border: 1px solid #ccc;
-  box-shadow: 1px 2px 2px rgba(var(--shadow), 0.2); }
+  transition: transform 150ms cubic-bezier(0, 0, 0.25, 1); }
 
-.Tooltip:hover .Tooltip__text {
-  visibility: visible;
-  opacity: 1; }
+.Marker.is-air:hover .Marker__inner {
+  transform: scale(0.9); }
+
+.Marker.is-air.is-5 .Marker__inner {
+  background: var(--white) url(/img/markers/5.svg);
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+.Marker.is-air.is-4 .Marker__inner {
+  background: var(--white) url(/img/markers/4.svg);
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+.Marker.is-air.is-3 .Marker__inner {
+  background: var(--white) url(/img/markers/3.svg);
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+.Marker.is-air.is-2 .Marker__inner {
+  background: var(--white) url(/img/markers/2.svg);
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+.Marker.is-air.is-1 .Marker__inner {
+  background: var(--white) url(/img/markers/1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; }
 
 @keyframes pulse {
   0% {
@@ -915,6 +572,12 @@ table {
 .fade-enter, .fade-leave-to {
   opacity: 0; }
 
+.is-air .Popup__description {
+  width: 300px; }
+
+.is-air .Popup__description strong {
+  font-weight: bold; }
+
 .Popup__description {
   line-height: 135%;
   margin: 0 0 0.8em; }
@@ -934,7 +597,8 @@ table {
 .Popup__body {
   position: relative;
   padding: 0.8em;
-  word-break: break-word; }
+  word-break: break-word;
+  overflow: hidden; }
 
 .Popup__address {
   font-size: 0.8em;
@@ -975,9 +639,6 @@ table {
 .can-send .Popup__controls .Popup__button,
 .can-send .Popup__controls .Popup__button {
   background: var(--blue); }
-
-.Popup__body {
-  overflow: hidden; }
 
 .Popup__spinner {
   position: absolute;
@@ -1118,18 +779,6 @@ table {
   margin: 0 0 0.2em;
   color: var(--blue); }
 
-.Station__id {
-  margin: 0 .4em 0 0; }
-
-.Station__id:after {
-  content: '';
-  position: relative;
-  width: 1px;
-  height: 100%;
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
-  left: 0.4em;
-  margin: 0 0.4em 0 0; }
-
 @media only screen and (max-width: 800px) {
   .Popup__header {
     font-size: 1em; }
@@ -1139,6 +788,117 @@ table {
     min-width: 200px; }
   .Popup__button {
     font-size: 1em; } }
+
+.Popup__pollutants.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0; }
+
+.Popup__pollutants {
+  display: block;
+  margin: 0 0 0.8em;
+  background: #f6f8fa;
+  border-radius: 4px;
+  padding: .8em;
+  transition: opacity 500ms ease-in-out; }
+
+.Popup__pollutantUnit {
+  font-size: .9em; }
+
+.Popup__pollutant {
+  display: flex;
+  margin: 0 0 0.2em; }
+
+.Popup__pollutant:last-child {
+  margin-bottom: 0; }
+
+.Popup__pollutantName {
+  font-weight: 500;
+  margin: 0 0.4em 0 0; }
+
+.Popup__pollutantsInfo {
+  margin: .8em 0 0 0; }
+
+.Popup__body .Popup__pollutantHelp {
+  font-size: 0.9em;
+  text-decoration: underline;
+  color: #000; }
+
+.Spinner {
+  border-top: 2px solid #ddd;
+  border-right: 2px solid #ddd;
+  border-bottom: 2px solid #ddd;
+  border-left: 2px solid #0090d7;
+  animation: load8 0.8s infinite linear; }
+
+.Spinner, .Spinner:after {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; }
+
+.Spinner.is-small {
+  width: 20px;
+  height: 20px; }
+
+.Spinner.is-mini {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%; }
+
+.Tooltip {
+  position: relative;
+  display: inline-block;
+  font-size: 0.8em;
+  margin: 0 0 0 4px;
+  display: inline-flex;
+  text-align: center;
+  vertical-align: baseline;
+  top: -2px;
+  line-height: 133%;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  color: var(--black);
+  border: 1px solid #ccc;
+  text-indent: 0;
+  cursor: pointer;
+  transition: background 250ms ease-in-out; }
+
+.Tooltip:hover {
+  background: rgba(0, 0, 0, 0.05); }
+
+.Tooltip__text {
+  visibility: hidden;
+  text-align: center;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 1.1em;
+  line-height: 135%;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+  margin-left: -56px;
+  width: 120px;
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid #ccc;
+  box-shadow: 1px 2px 2px rgba(var(--shadow), 0.2); }
+
+.Tooltip:hover .Tooltip__text {
+  visibility: visible;
+  opacity: 1; }
 
 * {
   box-sizing: border-box; }

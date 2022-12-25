@@ -2,9 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Bicimap</title>
+    <title>Bicimap - Mapa alternativo y amable de estaciones de BiciMAD y Bicing</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+
+    <link rel="icon" href="/img/icons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png?v=1.1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png?v=1.1">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png?v=1.1">
+
+    <link rel="manifest" href="/manifest.json?v=1.4">
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Bicimap" />
+    <meta property="og:site_name" content="Bicimap" />
+    <meta name="twitter:title" content="Bicimap">
+
+    <meta name="description" content="🌍 Mapa alternativo y amable de estaciones de BiciMAD y Bicing" />
+    <meta property="og:description" content="🌍 Mapa alternativo y amable de estaciones de BiciMAD y Bicing" />
+    <meta property="twitter:description" content="🌍 Mapa alternativo y amable de estaciones de BiciMAD y Bicing" />
+
+    <meta name=twitter:image content="https://bicimap.javierarce.com/img/card.png">
+    <meta property='og:image' content="https://bicimap.javierarce.com/img/card.png"/>
+    <meta name="twitter:card" content="summary_large_image"/>
 
     <link rel="stylesheet" href="/css/leaflet.css">
     <link rel="stylesheet" media="all"  href="/css/style.css" type="text/css">
@@ -24,13 +46,16 @@
     <script src="/js/base.js"></script>
     <script src="/js/stations.js"></script>
     <script src="/js/popup.js"></script>
+    <script src="/js/airpopup.js"></script>
     <script src="/js/map.js"></script>
     <script src="/js/about.js"></script>
     <script src="/js/app.js"></script>
   </head>
   <body>
     <div id="app" class="App">
-      <div id="map" class="Map"></div>
+      <div class="Map__container">
+        <div id="map" class="Map"></div>
+      </div>
     </div>
   </body>
 </html>

@@ -1,5 +1,14 @@
 @import 'helpers/transitions';
 
+.is-air .Popup__description {
+  width: 300px;
+}
+
+.is-air .Popup__description strong {
+  font-weight: bold;
+}
+
+
 .Popup__description {
   line-height: 135%;
   margin: 0 0 0.8em;
@@ -24,6 +33,7 @@
   position: relative;
   padding: 0.8em;
   word-break: break-word;
+  overflow: hidden;
 }
 
 .Popup__address {
@@ -71,10 +81,6 @@
 .can-send .Popup__controls .Popup__button,
 .can-send .Popup__controls .Popup__button {
   background: var(--blue);
-}
-
-.Popup__body {
-  overflow: hidden;
 }
 
 .Popup__spinner {
@@ -233,20 +239,6 @@
   color: var(--blue);
 }
 
-.Station__id {
-  margin: 0 .4em 0 0;
-}
-
-.Station__id:after {
-  content: '';
-  position: relative;
-  width: 1px;
-  height: 100%;
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
-  left: 0.4em;
-  margin: 0 0.4em 0 0;
-}
-
 @media only screen and (max-width: 800px) {
   .Popup__header {
     font-size: 1em;
@@ -262,3 +254,48 @@
   }
 }
 
+
+.Popup__pollutants.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.Popup__pollutants {
+  display: block;
+  margin: 0 0 0.8em;
+  background: #f6f8fa;
+  border-radius: 4px;
+  padding: .8em;
+  transition: opacity 500ms ease-in-out;
+}
+
+.Popup__pollutantUnit {
+  font-size: .9em;
+}
+
+.Popup__pollutant {
+  display: flex;
+  margin: 0 0 0.2em;
+}
+
+.Popup__pollutant:last-child {
+  margin-bottom: 0;
+}
+
+.Popup__pollutantName {
+  font-weight: 500;
+  margin: 0 0.4em 0 0;
+}
+
+.Popup__pollutantsInfo {
+  margin: .8em 0 0 0;
+}
+
+.Popup__body .Popup__pollutantHelp {
+  font-size: 0.9em;
+  text-decoration: underline;
+  color: #000;
+}

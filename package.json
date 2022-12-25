@@ -1,0 +1,24 @@
+{
+  "name": "BiciMap",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "repository": "git@github.com:wtmap/wtmap.git",
+  "author": "Javier Arce <4933+javierarce@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "scss": "node-sass --watch scss -o css",
+    "stations": "bicimad"
+  },
+  "dependencies": {
+    "aire-madrid": "^4.0.3",
+    "bicimad": "^1.0.1",
+    "bicing": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express-ejs-layouts": "^2.5.1",
+    "leaflet": "^1.9.3",
+    "leaflet.markercluster": "^1.5.3",
+    "node-sass": "^8.0.0"
+  }
+}

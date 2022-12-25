@@ -11,6 +11,8 @@ class Map extends Base {
     this.markers = []
     this.mode = MODE_BIKES
 
+    this.bounds = this.retrieveFromLocalStorage('bounds')
+
     this.options = { 
       scrollWheelZoom: true,
       zoomControl: true,
@@ -32,10 +34,19 @@ class Map extends Base {
     this.bindKeys()
     this.map.on('locationfound', this.onLocationFound.bind(this))
     this.map.on('locationerror', this.onLocationError.bind(this))
-    this.cluster.on('animationend', this.onModeChange.bind(this))
+    this.map.on('moveend', this.onMapMoveEnd.bind(this))
+    this.cluster.on('animationend', this.toggleMode.bind(this))
   }
 
-  onModeChange () {
+  toggleLanes () {
+    if (this.showLanes) {
+      this.lanes.forEach(lane => { this.map.addLayer(lane) })
+    } else {
+      this.lanes.forEach(lane => { this.map.removeLayer(lane) })
+    }
+  }
+
+  toggleMode () {
     this.markers.forEach((marker) => {
       const $marker = marker.getElement()
       const station = marker.options.station
@@ -43,33 +54,54 @@ class Map extends Base {
       if ($marker && station) {
         $marker.classList.toggle('is-dock', this.mode === MODE_BASES)
 
-        $marker.classList.remove('is-empty')
-        $marker.classList.remove('is-low')
-        $marker.classList.remove('is-ok')
-        $marker.classList.remove('is-good')
-        $marker.classList.remove('is-bad')
+        const classNames = ['is-empty', 'is-low', 'is-ok', 'is-good', 'is-bad']
+
+        classNames.forEach((className) => {
+          $marker.classList.remove(className)
+        })
+
         $marker.classList.add(this.getIconClassNameForStation(station))
       }
-
-
-        //marker.setTooltipContent(tooltipDescription)
-
-        //let what = value? 'free_bases' : 'dock_bikes'
-        //let whatLabel = 'free_bases'
-
-        //if (city === 'barcelona') {
-          //what = value? 'slots' : 'bikes'
-          //whatLabel = 'slots'
-        //}
-
-        //element.classList.toggle(`is-docks`, what === whatLabel)
-
-        //element.classList.toggle('is-empty', location[what] === 0)
-        //element.classList.toggle('is-low', location[what] > 0 && location[what] < 3)
-        //element.classList.toggle('is-ok', location[what] >= 3 && location[what] < 5)
-        //element.classList.toggle('is-good', location[what] >= 5)
-      //}
     })
+  }
+
+  addLanes () {
+    this.lanes = []
+    const files = ['/barcelona.geojson', '/madrid.geojson']
+
+    files.forEach(file => {
+      this.get(file)
+        .then(this.onGetLanes.bind(this))
+        .catch((error) => {
+          console.error(error)
+        })
+    })
+  }
+
+  onGetLanes (response) {
+    response.json().then((data) => {
+
+      const lane = L.geoJSON(data, {
+        style: () => {
+          return {
+            interactive:false,
+            "color": "#23D5AB",
+            "weight": 8,
+            "opacity": 0.5
+          }
+        }
+      })
+
+      this.lanes.push(lane)
+
+      if (this.lanes.length === 2) {
+        this.addLanesControl()
+      }
+    })
+  }
+
+  onMapMoveEnd () {
+    this.saveToLocalStorage('bounds', this.map.getBounds().toBBoxString())
   }
 
   onLocationError (event) {
@@ -121,14 +153,13 @@ class Map extends Base {
     const latlng = this.flattenCoordinates(coordinates) 
     const marker = L.marker(latlng, { icon, station })
 
-    const popup = new Popup(station)
-
     this.cluster.addLayer(marker)
 
     marker.on('click', () => {
       this.emit('markerclick', station.id)
     })
 
+    const popup = new Popup(station)
     popup.popup.setContent(popup.render())
     marker.bindPopup(popup.popup, { maxWidth: 'auto' })
 
@@ -184,17 +215,12 @@ class Map extends Base {
     L.Control.HelpControl = L.Control.extend({
       onRemove: () => { },
       onAdd: ()  => {
-        let div = L.DomUtil.create('div', 'Control is-hidden Control__help')
+        const div = L.DomUtil.create('div', 'Control is-hidden Control__help')
 
-        L.DomEvent.on(div, 'dblclick', (e) => {
-          e.stopPropagation()
-          e.preventDefault()
-        })
+        L.DomEvent.on(div, 'dblclick', this.killEvent.bind(this))
 
-        L.DomEvent.on(div, 'click', (e) => {
-          e.stopPropagation()
-          e.preventDefault()
-
+        L.DomEvent.on(div, 'click', (event) => {
+          this.killEvent(event)
           this.emit('show-about')
         })
 
@@ -213,23 +239,13 @@ class Map extends Base {
     L.Control.LanesControl = L.Control.extend({
       onRemove: () => { },
       onAdd: ()  => {
-        let div = L.DomUtil.create('div', 'Control is-hidden Control__lanes')
+        const div = L.DomUtil.create('div', 'Control is-hidden Control__lanes')
 
-        L.DomEvent.on(div, 'dblclick', (e) => {
-          e.stopPropagation()
-          e.preventDefault()
-        })
-
-        L.DomEvent.on(div, 'click', (e) => {
-          e.stopPropagation()
-          e.preventDefault()
-        })
-
-        L.DomEvent.on(div, 'touchstart', (e) => {
-          e.stopPropagation()
-          e.preventDefault()
-
+        L.DomEvent.on(div, 'dblclick', this.killEvent.bind(this))
+        L.DomEvent.on(div, 'click', (event) => {
+          this.killEvent(event)
           this.showLanes = !this.showLanes
+          this.toggleLanes()
           div.classList.toggle('is-selected', this.showLanes)
         })
 
@@ -254,8 +270,8 @@ class Map extends Base {
       },
       onRemove: () => { },
       onAdd: ()  => {
-        let div = L.DomUtil.create('div', 'Control is-hidden Control__locate')
-        let spinner = L.DomUtil.create('div', 'Spinner is-mini')
+        const div = L.DomUtil.create('div', 'Control is-hidden Control__locate')
+        const spinner = L.DomUtil.create('div', 'Spinner is-mini')
 
         div.appendChild(spinner)
 
@@ -288,18 +304,14 @@ class Map extends Base {
         const bikes = L.DomUtil.create('div', 'Control__modeBikes')
         const docks = L.DomUtil.create('div', 'Control__modeDocks')
 
-        L.DomEvent.on(div, 'dblclick', (e) => {
-          e.stopPropagation()
-          e.preventDefault()
-        })
+        L.DomEvent.on(div, 'dblclick', this.killEvent.bind(this))
 
-        L.DomEvent.on(div, 'click', (e) => {
-          e.stopPropagation()
-          e.preventDefault()
+        L.DomEvent.on(div, 'click', (event) => {
+          this.killEvent(event)
 
           this.mode = (this.mode === 'bikes' ) ? MODE_BASES : MODE_BIKES
           div.classList.toggle('is-dock', this.mode === MODE_BASES)
-          this.onModeChange()
+          this.toggleMode()
         })
 
         div.appendChild(bikes)
@@ -325,14 +337,64 @@ class Map extends Base {
     })
   }
 
+  centerToBounds(bounds) {
+    try {
+      const [west, south, east, north] = bounds.split(',').map(parseFloat)
+      const newBounds = new L.LatLngBounds(new L.LatLng(south, west), new L.LatLng(north, east))
+      this.map.fitBounds(newBounds)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  addAirQuality () {
+    this.get('/air.json')
+      .then(this.onGetAirQuality.bind(this))
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  onGetAirQuality (response) {
+    response.json().then((data) => {
+      data.forEach(this.addAirMarker.bind(this))
+    })
+  }
+
+  addAirMarker(data) {
+    const icon = this.getAirIcon(data)
+    const marker = L.marker([data.lat, data.lng], { icon, data }).addTo(this.map)
+
+    const popup = new AirPopup(data)
+    popup.popup.setContent(popup.render())
+    marker.bindPopup(popup.popup, { maxWidth: 'auto' })
+  }
+
+  getAirIcon (data) {
+    const className = `Marker is-air is-${data.qualityIndex}`
+
+    return new L.divIcon({
+      className,
+      html: `<div class="Marker__inner"></div>`,
+      iconSize: [32, 32],
+      iconAnchor: new L.Point(16, 0)
+    })
+  }
+
   render () {
     const attribution = this.attribution
 
     this.map = L.map('map', this.options).setView([this.coordinates.lat, this.coordinates.lng], this.coordinates.zoom)
 
+    if (this.bounds) {
+      this.centerToBounds(this.bounds)
+    }
+
+    this.addLanes()
     this.addHelpControl()
     this.addModeControl()
     this.addLocateControl()
+    this.addAirQuality()
 
     this.cluster = L.markerClusterGroup({
       spiderfyOnMaxZoom: false,

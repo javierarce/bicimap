@@ -1,22 +1,16 @@
 @import 'helpers/reset';
 
 @import 'helpers/colors';
-@import 'helpers/fonts';
 @import 'helpers/transitions';
-@import 'helpers/vars';
 
 @import 'About';
-@import 'Alert';
 @import 'Button';
 @import 'Control';
-@import 'Input';
-@import 'Locations';
 @import 'Map';
 @import 'Marker';
-@import 'Spinner';
-@import 'Toggle';
-@import 'Tooltip';
 @import 'Popup';
+@import 'Spinner';
+@import 'Tooltip';
 
 * {
   box-sizing: border-box;

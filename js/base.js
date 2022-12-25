@@ -93,6 +93,34 @@ class Base {
     $el.dispatchEvent(event)
   }
 
+  saveToLocalStorage (id, what) {
+    if (window.localStorage) {
+      window.localStorage.setItem(id, JSON.stringify(what))
+    }
+  }
+
+  retrieveFromLocalStorage (id) {
+    if (window.localStorage) {
+      let what = window.localStorage.getItem(id)
+      if (what) {
+        return JSON.parse(what)
+      }
+    }
+    return undefined
+  }
+
+  removeFromLocalStorage (id) {
+    if (window.localStorage) {
+      window.localStorage.removeItem(id)
+    }
+  }
+
+  emptyLocalStorage () {
+    if (window.localStorage) {
+      window.localStorage.clear()
+    }
+  }
+
   render () {
     this.renderTemplate()
     return this.$el

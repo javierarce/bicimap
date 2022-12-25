@@ -9,7 +9,7 @@
   border-radius: 100%;
   transition: border 150ms ease-in-out, background 150ms ease-in-out; }
 
-.Marker.leaflet-zoom-animated.leaflet-interactive:hover {
+.Marker:hover {
   border: 8px solid #fff; }
 
 .Marker.leaflet-zoom-animated.leaflet-interactive:focus-visible {
@@ -87,3 +87,47 @@
   -moz-transition: -moz-stroke-dashoffset 0.3s ease-out, -moz-stroke-opacity 0.3s ease-in;
   -o-transition: -o-stroke-dashoffset 0.3s ease-out, -o-stroke-opacity 0.3s ease-in;
   transition: stroke-dashoffset 0.3s ease-out, stroke-opacity 0.3s ease-in; }
+
+.Marker.is-air {
+  background: var(--white);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.Marker.is-air .Marker__inner {
+  border: 3px solid var(--white);
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  position: absolute;
+  transition: transform 150ms cubic-bezier(0, 0, 0.25, 1); }
+
+.Marker.is-air:hover .Marker__inner {
+  transform: scale(0.9); }
+
+.Marker.is-air.is-5 .Marker__inner {
+  background: var(--white) url(/img/markers/5.svg);
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+.Marker.is-air.is-4 .Marker__inner {
+  background: var(--white) url(/img/markers/4.svg);
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+.Marker.is-air.is-3 .Marker__inner {
+  background: var(--white) url(/img/markers/3.svg);
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+.Marker.is-air.is-2 .Marker__inner {
+  background: var(--white) url(/img/markers/2.svg);
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+.Marker.is-air.is-1 .Marker__inner {
+  background: var(--white) url(/img/markers/1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; }
