@@ -112,7 +112,7 @@ class Map extends Base {
     const isBarcelona = this.map.getBounds().intersects(BARCELONA_BOUNDS)
     const isMadrid = this.map.getBounds().intersects(MADRID_BOUNDS)
 
-    if (this.lanesControl) {
+    if (this.modeControl) {
       if (this.map.getZoom() > 11 && (isBarcelona || isMadrid)) {
         this.modeControl.getContainer().classList.remove('is-hidden')
       } else {
@@ -464,9 +464,6 @@ class Map extends Base {
     this.map.on('click', (c) => {
       console.log(c.latlng)
     })
-
-    //L.rectangle(BARCELONA_BOUNDS, {color: 'blue', weight: 1}).addTo(this.map)
-    //L.rectangle(MADRID_BOUNDS, {color: 'red', weight: 1}).addTo(this.map)
 
     this.bindEvents()
   }
