@@ -583,7 +583,7 @@ class Map extends Base {
 
         setTimeout(() => {
           div.classList.remove('is-hidden')
-        }, 800)
+        }, 600)
 
         return div
       }
