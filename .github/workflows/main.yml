@@ -24,5 +24,6 @@ jobs:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
         with:
           strip_components: 1
+          source: "./*"
           target: "/home/javier/bicimap"
 
