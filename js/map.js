@@ -461,10 +461,6 @@ class Map extends Base {
       minZoom: 0
     }).addTo(this.map)
 
-    this.map.on('click', (c) => {
-      console.log(c.latlng)
-    })
-
     this.bindEvents()
   }
 }
