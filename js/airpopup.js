@@ -1,7 +1,7 @@
 class AirPopup extends Popup {
-  constructor (data) {
-    super()
-    this.templateData = data
+  constructor (station) {
+    super(station)
+    this.templateData = station
 
     this.AIR_QUALITY_DESCRIPTION = ['muy mala', 'mala', 'regular', 'buena', 'muy buena']
     this.templateData.time = this.time()

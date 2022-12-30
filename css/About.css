@@ -35,10 +35,6 @@
   font-size: 1.1em;
   margin: 0 0 16px 0; }
 
-.About__description {
-  margin: 0 0 0.8em 0;
-  line-height: 135%; }
-
 .About__highlight {
   background: #f6f6f6;
   padding: 0.8em;
@@ -78,13 +74,8 @@
 
 @media only screen and (max-width: 800px) {
   .About__inner {
-    width: 80%;
-    padding: 1em;
-    font-size: 0.9em; }
+    width: 90%;
+    padding: 1em; }
   .About__footer {
     flex-direction: column;
-    font-size: 0.8em; }
-  .About__highlight .About__button.is-bold {
-    font-size: 0.8em; }
-  .About__footer > div:first-child {
-    margin: 0 0 0.2em; } }
+    font-size: 0.8em; } }

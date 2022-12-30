@@ -10,13 +10,22 @@
 
 .Control.is-hidden {
   visibility: hidden;
-  opacity: 0; }
+  opacity: 0;
+  display: none; }
 
 .Control:hover {
   background-color: var(--gray); }
 
 .Control__locate {
-  background-color: var(--white);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 32px;
+  height: 32px; }
+
+.Control__locate .Control__icon {
+  width: 100%;
+  height: 100%;
   background-image: url(/img/location.svg);
   background-repeat: no-repeat;
   background-size: cover; }
@@ -24,7 +33,7 @@
 .Control .Spinner {
   display: none; }
 
-.Control.is-loading {
+.Control.is-loading .Control__icon {
   background-image: none; }
 
 .Control.is-loading:before {
@@ -34,14 +43,25 @@
   display: block; }
 
 .Control__lanes {
-  background-color: var(--white);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 32px;
+  height: 32px;
+  background-color: var(--white); }
+
+.Control__lanes.is-selected {
+  background-color: var(--blue); }
+
+.Control__lanes .Control__icon {
+  width: 100%;
+  height: 100%;
   background-image: url(/img/lanes.svg);
   background-repeat: no-repeat;
   background-size: cover; }
 
-.Control__lanes.is-selected {
-  background-image: url(/img/lanes_white.svg);
-  background-color: var(--blue); }
+.Control__lanes.is-selected .Control__icon {
+  background-image: url(/img/lanes_white.svg); }
 
 .Control__help {
   background-image: url(/img/help.svg);
@@ -107,6 +127,8 @@
 
 @media only screen and (max-width: 640px) {
   .Control,
+  .Control__locate,
+  .Control__lanes,
   .Control__modeBikes,
   .Control__modeDocks {
     width: 48px;

@@ -5,6 +5,11 @@ class Popup extends Base {
     this.popup = L.popup({ className: 'Popup', offset: [0, 12] })
   }
 
+  update (station) {
+    this.templateData = station
+    return this
+  }
+
   template () {
     return `<div class="Popup__content">
         <div class="Popup__header">
@@ -37,9 +42,9 @@ class Popup extends Base {
       </div>`
   }
 
-  render () {
-    this.renderTemplate()
-    return this.$el
-  }
+    render () {
+      this.renderTemplate()
+      return this.$el
+    }
 }
 

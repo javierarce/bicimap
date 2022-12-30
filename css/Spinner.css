@@ -3,37 +3,30 @@
   border-right: 2px solid #ddd;
   border-bottom: 2px solid #ddd;
   border-left: 2px solid #0090d7;
-  animation: load8 0.8s infinite linear;
-}
+  animation: load8 0.8s infinite linear; }
 
 .Spinner, .Spinner:after {
   width: 30px;
   height: 30px;
-  border-radius: 50%;
-}
+  border-radius: 50%; }
+
 .Spinner.is-small {
   width: 20px;
-  height: 20px;
-}
+  height: 20px; }
 
 .Spinner.is-mini {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
+  top: 8px;
+  left: 8px;
   width: 16px;
   height: 16px;
-  border-radius: 100%;
-}
-
+  border-radius: 100%; }
 
 @media only screen and (max-width: 640px) {
-
   .Spinner.is-mini {
+    top: 50%;
+    left: 50%;
     width: 24px;
     height: 24px;
     margin-left: -12px;
-    margin-top: -12px;
-  }
-}
+    margin-top: -12px; } }

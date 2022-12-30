@@ -1,5 +1,7 @@
 const MODE_BIKES = 'bikes'
 const MODE_BASES = 'bases'
+const MADRID_BOUNDS = L.latLngBounds(L.latLng(40.52663416373108, -3.7968269716076013), L.latLng(40.318012406610876, -3.572241580290972))
+const BARCELONA_BOUNDS = L.latLngBounds(L.latLng(41.46601766304985, 2.0719888007174037), L.latLng(41.32810027799218, 2.238855829258895))
 
 class Map extends Base {
   constructor (coordinates) {
@@ -47,9 +49,9 @@ class Map extends Base {
   }
 
   toggleMode () {
-    this.markers.forEach((marker) => {
-      const $marker = marker.getElement()
-      const station = marker.options.station
+    this.markers.forEach((data) => {
+      const $marker = data.marker.getElement()
+      const station = data.marker.options.station
 
       if ($marker && station) {
         $marker.classList.toggle('is-dock', this.mode === MODE_BASES)
@@ -102,6 +104,34 @@ class Map extends Base {
 
   onMapMoveEnd () {
     this.saveToLocalStorage('bounds', this.map.getBounds().toBBoxString())
+    this.toggleLanesControl()
+    this.toggleModeControl()
+  }
+
+  toggleModeControl () {
+    const isBarcelona = this.map.getBounds().intersects(BARCELONA_BOUNDS)
+    const isMadrid = this.map.getBounds().intersects(MADRID_BOUNDS)
+
+    if (this.lanesControl) {
+      if (this.map.getZoom() > 11 && (isBarcelona || isMadrid)) {
+        this.modeControl.getContainer().classList.remove('is-hidden')
+      } else {
+        this.modeControl.getContainer().classList.add('is-hidden')
+      }
+    }
+  }
+
+  toggleLanesControl () {
+    const isBarcelona = this.map.getBounds().intersects(BARCELONA_BOUNDS)
+    const isMadrid = this.map.getBounds().intersects(MADRID_BOUNDS)
+
+    if (this.lanesControl) {
+      if (this.map.getZoom() > 13 && (isBarcelona || isMadrid)) {
+        this.lanesControl.getContainer().classList.remove('is-hidden')
+      } else {
+        this.lanesControl.getContainer().classList.add('is-hidden')
+      }
+    }
   }
 
   onLocationError (event) {
@@ -140,7 +170,22 @@ class Map extends Base {
     })
   }
 
+  findMarkerByStationByIdAndCity (id, city) {
+    return this.markers.find(data => {
+      return data.marker.options.station.id === id && data.marker.options.station.city === city
+    })
+  }
+
   addMarker (station) {
+    const m = this.findMarkerByStationByIdAndCity(station.id, station.city)
+
+    if (m) {
+      m.marker.options.station = station
+      m.marker.setIcon(this.getIcon(station))
+      m.marker.setPopupContent(m.popup.update(station).render())
+      return
+    }
+
     const coordinates = { lat: station.lat, lng: station.lng }
     const name = station.name
     const description = station.description
@@ -163,7 +208,7 @@ class Map extends Base {
     popup.popup.setContent(popup.render())
     marker.bindPopup(popup.popup, { maxWidth: 'auto' })
 
-    this.markers.push(marker)
+    this.markers.push({ marker, popup })
   }
 
   removeMarker () {
@@ -240,6 +285,7 @@ class Map extends Base {
       onRemove: () => { },
       onAdd: ()  => {
         const div = L.DomUtil.create('div', 'Control is-hidden Control__lanes')
+        const icon = L.DomUtil.create('div', 'Control__icon')
 
         L.DomEvent.on(div, 'dblclick', this.killEvent.bind(this))
         L.DomEvent.on(div, 'click', (event) => {
@@ -249,9 +295,11 @@ class Map extends Base {
           div.classList.toggle('is-selected', this.showLanes)
         })
 
+        div.appendChild(icon)
+
         setTimeout(() => {
-          div.classList.remove('is-hidden')
-        }, 800)
+          this.toggleLanesControl()
+        }, 400)
 
         return div
       }
@@ -271,9 +319,11 @@ class Map extends Base {
       onRemove: () => { },
       onAdd: ()  => {
         const div = L.DomUtil.create('div', 'Control is-hidden Control__locate')
+        const icon = L.DomUtil.create('div', 'Control__icon')
         const spinner = L.DomUtil.create('div', 'Spinner is-mini')
 
         div.appendChild(spinner)
+        div.appendChild(icon)
 
         L.DomEvent.on(div, 'click', (e) => {
           e.stopPropagation()
@@ -318,7 +368,7 @@ class Map extends Base {
         div.appendChild(docks)
 
         setTimeout(() => {
-          div.classList.remove('is-hidden')
+          this.toggleModeControl()
         }, 800)
 
         return div
@@ -410,6 +460,13 @@ class Map extends Base {
       maxZoom: 20,
       minZoom: 0
     }).addTo(this.map)
+
+    this.map.on('click', (c) => {
+      console.log(c.latlng)
+    })
+
+    //L.rectangle(BARCELONA_BOUNDS, {color: 'blue', weight: 1}).addTo(this.map)
+    //L.rectangle(MADRID_BOUNDS, {color: 'red', weight: 1}).addTo(this.map)
 
     this.bindEvents()
   }

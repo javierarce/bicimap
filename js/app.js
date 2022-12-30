@@ -3,9 +3,7 @@ class App {
     this.$el = document.getElementById('app')
 
     this.about = new About()
-    this.stations = new Stations()
-    this.stations.getStationsFromCity('madrid')
-    this.stations.getStationsFromCity('barcelona')
+    this.stations = new Stations(['madrid', 'barcelona'])
     this.map = new Map(COORDINATES)
 
     this.render()
@@ -25,8 +23,9 @@ class App {
       this.about.show()
     })
     
-    this.stations.on('data', (stations) => {
-      this.map.renderStations(stations)
+    this.stations.on('data', response  => {
+      this.about.setUpdatedAt(response.updatedAt)
+      this.map.renderStations(response.stations)
     })
   }
 
