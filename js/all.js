@@ -202,7 +202,6 @@ class Popup extends Base {
   constructor (station) {
     super()
     this.templateData = station
-    this.templateData.URL = encodeURIComponent(station.address)
     this.popup = L.popup({ className: 'Popup', offset: [0, 12] })
   }
 
@@ -249,7 +248,7 @@ class Popup extends Base {
       </div>
       </div>
       <div class="Popup__footer">
-      <a href="https://www.google.com/maps/place/<%= URL -%>, <%= city -%>/<%= lat -%>,<%= lng -%>, <%= zoom -%>z" target="_blank" title="Abrir en Google Maps" class="Popup__address"><%= address -%></a>
+      <a href="https://www.google.com/maps/place/<%= encodeURIComponent(address) -%>, <%= city -%>/<%= lat -%>,<%= lng -%>, <%= zoom -%>z" target="_blank" title="Abrir en Google Maps" class="Popup__address"><%= address -%></a>
       </div>
       </div>
       </div>`
