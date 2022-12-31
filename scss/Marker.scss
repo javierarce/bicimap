@@ -71,7 +71,20 @@
   transform: scale(0.9) rotate(90deg);
 }
 
+.Marker.is-highlighted:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -4px;
+  margin-top: -4px;
+  z-index: 1000;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 100%;
 
+}
 .Cluster {
   font-weight: bold;
   background-color: var(--blue);

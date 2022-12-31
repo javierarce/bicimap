@@ -49,12 +49,12 @@
 .is-air .Popup__description {
   width: 300px; }
 
-.is-air .Popup__description strong {
-  font-weight: bold; }
-
 .Popup__description {
   line-height: 135%;
   margin: 0 0 0.8em; }
+
+.Popup__description:last-child {
+  margin: 0; }
 
 .Popup__description strong {
   font-weight: bold; }

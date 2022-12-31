@@ -10,6 +10,18 @@ class Popup extends Base {
     return this
   }
 
+  setContent () {
+    this.popup.setContent(this.render())
+  }
+
+  setLatLng (latLng) {
+    this.popup.setLatLng(latLng)
+  }
+
+  openOn (map) {
+    this.popup.openOn(map)
+  }
+
   template () {
     return `<div class="Popup__content">
         <div class="Popup__header">

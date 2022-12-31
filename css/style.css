@@ -189,8 +189,26 @@ table {
 .Button {
   margin: auto; }
 
-.Button.is-bold:hover {
+.Button.is-bold:hover,
+.Button.is-small:hover {
   background: #1c598e; }
+
+.Button.is-small {
+  display: inline-block;
+  border-radius: 4px;
+  width: 100%;
+  margin: auto;
+  font-size: 1em;
+  padding: 12px;
+  border: none;
+  outline: none;
+  background: #2A84D2;
+  color: var(--white);
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: none;
+  transition: all 250ms ease-in-out; }
 
 .Button.is-bold {
   display: inline-block;
@@ -494,6 +512,19 @@ table {
 .Marker.is-dock:hover .Marker__inner {
   transform: scale(0.9) rotate(90deg); }
 
+.Marker.is-highlighted:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -4px;
+  margin-top: -4px;
+  z-index: 1000;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 100%; }
+
 .Cluster {
   font-weight: bold;
   background-color: var(--blue);
@@ -616,12 +647,12 @@ table {
 .is-air .Popup__description {
   width: 300px; }
 
-.is-air .Popup__description strong {
-  font-weight: bold; }
-
 .Popup__description {
   line-height: 135%;
   margin: 0 0 0.8em; }
+
+.Popup__description:last-child {
+  margin: 0; }
 
 .Popup__description strong {
   font-weight: bold; }

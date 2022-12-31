@@ -2,6 +2,7 @@ cat js/base.js \
     js/stations.js \
     js/popup.js \
     js/airpopup.js \
+    js/userpopup.js \
     js/map.js \
     js/about.js \
     js/app.js \

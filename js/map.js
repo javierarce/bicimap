@@ -38,6 +38,8 @@ class Map extends Base {
     this.map.on('locationerror', this.onLocationError.bind(this))
     this.map.on('moveend', this.onMapMoveEnd.bind(this))
     this.cluster.on('animationend', this.toggleMode.bind(this))
+    this.map.on('popupclose', this.unhighlightMarkers.bind(this))
+    this.map.on('click', this.unhighlightMarkers.bind(this))
   }
 
   toggleLanes () {
@@ -155,19 +157,53 @@ class Map extends Base {
     return [coordinates.lat, coordinates.lng]
   }
 
-  addUserMarker (data) {
+  unhighlightMarkers () {
+    if (this.highlightedMarker && this.highlightedMarker.getElement()) {
+      this.highlightedMarker.getElement().classList.remove('is-highlighted')
+    }
+  }
+
+  highlightMarker (marker) {
+    this.unhighlightMarkers()
+    if (marker && marker.getElement()) {
+      marker.getElement().classList.add('is-highlighted')
+      this.highlightedMarker = marker
+    }
+  }
+
+  addUserMarker (point) {
     if (this.userMarker) {
       this.userMarker.remove()
     }
 
-    const location = data.latlng
+    const location = point.latlng
     const icon = this.getUserIcon()
+
+    const closestMarker = this.getClosestMarkerToPoint(point)
+    this.highlightMarker(closestMarker.marker)
 
     this.userMarker = L.marker(location, { icon }).addTo(this.map)
 
     this.userMarker.on('click', () => {
-      this.map.setView(location, 19, { animate: true, easeLinearity: 0.5, duration: 0.5 })
+      const closestMarker = this.getClosestMarkerToPoint(point)
+      console.log(closestMarker)
+      this.highlightMarker(closestMarker.marker)
+      const mode = this.mode
+      const popup = new UserPopup(location, mode, closestMarker)
+      popup.setLatLng(this.userMarker.getLatLng())
+      popup.setContent(location, mode, closestMarker)
+      popup.on('visit-marker', this.visitMarker.bind(this))
+      popup.openOn(this.map)
     })
+  }
+
+  visitMarker (marker) {
+    const zoom = this.map.getZoom() < 14 ? 14 : this.map.getZoom()
+    this.map.setView(marker.getLatLng(), zoom, { animate: true, easeLinearity: 0.5, duration: 0.5 })
+
+    setTimeout(() => {
+      marker.openPopup()
+    }, 700)
   }
 
   findMarkerByStationByIdAndCity (id, city) {
@@ -246,7 +282,7 @@ class Map extends Base {
   }
 
   getIcon (station) {
-    const classNames = ['Marker', this.getIconClassNameForStation(station)]
+    const classNames = ['Marker', this.getIconClassNameForStation(station), this.mode === MODE_BASES ? 'is-dock' : '']
     const className = classNames.join(' ')
 
     return new L.divIcon({
@@ -429,6 +465,27 @@ class Map extends Base {
       iconSize: [32, 32],
       iconAnchor: new L.Point(16, 0)
     })
+  }
+
+  getClosestMarkerToPoint (point) {
+    const center = point.latlng
+
+    let maxDistance = Infinity
+    let closestMarker = null
+
+    const mode = this.mode === MODE_BIKES ? 'bikes' : 'bases'
+
+    this.markers.forEach(marker => {
+      const station = marker.marker.options.station
+      const distance = marker.marker.getLatLng().distanceTo(center)
+
+      if (station[mode] >= 3 && distance < maxDistance) {
+        maxDistance = distance
+        closestMarker = marker
+      }
+    })
+
+    return closestMarker
   }
 
   render () {
