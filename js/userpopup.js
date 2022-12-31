@@ -20,7 +20,8 @@ class UserPopup extends Popup {
     return `<div class="Popup__content">
     <div class="Popup__header">Usted se encuentra aquí</div>
     <div class="Popup__body">
-      <div class="Popup__description">La estación más cercana con al menos 3 <%= mode -%> es <strong><%= id -%> - <%= name -%></strong> en <%= address -%></div>
+      <div class="Popup__description">La estación más cercana con al menos 3 <%= mode -%> es <strong><%= id -%> - <%= name -%></strong></div>
+      <div class="Popup__address"><%= address -%></div>
       <div class="Popup__action"><button class="Button is-small js-go">Ir a la estación<button></div>
     </div>
   </div>`

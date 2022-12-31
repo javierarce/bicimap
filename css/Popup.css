@@ -77,11 +77,15 @@
 .Popup__address {
   font-size: 0.8em;
   width: 100%;
+  margin: 0 0 0.8em;
   opacity: 0.5;
   line-height: 135%;
   transition: opacity 150ms ease-in-out; }
 
-.Popup__address:hover {
+.Popup__address:last-child {
+  margin: 0; }
+
+a.Popup__address:hover {
   opacity: 0.8; }
 
 .Popup__button {
