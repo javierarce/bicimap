@@ -54,6 +54,7 @@ class Popup extends Base {
       </div>
       </div>`
   }
+
     render () {
       this.renderTemplate()
       return this.$el
