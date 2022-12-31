@@ -108,6 +108,7 @@ class Map extends Base {
     this.saveToLocalStorage('bounds', this.map.getBounds().toBBoxString())
     this.toggleLanesControl()
     this.toggleModeControl()
+    this.toggleMode()
   }
 
   toggleModeControl () {
