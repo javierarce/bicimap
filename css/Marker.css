@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .Marker,
 .Cluster {
   width: 32px;
@@ -7,7 +8,8 @@
   border: 5px solid #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 100%;
-  transition: border 150ms ease-in-out, background 150ms ease-in-out; }
+  transition: border 150ms ease-in-out, background 150ms ease-in-out;
+  overflow: hidden; }
 
 .Marker:hover {
   border: 8px solid #fff; }
@@ -19,14 +21,42 @@
 .Marker.is-good {
   background: var(--green); }
 
-.Marker.is-ok {
+.Marker.is-low {
   background: var(--yellow); }
 
-.Marker.is-low {
+.Marker.is-low:after {
+  content: '';
+  width: 100%;
+  height: 200%;
+  background: rgba(0, 0, 0, 0.1);
+  transform: rotate(45deg);
+  position: absolute;
+  top: 0;
+  left: 4px; }
+
+.Marker.is-bad {
   background: var(--red); }
+
+.Marker.is-bad:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 16px; }
 
 .Marker.is-empty {
   background: var(--darkgray); }
+
+.Marker.is-empty:after {
+  content: "⨉";
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold; }
 
 .Marker.is-user {
   box-shadow: 0 2px 4px rgba(var(--shadow), 0.2);
