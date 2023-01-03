@@ -459,14 +459,14 @@ table {
   border: 5px solid #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 100%;
-  transition: border 150ms ease-in-out, background 150ms ease-in-out;
+  transition: border 150ms ease-in-out, transform 150ms ease-in-out, background 150ms ease-in-out;
   overflow: hidden; }
 
 .Marker:hover {
-  border: 8px solid #fff; }
+  border: 7px solid #fff; }
 
 .Marker.leaflet-zoom-animated.leaflet-interactive:focus-visible {
-  border: 8px solid #fff;
+  border: 7px solid #fff;
   outline: 2px solid var(--blue); }
 
 .Marker.is-good {
@@ -528,16 +528,12 @@ table {
   box-shadow: 0 0 0 0 white;
   animation: pulse 1000ms ease-in-out infinite; }
 
-.Marker.is-dock:focus .Marker__inner {
-  transform: scale(1.2) rotate(90deg); }
-
 .Marker.is-dock {
   border-radius: 4px;
   transform: scale(1) rotate(90deg); }
 
-.Marker.is-dock .Marker__inner {
-  border-radius: 4px;
-  transform: scale(1) rotate(90deg); }
+.Marker.is-dock:focus .Marker__inner {
+  transform: scale(1.2) rotate(90deg); }
 
 .Marker.is-dock:hover .Marker__inner {
   transform: scale(0.9) rotate(90deg); }
@@ -583,6 +579,7 @@ table {
   transition: stroke-dashoffset 0.3s ease-out, stroke-opacity 0.3s ease-in; }
 
 .Marker.is-air {
+  border: none;
   background: var(--white);
   width: 32px;
   height: 32px;
